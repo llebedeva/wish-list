@@ -2,3 +2,5 @@ TODO.txt
 .idea/*
 /docker/my-db
 /docker/.env
+/vendor
+/composer.phar
