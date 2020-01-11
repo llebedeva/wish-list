@@ -1,5 +1,8 @@
+.idea
+
+docker/my-db
+docker/.env
+vendor
+
+.phpunit.result.cache
 TODO.txt
-.idea/*
-/docker/my-db
-/docker/.env
-/vendor
