@@ -9,6 +9,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ControllerTest extends TestCase
 {
+    public function testIndex()
+    {
+        $controller = new Controller();
+
+        /** @var Response $response */
+        $response = $controller->indexAction();
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertNotEmpty($response->getContent());
+    }
+
     public function testCreateWish_success()
     {
         $request = new Request([], ['wish' => 'Wish', 'link' => 'Link', 'description' => 'Description']);
@@ -23,7 +35,7 @@ class ControllerTest extends TestCase
 
     public function testCreateWish_error()
     {
-        $request = new Request([], ['wish' => '', 'link' => '', 'description' => '']);
+        $request = new Request();
         $controller = new Controller();
 
         /** @var Response $response */
