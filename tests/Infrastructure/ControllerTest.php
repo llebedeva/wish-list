@@ -11,11 +11,11 @@ class ControllerTest extends TestCase
 {
     public function testCreateWish_success()
     {
-        $request = new Request();
-        $controller = new Controller($request);
+        $request = new Request([], ['wish' => 'Wish', 'link' => 'Link', 'description' => 'Description']);
+        $controller = new Controller();
 
         /** @var Response $response */
-        $response = $controller->createWishAction();
+        $response = $controller->createWishAction($request);
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
@@ -23,6 +23,13 @@ class ControllerTest extends TestCase
 
     public function testCreateWish_error()
     {
-        //
+        $request = new Request([], ['wish' => '', 'link' => '', 'description' => '']);
+        $controller = new Controller();
+
+        /** @var Response $response */
+        $response = $controller->createWishAction($request);
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
     }
 }
