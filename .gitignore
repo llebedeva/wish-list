@@ -1,7 +1,6 @@
 .idea
 
 docker/my-db
-docker/.env
 vendor
 tests/report
 
