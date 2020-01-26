@@ -7,7 +7,8 @@
         "phpunit/php-code-coverage": "^7.0"
     },
     "scripts": {
-        "test": "vendor/bin/phpunit tests"
+        "test": "vendor/bin/phpunit tests",
+        "build": "docker build -t wishlist_php docker/php-fpm"
     },
     "autoload": {
         "psr-4": {

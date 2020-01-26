@@ -1,7 +1,7 @@
 version: '3'
 services:
   php:
-    image: php_fpm
+    image: wishlist_php
     volumes:
       - .:/app
   nginx:
