@@ -3,6 +3,7 @@
 docker/my-db
 docker/.env
 vendor
+tests/report
 
 .phpunit.result.cache
 TODO.txt
