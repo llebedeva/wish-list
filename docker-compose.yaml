@@ -2,6 +2,9 @@ version: '3'
 services:
   php:
     image: wishlist_php
+    environment:
+      XDEBUG_CONFIG: "remote_host=host.docker.internal remote_port=9001 remote_enable=1"
+      PHP_IDE_CONFIG: "serverName=docker-dev"
     volumes:
       - .:/app
   nginx:
