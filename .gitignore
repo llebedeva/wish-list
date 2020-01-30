@@ -6,3 +6,4 @@ tests/report
 
 .phpunit.result.cache
 TODO.txt
+docker/.env

@@ -2,6 +2,8 @@ version: '3'
 services:
   php:
     image: wishlist_php
+    env_file:
+      - './docker/.env'
     environment:
       XDEBUG_CONFIG: "remote_host=host.docker.internal remote_port=9001 remote_enable=1"
       PHP_IDE_CONFIG: "serverName=docker-dev"
@@ -17,6 +19,8 @@ services:
   db:
     image: mysql:5.7
     restart: always
+    env_file:
+      - './docker/.env'
     ports:
       - 3306:3306
     expose:
