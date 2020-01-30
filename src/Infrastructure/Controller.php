@@ -21,17 +21,13 @@ class Controller
         $wish = $request->request->get('wish');
         $link = $request->request->get('link');
         $description = $request->request->get('description');
-        if (empty($wish) || empty($link) || empty($description)) {
-            $response = new Response('', Response::HTTP_BAD_REQUEST);
-        } else {
-            $request = new PostDataRequest($wish, $link, $description);
-            try {
-                $request->validate();
-                // domain logic
-                $response = new Response();
-            } catch (\Exception $e) {
-                $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);
-            }
+        $request = new PostDataRequest($wish, $link, $description);
+        try {
+            $request->validate();
+            // domain logic
+            $response = new Response();
+        } catch (\Exception $e) {
+            $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
         $response->headers->set('Content-Type', 'application/json');
         return $response;

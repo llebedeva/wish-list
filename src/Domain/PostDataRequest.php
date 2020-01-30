@@ -12,7 +12,7 @@ class PostDataRequest
     private $link;
     private $description;
 
-    public function __construct(string $wish, string $link, string $description)
+    public function __construct($wish, $link, $description)
     {
         $this->wish = $wish;
         $this->link = $link;

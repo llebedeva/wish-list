@@ -57,7 +57,7 @@ class PostDataRequestTest extends TestCase
      */
     public function testThrowsExceptionIfInvalidTypeArguments($wish, $link, $description)
     {
-        $this->expectException(\TypeError::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $request = new PostDataRequest($wish, $link, $description);
         $request->validate();
