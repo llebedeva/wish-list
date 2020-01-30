@@ -46,7 +46,6 @@ class PostDataRequestTest extends TestCase
         return [
             ['', self::VALID_LINK, self::VALID_DESCRIPTION],
             [self::TOO_LONG_WISH, self::VALID_LINK, self::VALID_DESCRIPTION],
-            [self::VALID_WISH, '', self::VALID_DESCRIPTION],
             [self::VALID_WISH, self::TOO_LONG_LINK, self::VALID_DESCRIPTION],
             [self::VALID_WISH, self::VALID_LINK, self::TOO_LONG_DESCRIPTION]
         ];

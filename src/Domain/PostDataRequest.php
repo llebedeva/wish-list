@@ -41,11 +41,9 @@ class PostDataRequest
         Assert::maxLength($this->wish, 100);
 
         Assert::string($this->link);
-        Assert::stringNotEmpty($this->link);
         Assert::maxLength($this->link, 2048);
 
         Assert::string($this->description);
-        Assert::stringNotEmpty($this->description);
         Assert::maxLength($this->description, 2000);
     }
 }
