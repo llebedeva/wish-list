@@ -13,6 +13,6 @@ $controller = new Controller();
 if ($request->isMethod('GET')) {
     $response = $controller->indexAction();
 } else {
-    $response = $controller->createWishAction($request);
+    $response = $controller->addWishAction($request);
 }
 $response->send();

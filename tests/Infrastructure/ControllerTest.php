@@ -21,25 +21,25 @@ class ControllerTest extends TestCase
         $this->assertNotEmpty($response->getContent());
     }
 
-    public function testCreateWish_success()
+    public function testAddWish_success()
     {
         $request = new Request([], ['wish' => 'Wish', 'link' => 'Link', 'description' => 'Description']);
         $controller = new Controller();
 
         /** @var Response $response */
-        $response = $controller->createWishAction($request);
+        $response = $controller->addWishAction($request);
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
     }
 
-    public function testCreateWish_error()
+    public function testAddWish_error()
     {
         $request = new Request();
         $controller = new Controller();
 
         /** @var Response $response */
-        $response = $controller->createWishAction($request);
+        $response = $controller->addWishAction($request);
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());

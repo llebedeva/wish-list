@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Infrastructure;
 
 use App\Domain\PostDataRequest;
+use App\Domain\Wish;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,14 +16,14 @@ class Controller
         return $response;
     }
 
-    public function createWishAction(Request $request)
+    public function addWishAction(Request $request)
     {
         $wish = $request->request->get('wish');
         $link = $request->request->get('link');
         $description = $request->request->get('description');
         try {
-            new PostDataRequest($wish, $link, $description);
-            // domain logic
+            $wish = new Wish($wish, $link, $description);
+
             $response = new Response();
         } catch (\Exception $e) {
             $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);
