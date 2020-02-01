@@ -5,5 +5,9 @@ use PHPUnit\Framework\TestCase;
 
 class WishTest extends TestCase
 {
+    public function testAddWish()
+    {
+        $this->markTestSkipped();
+    }
 
 }
