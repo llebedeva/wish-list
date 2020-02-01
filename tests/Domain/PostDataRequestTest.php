@@ -45,26 +45,11 @@ class PostDataRequestTest extends TestCase
     {
         return [
             ['', self::VALID_LINK, self::VALID_DESCRIPTION],
+
             [self::TOO_LONG_WISH, self::VALID_LINK, self::VALID_DESCRIPTION],
             [self::VALID_WISH, self::TOO_LONG_LINK, self::VALID_DESCRIPTION],
-            [self::VALID_WISH, self::VALID_LINK, self::TOO_LONG_DESCRIPTION]
-        ];
-    }
+            [self::VALID_WISH, self::VALID_LINK, self::TOO_LONG_DESCRIPTION],
 
-    /**
-     * @dataProvider providerInvalidTypeArguments
-     */
-    public function testThrowsExceptionIfInvalidTypeArguments($wish, $link, $description)
-    {
-        $this->expectException(\InvalidArgumentException::class);
-
-        $request = new PostDataRequest($wish, $link, $description);
-        $request->validate();
-    }
-
-    public function providerInvalidTypeArguments()
-    {
-        return [
             [null, self::VALID_LINK, self::VALID_DESCRIPTION],
             [self::VALID_WISH, null, self::VALID_DESCRIPTION],
             [self::VALID_WISH, self::VALID_LINK, null]
