@@ -14,6 +14,15 @@ class PostDataRequest
 
     public function __construct($wish, $link, $description)
     {
+        Assert::string($wish);
+        Assert::stringNotEmpty($wish);
+        Assert::maxLength($wish, 100);
+
+        Assert::string($link);
+        Assert::maxLength($link, 2048);
+
+        Assert::string($description);
+        Assert::maxLength($description, 2000);
         $this->wish = $wish;
         $this->link = $link;
         $this->description = $description;
@@ -32,18 +41,5 @@ class PostDataRequest
     public function description() : string
     {
         return $this->description;
-    }
-
-    public function validate() : void
-    {
-        Assert::string($this->wish);
-        Assert::stringNotEmpty($this->wish);
-        Assert::maxLength($this->wish, 100);
-
-        Assert::string($this->link);
-        Assert::maxLength($this->link, 2048);
-
-        Assert::string($this->description);
-        Assert::maxLength($this->description, 2000);
     }
 }

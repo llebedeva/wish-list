@@ -37,8 +37,7 @@ class PostDataRequestTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $request = new PostDataRequest($wish, $link, $description);
-        $request->validate();
+        new PostDataRequest($wish, $link, $description);
     }
 
     public function providerInvalidArguments()

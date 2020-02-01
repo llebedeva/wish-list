@@ -21,9 +21,8 @@ class Controller
         $wish = $request->request->get('wish');
         $link = $request->request->get('link');
         $description = $request->request->get('description');
-        $request = new PostDataRequest($wish, $link, $description);
         try {
-            $request->validate();
+            new PostDataRequest($wish, $link, $description);
             // domain logic
             $response = new Response();
         } catch (\Exception $e) {
