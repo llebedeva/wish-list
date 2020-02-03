@@ -1,7 +1,6 @@
 <?php
 namespace App\Domain;
 
-use App\Domain\PostDataRequest;
 use App\Storage\Storage;
 
 class Wish
@@ -22,6 +21,7 @@ class Wish
     public function saveToStorage()
     {
         $storage = new Storage();
-        $storage->insert($this->wish, $this->link, $this->description);
+        $sql = "INSERT INTO wishes (wish, link, description) VALUES ('" . $this->wish . "', '" . $this->link . "', '" . $this->description . "');";
+        $storage->insert($sql);
     }
 }

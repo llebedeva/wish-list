@@ -1,7 +1,6 @@
 <?php
 namespace App\Infrastructure;
 
-use App\Domain\PostDataRequest;
 use App\Domain\Wish;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

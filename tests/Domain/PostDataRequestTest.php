@@ -1,11 +1,8 @@
 <?php
-
-
 namespace App\Tests\Domain;
 
 use App\Domain\PostDataRequest;
 use PHPUnit\Framework\TestCase;
-
 
 class PostDataRequestTest extends TestCase
 {

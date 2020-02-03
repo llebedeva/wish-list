@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Tests\Infrastructure;
 
 use App\Infrastructure\Config;
