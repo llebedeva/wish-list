@@ -2,6 +2,7 @@
 namespace App\Domain;
 
 use App\Domain\PostDataRequest;
+use App\Storage\Storage;
 
 class Wish
 {
@@ -15,5 +16,12 @@ class Wish
         $this->wish = $wish;
         $this->link = $link;
         $this->description = $description;
+        $this->saveToStorage();
+    }
+
+    public function saveToStorage()
+    {
+        $storage = new Storage();
+        $storage->insert($this->wish, $this->link, $this->description);
     }
 }
