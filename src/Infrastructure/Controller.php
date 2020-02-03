@@ -18,12 +18,12 @@ class Controller
 
     public function addWishAction(Request $request)
     {
-        $wish = $request->request->get('wish');
-        $link = $request->request->get('link');
-        $description = $request->request->get('description');
         try {
-            $wish = new Wish($wish, $link, $description);
-
+            $wish = new Wish(
+                $request->request->get('wish'),
+                $request->request->get('link'),
+                $request->request->get('description')
+            );
             $response = new Response();
         } catch (\Exception $e) {
             $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);

@@ -12,20 +12,20 @@ class PostDataRequest
         $this->validateDescription($description);
     }
 
-    public function validateWish($wish)
+    private function validateWish($wish)
     {
         Assert::string($wish);
         Assert::stringNotEmpty($wish);
         Assert::maxLength($wish, 100);
     }
 
-    public function validateLink($link)
+    private function validateLink($link)
     {
         Assert::string($link);
         Assert::maxLength($link, 2048);
     }
 
-    public function validateDescription($description)
+    private function validateDescription($description)
     {
         Assert::string($description);
         Assert::maxLength($description, 2000);
