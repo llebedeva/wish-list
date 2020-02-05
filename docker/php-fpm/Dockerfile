@@ -13,3 +13,5 @@ RUN set -xe && \
     pecl install xdebug && \
     docker-php-ext-enable xdebug && \
     apk del -f .build-deps
+
+WORKDIR /app
