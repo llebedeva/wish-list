@@ -1,12 +1,12 @@
 <?php
 namespace App\Tests\Infrastructure;
 
+use App\Tests\SetUpTestCase;
 use App\Infrastructure\Controller;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ControllerTest extends TestCase
+class ControllerTest extends SetUpTestCase
 {
     public function testIndex()
     {
