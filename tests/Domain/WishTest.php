@@ -1,6 +1,7 @@
 <?php
 namespace App\Tests\Domain;
 
+use App\Infrastructure\Config;
 use App\Domain\Wish;
 use App\Tests\SetUpTestCase;
 
@@ -12,11 +13,11 @@ class WishTest extends SetUpTestCase
 
     public function testAddWishIfValidArguments()
     {
-        $wish = self::VALID_WISH;
-        $link = self::VALID_LINK;
-        $description = self::VALID_DESCRIPTION;
-
-        $obj = new Wish($wish, $link, $description);
+        $obj = new Wish(
+            self::VALID_WISH,
+            self::VALID_LINK,
+            self::VALID_DESCRIPTION
+        );
 
         $this->assertInstanceOf(Wish::class, $obj);
     }
@@ -30,6 +31,13 @@ class WishTest extends SetUpTestCase
 
     public function testThrowsExceptionIfConnectionWasFailed()
     {
-        $this->markTestSkipped();
+        $this->setEnvVariable(Config::MYSQL_ROOT_PASSWORD, self::ROOT_PASSWORD_VALUE . "1");
+        $this->expectException(\PDOException::class);
+
+        new Wish(
+            self::VALID_WISH,
+            self::VALID_LINK,
+            self::VALID_DESCRIPTION
+        );
     }
 }
