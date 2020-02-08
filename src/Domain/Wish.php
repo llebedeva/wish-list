@@ -11,11 +11,14 @@ class Wish
 
     public function __construct($wish, $link, $description)
     {
-        new PostDataRequest($wish, $link, $description);
         $this->wish = $wish;
         $this->link = $link;
         $this->description = $description;
-        $this->saveToStorage();
+    }
+
+    public function validate()
+    {
+        new PostDataRequest($this->wish, $this->link, $this->description);
     }
 
     public function saveToStorage()

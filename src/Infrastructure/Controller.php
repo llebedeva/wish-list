@@ -23,6 +23,8 @@ class Controller
                 $request->request->get('link'),
                 $request->request->get('description')
             );
+            $wish->validate();
+            $wish->saveToStorage();
             $response = new Response();
         } catch (\Exception $e) {
             $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);

@@ -26,7 +26,9 @@ class WishTest extends SetUpTestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        new Wish('', '', '');
+        $obj = new Wish('', '', '');
+        $obj->validate();
+
     }
 
     public function testThrowsExceptionIfConnectionWasFailed()
@@ -34,10 +36,11 @@ class WishTest extends SetUpTestCase
         $this->setEnvVariable(Config::MYSQL_ROOT_PASSWORD, self::ROOT_PASSWORD_VALUE . "1");
         $this->expectException(\PDOException::class);
 
-        new Wish(
+        $obj = new Wish(
             self::VALID_WISH,
             self::VALID_LINK,
             self::VALID_DESCRIPTION
         );
+        $obj->saveToStorage();
     }
 }
