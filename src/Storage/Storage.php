@@ -21,8 +21,13 @@ class Storage
         $this->dbh = new \PDO('mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database . ';charset=' . $charset, $user, $password);
     }
 
-    public function insert(string $sql)
+    public function execute(string $sql)
     {
         $this->dbh->exec($sql);
+    }
+
+    public function query(string $sql) : \PDOStatement
+    {
+        return $this->dbh->query($sql);
     }
 }

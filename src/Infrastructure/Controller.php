@@ -11,6 +11,35 @@ class Controller
     {
         $response = new Response(
             (string)file_get_contents(PROJECT_ROOT . "/src/index.html"));
+        // Wish table
+        $table = Wish::getTable();
+        if (count($table) > 0) {
+            ?>
+            <h2>Список желаний:</h2>
+            <table border="1">
+                <thead>
+                <tr>
+                    <td>Желание</td>
+                    <td>Ссылка</td>
+                    <td>Дополнительная информация</td>
+                </tr>
+                </thead>
+                <tbody>
+            <?php
+            foreach ($table as $wish) {
+                ?>
+                <tr>
+                    <td><?=$wish->getWish();?></td>
+                    <td><a href="<?=$wish->getLink();?>"><?=$wish->getLink();?></a></td>
+                    <td><?=$wish->getDescription();?></td>
+                </tr>
+                <?php
+            }
+        }
+        ?>
+            </tbody>
+        </table>
+        <?php
         $response->headers->set('Content-Type', 'text/html');
         return $response;
     }

@@ -16,6 +16,21 @@ class Wish
         $this->description = $description;
     }
 
+    public function getWish()
+    {
+        return $this->wish;
+    }
+
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
     public function validate()
     {
         new PostDataRequest($this->wish, $this->link, $this->description);
@@ -25,6 +40,19 @@ class Wish
     {
         $storage = new Storage();
         $sql = "INSERT INTO wishes (wish, link, description) VALUES ('" . $this->wish . "', '" . $this->link . "', '" . $this->description . "');";
-        $storage->insert($sql);
+        $storage->execute($sql);
+    }
+
+    public static function getTable() : array
+    {
+        $storage = new Storage();
+        $sql = 'SELECT * FROM wishes';
+        $stmt = $storage->query($sql);
+        $list = [];
+        while ($row = $stmt->fetch())
+        {
+            $list[] = new Wish($row['wish'], $row['link'], $row['description']);
+        }
+        return $list;
     }
 }
