@@ -2,6 +2,7 @@
 namespace App\Infrastructure;
 
 use App\Domain\Wish;
+use App\Storage\Storage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -12,8 +13,9 @@ class Controller
         $s = $this->render_php(PROJECT_ROOT . "/src/wishlist.php");
         $response = new Response($s);
         // Wish table
-        $table = Wish::getTable();
-        if (count($table) > 0):
+        $storage = new Storage();
+        $stmt = $storage->getWishTable();
+        if ($stmt->rowCount() > 0):
             ?>
             <h2>Список желаний:</h2>
             <table border="1">
@@ -25,13 +27,13 @@ class Controller
                 </tr>
                 </thead>
                 <tbody>
-            <?php foreach ($table as $wish): ?>
+            <?php while ($row = $stmt->fetch()): ?>
                 <tr>
-                    <td><?=$wish->getWish();?></td>
-                    <td><a href="<?=$wish->getLink();?>"><?=$wish->getLink();?></a></td>
-                    <td><?=$wish->getDescription();?></td>
+                    <td><?=$row['wish'];?></td>
+                    <td><a href="<?=$row['link'];?>"><?=$row['link'];?></a></td>
+                    <td><?=$row['description'];?></td>
                 </tr>
-                <?php endforeach; ?>
+                <?php endwhile; ?>
                     </tbody>
             </table>
             <?php

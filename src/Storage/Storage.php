@@ -26,8 +26,10 @@ class Storage
         $this->dbh->exec($sql);
     }
 
-    public function query(string $sql) : \PDOStatement
+    public function getWishTable() : \PDOStatement
     {
-        return $this->dbh->query($sql);
+        $sql = 'SELECT * FROM wishes';
+        $stmt = $this->dbh->query($sql);
+        return $stmt;
     }
 }
