@@ -30,6 +30,7 @@ class Controller
             $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
         $response->headers->set('Content-Type', 'application/json');
+        echo "<meta http-equiv='refresh' content='0'>";
         return $response;
     }
 
