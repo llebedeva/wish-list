@@ -9,11 +9,11 @@ class Controller
 {
     public function indexAction()
     {
-        $response = new Response(
-            (string)file_get_contents(PROJECT_ROOT . "/src/index.html"));
+        $s = $this->render_php(PROJECT_ROOT . "/src/wishlist.php");
+        $response = new Response($s);
         // Wish table
         $table = Wish::getTable();
-        if (count($table) > 0) {
+        if (count($table) > 0):
             ?>
             <h2>Список желаний:</h2>
             <table border="1">
@@ -25,21 +25,17 @@ class Controller
                 </tr>
                 </thead>
                 <tbody>
-            <?php
-            foreach ($table as $wish) {
-                ?>
+            <?php foreach ($table as $wish): ?>
                 <tr>
                     <td><?=$wish->getWish();?></td>
                     <td><a href="<?=$wish->getLink();?>"><?=$wish->getLink();?></a></td>
                     <td><?=$wish->getDescription();?></td>
                 </tr>
-                <?php
-            }
-        }
-        ?>
-            </tbody>
-        </table>
-        <?php
+                <?php endforeach; ?>
+                    </tbody>
+            </table>
+            <?php
+            endif;
         $response->headers->set('Content-Type', 'text/html');
         return $response;
     }
@@ -60,5 +56,14 @@ class Controller
         }
         $response->headers->set('Content-Type', 'application/json');
         return $response;
+    }
+
+    private function render_php($path)
+    {
+        ob_start();
+        include($path);
+        $var = ob_get_contents();
+        ob_end_clean();
+        return $var;
     }
 }
