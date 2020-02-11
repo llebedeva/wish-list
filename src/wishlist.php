@@ -24,5 +24,34 @@
         <br>
         <input type="submit" value="Создать">
     </form>
+    <?php
+    // Wish table
+    use App\Storage\Storage;
+    $storage = new Storage();
+    $stmt = $storage->getWishTable();
+    if ($stmt->rowCount() > 0):
+        ?>
+        <h2>Список желаний:</h2>
+        <table border="1">
+            <thead>
+            <tr>
+                <td>Желание</td>
+                <td>Ссылка</td>
+                <td>Дополнительная информация</td>
+            </tr>
+            </thead>
+            <tbody>
+            <?php while ($row = $stmt->fetch()): ?>
+                <tr>
+                    <td><?=$row['wish'];?></td>
+                    <td><a href="<?=$row['link'];?>"><?=$row['link'];?></a></td>
+                    <td><?=$row['description'];?></td>
+                </tr>
+            <?php endwhile; ?>
+            </tbody>
+        </table>
+    <?php
+    endif;
+    ?>
 </body>
 </html>
