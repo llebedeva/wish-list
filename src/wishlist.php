@@ -1,43 +1,45 @@
+<?php
+/** @var array $variables */
+/** @var PDOStatement $stmt */
+$stmt = $variables['stmt'];
+?>
+
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>Создаем свой Wishlist</title>
 </head>
 <body>
     <form action="/" method="POST">
-        <h1>Добро пожаловать в ваш личный Wishlist!</h1>
-        <p>Здесь вы можете создать свой собственный список желаний. Это поможет вам лучше разобраться в себе и понять
-            чего вы действительно хотите. Также вы сможете поделиться списком с друзьями, если захотите.</p>
-        <p>Для начала заполните форму ниже чтобы создать ваше первое желание:</p>
-        <label for="wish">Желание:</label>
+        <h1>Welcome to the Wishlist!</h1>
+        <?php if ($stmt->rowCount() === 0): ?>
+            <p>You don't have any wishes yet. Please, create your first wish.</p>
+        <?php endif; ?>
+        <label for="wish">Wish:</label>
         <br>
         <input type="text" id="wish" name="wish" required>
         <br>
-        <label for="link">Ссылка на продукт или услугу:</label>
+        <label for="link">Reference:</label>
         <br>
         <input type="text" id="link" name="link">
         <br>
-        <label for="description">Дополнительная информация:</label>
+        <label for="description">Additional information:</label>
         <br>
         <textarea id="description" name="description" rows="3" cols="40"></textarea>
         <br>
-        <input type="submit" value="Создать">
+        <input type="submit" value="Create">
     </form>
     <?php
-    // Wish table
-    use App\Storage\Storage;
-    $storage = new Storage();
-    $stmt = $storage->getWishTable();
     if ($stmt->rowCount() > 0):
         ?>
-        <h2>Список желаний:</h2>
+        <h2>Wish list:</h2>
         <table border="1">
             <thead>
             <tr>
-                <td>Желание</td>
-                <td>Ссылка</td>
-                <td>Дополнительная информация</td>
+                <td>Wish</td>
+                <td>Reference</td>
+                <td>Additional information</td>
             </tr>
             </thead>
             <tbody>

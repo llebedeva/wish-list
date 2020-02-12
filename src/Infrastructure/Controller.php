@@ -2,6 +2,7 @@
 namespace App\Infrastructure;
 
 use App\Domain\Wish;
+use App\Storage\Storage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -9,7 +10,10 @@ class Controller
 {
     public function indexAction()
     {
-        $s = $this->render_php(PROJECT_ROOT . "/src/wishlist.php");
+        $storage = new Storage();
+        $stmt = $storage->getWishTable();
+
+        $s = $this->render_php(PROJECT_ROOT . "/src/wishlist.php", ["stmt"=>$stmt]);
         $response = new Response($s);
         $response->headers->set('Content-Type', 'text/html');
         return $response;
@@ -25,16 +29,16 @@ class Controller
             );
             $wish->validate();
             $wish->saveToStorage();
-            $response = new Response();
+            $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
         } catch (\Exception $e) {
             $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
         $response->headers->set('Content-Type', 'application/json');
-        echo "<meta http-equiv='refresh' content='0'>";
+        $response->headers->set('Location', '/');
         return $response;
     }
 
-    private function render_php($path)
+    private function render_php($path, array $variables)
     {
         ob_start();
         include($path);
