@@ -33,7 +33,44 @@ class Controller
         } catch (\Exception $e) {
             $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
-        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Location', '/');
+        return $response;
+    }
+
+    public function updateWishAction(Request $request)
+    {
+        try {
+            $wish = new Wish(
+                $request->request->get('wish'),
+                $request->request->get('link'),
+                $request->request->get('description'),
+                $request->request->get('hidden')
+            );
+            $wish->validate();
+            $wish->updateInStorage();
+            $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
+        } catch (\Exception $e) {
+            $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+        $response->headers->set('Location', '/');
+        return $response;
+    }
+
+    public function deleteWishAction(Request $request)
+    {
+        try {
+            $wish = new Wish(
+                $request->request->get('wish'),
+                $request->request->get('link'),
+                $request->request->get('description'),
+                $request->request->get('hidden')
+            );
+            $wish->isIdNotNull();
+            $wish->deleteFromStorage();
+            $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
+        } catch (\Exception $e) {
+            $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
         $response->headers->set('Location', '/');
         return $response;
     }

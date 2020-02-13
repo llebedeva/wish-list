@@ -28,7 +28,7 @@ $stmt = $variables['stmt'];
         <br>
         <textarea id="description" name="description" rows="3" cols="40"></textarea>
         <br>
-        <input type="submit" value="Create">
+        <input type="submit" name="add" value="Create">
     </form>
     <?php
     if ($stmt->rowCount() > 0):
@@ -44,11 +44,16 @@ $stmt = $variables['stmt'];
             </thead>
             <tbody>
             <?php while ($row = $stmt->fetch()): ?>
-                <tr>
-                    <td><?=$row['wish'];?></td>
-                    <td><a href="<?=$row['link'];?>"><?=$row['link'];?></a></td>
-                    <td><?=$row['description'];?></td>
-                </tr>
+                <form action="/" method="POST">
+                    <tr>
+                        <td><input type="text" name="wish" value="<?=$row['wish'];?>"></td>
+                        <td><input type="text" name="link" value="<?=$row['link'];?>"></td>
+                        <td><input type="text" name="description" value="<?=$row['description'];?>"></td>
+                        <td><input type="hidden" name="hidden" value="<?=$row['id'];?>"></td>
+                        <td><input type="submit" name="update" value="Update"></td>
+                        <td><input type="submit" name="delete" value="Delete"></td>
+                    </tr>
+                </form>
             <?php endwhile; ?>
             </tbody>
         </table>

@@ -43,4 +43,52 @@ class ControllerTest extends SetUpTestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
     }
+
+    public function testUpdateWish_success()
+    {
+        $request = new Request([], ['wish' => 'Wish', 'link' => 'Link', 'description' => 'Description', 'id' => 'id']);
+        $controller = new Controller();
+
+        /** @var Response $response */
+        $response = $controller->updateWishAction($request);
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(Response::HTTP_MOVED_PERMANENTLY, $response->getStatusCode());
+    }
+
+    public function testUpdateWish_error()
+    {
+        $request = new Request();
+        $controller = new Controller();
+
+        /** @var Response $response */
+        $response = $controller->updateWishAction($request);
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
+    }
+
+    public function testDeleteWish_success()
+    {
+        $request = new Request([], ['wish' => '', 'link' => '', 'description' => '', 'hidden' => 45]);
+        $controller = new Controller();
+
+        /** @var Response $response */
+        $response = $controller->deleteWishAction($request);
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(Response::HTTP_MOVED_PERMANENTLY, $response->getStatusCode());
+    }
+
+    public function testDeleteWish_error()
+    {
+        $request = new Request();
+        $controller = new Controller();
+
+        /** @var Response $response */
+        $response = $controller->deleteWishAction($request);
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
+    }
 }
