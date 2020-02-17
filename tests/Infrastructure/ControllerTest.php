@@ -71,7 +71,7 @@ class ControllerTest extends SetUpTestCase
 
     public function testDeleteWish_success()
     {
-        $request = new Request([], ['wish' => '', 'link' => '', 'description' => '', 'id' => 45]);
+        $request = new Request([], ['wish' => '', 'link' => '', 'description' => '', 'id' => '15']);
         $controller = new Controller();
 
         /** @var Response $response */
