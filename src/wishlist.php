@@ -50,7 +50,7 @@ $id = $variables['id'];
                         <td><input type="text" name="wish" value="<?=$row['wish'];?>"></td>
                         <td><input type="text" name="link" value="<?=$row['link'];?>"></td>
                         <td><input type="text" name="description" value="<?=$row['description'];?>"></td>
-                        <td><input type="hidden" name="hidden" value="<?=$row['id'];?>"></td>
+                        <td><input type="hidden" name="id" value="<?=$row['id'];?>"></td>
                         <td><input type="submit" name="update" value="Save"></td>
                         <td><input type="submit" name="cancel" value="Cancel"></td>
                     </tr>
@@ -59,7 +59,7 @@ $id = $variables['id'];
                         <td><?=$row['wish'];?></td>
                         <td><a href="<?=$row['link'];?>"><?=$row['link'];?></td>
                         <td><?=$row['description'];?></td>
-                        <td><input type="hidden" name="hidden" value="<?=$row['id'];?>"></td>
+                        <td><input type="hidden" name="id" value="<?=$row['id'];?>"></td>
                         <td><input type="submit" name="edit" value="Edit"></td>
                         <td><input type="submit" name="delete" value="Delete"></td>
                     </tr>

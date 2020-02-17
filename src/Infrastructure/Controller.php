@@ -18,7 +18,7 @@ class Controller
 
         $s = $this->render_php(PROJECT_ROOT . "/src/wishlist.php", [
             "stmt" => $stmt,
-            "id" => (isset($request->request->all()['edit'])) ? $request->request->get('hidden') : null
+            "id" => (isset($request->request->all()['edit'])) ? $request->request->get('id') : null
         ]);
 
         $response = new Response($s);
@@ -55,13 +55,13 @@ class Controller
                 $request->request->get('wish'),
                 $request->request->get('link'),
                 $request->request->get('description'),
-                $request->request->get('hidden')
+                $request->request->get('id')
             );
             $wish = new Wish(
                 $request->request->get('wish'),
                 $request->request->get('link'),
                 $request->request->get('description'),
-                $request->request->get('hidden')
+                $request->request->get('id')
             );
             $wish->updateInStorage();
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
@@ -75,12 +75,12 @@ class Controller
     public function deleteWishAction(Request $request)
     {
         try {
-            new DeleteWishRequest($request->request->get('hidden'));
+            new DeleteWishRequest($request->request->get('id'));
             $wish = new Wish(
                 $request->request->get('wish'),
                 $request->request->get('link'),
                 $request->request->get('description'),
-                $request->request->get('hidden')
+                $request->request->get('id')
             );
             $wish->deleteFromStorage();
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
