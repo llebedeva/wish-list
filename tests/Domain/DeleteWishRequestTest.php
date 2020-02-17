@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class DeleteWishRequestTest extends TestCase
 {
-    private const VALID_ID = 15;
+    private const VALID_ID = '15';
 
     public function testSuccessIfVaidAgruments()
     {

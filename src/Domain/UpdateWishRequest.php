@@ -13,6 +13,7 @@ class UpdateWishRequest extends CreateWishRequest
 
     private function validateId($id)
     {
-        Assert::integer($id);
+        Assert::string($id);
+        Assert::stringNotEmpty($id);
     }
 }
