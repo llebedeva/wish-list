@@ -10,11 +10,11 @@ $id = $variables['id'];
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Создаем свой Wishlist</title>
+    <title>Wishlist</title>
 </head>
 <body>
     <form action="/" method="POST">
-        <h1>Welcome to the Wishlist!</h1>
+        <h2>I wish...</h2>
         <?php if ($stmt->rowCount() === 0): ?>
             <p>You don't have any wishes yet. Please, create your first wish.</p>
         <?php endif; ?>
