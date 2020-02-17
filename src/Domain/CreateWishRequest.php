@@ -3,7 +3,7 @@ namespace App\Domain;
 
 use Webmozart\Assert\Assert;
 
-class PostDataRequest
+class CreateWishRequest
 {
     public function __construct($wish, $link, $description)
     {
@@ -12,20 +12,20 @@ class PostDataRequest
         $this->validateDescription($description);
     }
 
-    private function validateWish($wish)
+    protected function validateWish($wish)
     {
         Assert::string($wish);
         Assert::stringNotEmpty($wish);
         Assert::maxLength($wish, 100);
     }
 
-    private function validateLink($link)
+    protected function validateLink($link)
     {
         Assert::string($link);
         Assert::maxLength($link, 2048);
     }
 
-    private function validateDescription($description)
+    protected function validateDescription($description)
     {
         Assert::string($description);
         Assert::maxLength($description, 2000);

@@ -1,6 +1,9 @@
 <?php
 namespace App\Infrastructure;
 
+use App\Domain\CreateWishRequest;
+use App\Domain\DeleteWishRequest;
+use App\Domain\UpdateWishRequest;
 use App\Domain\Wish;
 use App\Storage\Storage;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,12 +29,16 @@ class Controller
     public function addWishAction(Request $request)
     {
         try {
+            new CreateWishRequest(
+                $request->request->get('wish'),
+                $request->request->get('link'),
+                $request->request->get('description')
+            );
             $wish = new Wish(
                 $request->request->get('wish'),
                 $request->request->get('link'),
                 $request->request->get('description')
             );
-            $wish->validate();
             $wish->saveToStorage();
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
         } catch (\Exception $e) {
@@ -44,13 +51,18 @@ class Controller
     public function updateWishAction(Request $request)
     {
         try {
+            new UpdateWishRequest(
+                $request->request->get('wish'),
+                $request->request->get('link'),
+                $request->request->get('description'),
+                $request->request->get('hidden')
+            );
             $wish = new Wish(
                 $request->request->get('wish'),
                 $request->request->get('link'),
                 $request->request->get('description'),
                 $request->request->get('hidden')
             );
-            $wish->validate();
             $wish->updateInStorage();
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
         } catch (\Exception $e) {
@@ -63,13 +75,13 @@ class Controller
     public function deleteWishAction(Request $request)
     {
         try {
+            new DeleteWishRequest($request->request->get('hidden'));
             $wish = new Wish(
                 $request->request->get('wish'),
                 $request->request->get('link'),
                 $request->request->get('description'),
                 $request->request->get('hidden')
             );
-            $wish->isIdNotNull();
             $wish->deleteFromStorage();
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
         } catch (\Exception $e) {

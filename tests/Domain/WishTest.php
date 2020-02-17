@@ -22,15 +22,6 @@ class WishTest extends SetUpTestCase
         $this->assertInstanceOf(Wish::class, $obj);
     }
 
-    public function testThrowsExceptionIfInvalidArguments()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-
-        $obj = new Wish('', '', '');
-        $obj->validate();
-
-    }
-
     public function testThrowsExceptionIfConnectionWasFailed()
     {
         $this->setEnvVariable(Config::MYSQL_ROOT_PASSWORD, self::ROOT_PASSWORD_VALUE . "1");

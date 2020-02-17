@@ -2,7 +2,6 @@
 namespace App\Domain;
 
 use App\Storage\Storage;
-use Webmozart\Assert\Assert;
 
 class Wish
 {
@@ -19,14 +18,19 @@ class Wish
         $this->id = $id;
     }
 
-    public function validate()
+    public function wish() : string
     {
-        new PostDataRequest($this->wish, $this->link, $this->description);
+        return $this->wish;
     }
 
-    public function isIdNotNull()
+    public function link() : string
     {
-        Assert::notNull($this->id);
+        return $this->link;
+    }
+
+    public function description() : string
+    {
+        return $this->description;
     }
 
     public function saveToStorage()

@@ -1,10 +1,10 @@
 <?php
 namespace App\Tests\Domain;
 
-use App\Domain\PostDataRequest;
+use App\Domain\CreateWishRequest;
 use PHPUnit\Framework\TestCase;
 
-class PostDataRequestTest extends TestCase
+class CreateWishRequestTest extends TestCase
 {
     private const VALID_WISH = 'I wish something';
     private const VALID_LINK = 'https://ru.wikipedia.org/wiki/URL';
@@ -20,9 +20,9 @@ class PostDataRequestTest extends TestCase
         $link = self::VALID_LINK;
         $description = self::VALID_DESCRIPTION;
 
-        $request = new PostDataRequest($wish, $link, $description);
+        $request = new CreateWishRequest($wish, $link, $description);
 
-        $this->assertInstanceOf(PostDataRequest::class, $request);
+        $this->assertInstanceOf(CreateWishRequest::class, $request);
     }
 
     /**
@@ -32,7 +32,7 @@ class PostDataRequestTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        new PostDataRequest($wish, $link, $description);
+        new CreateWishRequest($wish, $link, $description);
     }
 
     public function providerInvalidArguments()
