@@ -52,7 +52,7 @@ $id = $variables['id'];
                         <td><input type="text" name="description" value="<?=$row['description'];?>"></td>
                         <td><input type="hidden" name="hidden" value="<?=$row['id'];?>"></td>
                         <td><input type="submit" name="update" value="Save"></td>
-                        <td><input type="submit" name="delete" value="Delete"></td>
+                        <td><input type="submit" name="cancel" value="Cancel"></td>
                     </tr>
                 <?php else: ?>
                     <tr>
