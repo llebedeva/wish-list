@@ -1,7 +1,7 @@
 <?php
 /** @var array $variables */
 /** @var PDOStatement $stmt */
-/** @var string? $id */
+/** @var string|null $id */
 $stmt = $variables['stmt'];
 $id = $variables['id'];
 ?>

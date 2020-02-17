@@ -13,12 +13,10 @@ class Controller
         $storage = new Storage();
         $stmt = $storage->getWishTable();
 
-        $s = $this->render_php(
-            PROJECT_ROOT . "/src/wishlist.php",
-            [
-                "stmt" => $stmt,
-                "id" => (isset($_POST['edit'])) ? $request->request->get('hidden') : null
-            ]);
+        $s = $this->render_php(PROJECT_ROOT . "/src/wishlist.php", [
+            "stmt" => $stmt,
+            "id" => (isset($request->request->all()['edit'])) ? $request->request->get('hidden') : null
+        ]);
 
         $response = new Response($s);
         $response->headers->set('Content-Type', 'text/html');
