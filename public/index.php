@@ -16,9 +16,7 @@ if (isset($_POST['add'])) {
     $response = $controller->updateWishAction($request);
 } elseif (isset($_POST['delete'])) {
     $response = $controller->deleteWishAction($request);
-} elseif (isset($_POST['edit'])) {
-    $response = $controller->editWishAction($request);
 } else {
-    $response = $controller->indexAction();
+    $response = $controller->indexAction($request);
 }
 $response->send();

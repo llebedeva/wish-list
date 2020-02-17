@@ -32,9 +32,7 @@ $id = $variables['id'];
         <br>
         <input type="submit" name="add" value="Create">
     </form>
-    <?php
-    if ($stmt->rowCount() > 0):
-        ?>
+    <?php if ($stmt->rowCount() > 0): ?>
         <h2>Wish list:</h2>
         <table border="1">
             <thead>
@@ -70,8 +68,6 @@ $id = $variables['id'];
             <?php endwhile; ?>
             </tbody>
         </table>
-    <?php
-    endif;
-    ?>
+    <?php endif; ?>
 </body>
 </html>

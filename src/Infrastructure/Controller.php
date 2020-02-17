@@ -8,23 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Controller
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $storage = new Storage();
         $stmt = $storage->getWishTable();
 
-        $s = $this->render_php(PROJECT_ROOT . "/src/wishlist.php", ["stmt"=>$stmt, "id"=>null]);
-        $response = new Response($s);
-        $response->headers->set('Content-Type', 'text/html');
-        return $response;
-    }
-
-    public function editWishAction(Request $request)
-    {
-        $storage = new Storage();
-        $stmt = $storage->getWishTable();
-
-        $s = $this->render_php(PROJECT_ROOT . "/src/wishlist.php", ["stmt"=>$stmt, "id"=>$request->request->get('hidden'),]);
+        $s = $this->render_php(PROJECT_ROOT . "/src/wishlist.php", ["stmt"=>$stmt, "id"=>$request->request->get('hidden')]);
         $response = new Response($s);
         $response->headers->set('Content-Type', 'text/html');
         return $response;
