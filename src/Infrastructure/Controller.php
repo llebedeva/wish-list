@@ -4,7 +4,6 @@ namespace App\Infrastructure;
 use App\Domain\CreateWishRequest;
 use App\Domain\DeleteWishRequest;
 use App\Domain\UpdateWishRequest;
-use App\Domain\Wish;
 use App\Storage\Storage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,17 +28,15 @@ class Controller
     public function addWishAction(Request $request)
     {
         try {
-            new CreateWishRequest(
-                $request->request->get('wish'),
-                $request->request->get('link'),
-                $request->request->get('description')
-            );
-            $wish = new Wish(
-                $request->request->get('wish'),
-                $request->request->get('link'),
-                $request->request->get('description')
-            );
-            $wish->saveToStorage();
+            $wish = $request->request->get('wish');
+            $link = $request->request->get('link');
+            $description = $request->request->get('description');
+
+            new CreateWishRequest($wish, $link, $description);
+
+            $storage = new Storage();
+            $storage->createWish($wish, $link, $description);
+
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
         } catch (\Exception $e) {
             $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);
@@ -51,19 +48,16 @@ class Controller
     public function updateWishAction(Request $request)
     {
         try {
-            new UpdateWishRequest(
-                $request->request->get('wish'),
-                $request->request->get('link'),
-                $request->request->get('description'),
-                $request->request->get('id')
-            );
-            $wish = new Wish(
-                $request->request->get('wish'),
-                $request->request->get('link'),
-                $request->request->get('description')
-            );
-            $wish->setId($request->request->get('id'));
-            $wish->updateInStorage();
+            $wish = $request->request->get('wish');
+            $link = $request->request->get('link');
+            $description = $request->request->get('description');
+            $id = $request->request->get('id');
+
+            new UpdateWishRequest($wish, $link, $description, $id);
+
+            $storage = new Storage();
+            $storage->updateWish($wish, $link, $description, $id);
+
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
         } catch (\Exception $e) {
             $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);
@@ -75,14 +69,13 @@ class Controller
     public function deleteWishAction(Request $request)
     {
         try {
-            new DeleteWishRequest($request->request->get('id'));
-            $wish = new Wish(
-                $request->request->get('wish'),
-                $request->request->get('link'),
-                $request->request->get('description')
-            );
-            $wish->setId($request->request->get('id'));
-            $wish->deleteFromStorage();
+            $id = $request->request->get('id');
+
+            new DeleteWishRequest($id);
+
+            $storage = new Storage();
+            $storage->deleteWish($id);
+
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
         } catch (\Exception $e) {
             $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);
