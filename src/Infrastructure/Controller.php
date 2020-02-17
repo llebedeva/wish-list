@@ -60,9 +60,9 @@ class Controller
             $wish = new Wish(
                 $request->request->get('wish'),
                 $request->request->get('link'),
-                $request->request->get('description'),
-                $request->request->get('id')
+                $request->request->get('description')
             );
+            $wish->setId($request->request->get('id'));
             $wish->updateInStorage();
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
         } catch (\Exception $e) {
@@ -79,9 +79,9 @@ class Controller
             $wish = new Wish(
                 $request->request->get('wish'),
                 $request->request->get('link'),
-                $request->request->get('description'),
-                $request->request->get('id')
+                $request->request->get('description')
             );
+            $wish->setId($request->request->get('id'));
             $wish->deleteFromStorage();
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
         } catch (\Exception $e) {

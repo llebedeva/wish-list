@@ -10,11 +10,15 @@ class Wish
     private $link;
     private $description;
 
-    public function __construct($wish, $link, $description, $id=null)
+    public function __construct($wish, $link, $description)
     {
         $this->wish = $wish;
         $this->link = $link;
         $this->description = $description;
+    }
+
+    public function setId($id)
+    {
         $this->id = $id;
     }
 
@@ -31,6 +35,11 @@ class Wish
     public function description() : string
     {
         return $this->description;
+    }
+
+    public function id() : string
+    {
+        return $this->id;
     }
 
     public function saveToStorage()
