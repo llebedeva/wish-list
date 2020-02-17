@@ -1,7 +1,9 @@
 <?php
 /** @var array $variables */
 /** @var PDOStatement $stmt */
+/** @var string? $id */
 $stmt = $variables['stmt'];
+$id = $variables['id'];
 ?>
 
 <!DOCTYPE html>
@@ -45,14 +47,25 @@ $stmt = $variables['stmt'];
             <tbody>
             <?php while ($row = $stmt->fetch()): ?>
                 <form action="/" method="POST">
+                <?php if ($id===$row['id']):?>
                     <tr>
                         <td><input type="text" name="wish" value="<?=$row['wish'];?>"></td>
                         <td><input type="text" name="link" value="<?=$row['link'];?>"></td>
                         <td><input type="text" name="description" value="<?=$row['description'];?>"></td>
                         <td><input type="hidden" name="hidden" value="<?=$row['id'];?>"></td>
-                        <td><input type="submit" name="update" value="Update"></td>
+                        <td><input type="submit" name="update" value="Save"></td>
                         <td><input type="submit" name="delete" value="Delete"></td>
                     </tr>
+                <?php else: ?>
+                    <tr>
+                        <td><?=$row['wish'];?></td>
+                        <td><a href="<?=$row['link'];?>"><?=$row['link'];?></td>
+                        <td><?=$row['description'];?></td>
+                        <td><input type="hidden" name="hidden" value="<?=$row['id'];?>"></td>
+                        <td><input type="submit" name="edit" value="Edit"></td>
+                        <td><input type="submit" name="delete" value="Delete"></td>
+                    </tr>
+                <?php endif; ?>
                 </form>
             <?php endwhile; ?>
             </tbody>
