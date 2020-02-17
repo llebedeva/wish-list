@@ -17,21 +17,10 @@ class DeleteWishRequestTest extends TestCase
         $this->assertInstanceOf(DeleteWishRequest::class, $request);
     }
 
-    /**
-     * @dataProvider providerInvalidArguments
-     */
-    public function testThrowsExceptionIfInvalidArguments($id)
+    public function testThrowsExceptionIfInvalidArguments()
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        new DeleteWishRequest($id);
-    }
-
-    public function providerInvalidArguments()
-    {
-        return [
-            [null],
-            ['']
-        ];
+        new DeleteWishRequest(null);
     }
 }

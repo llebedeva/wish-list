@@ -49,9 +49,7 @@ class UpdateWishRequestTest extends TestCase
             [null, self::VALID_LINK, self::VALID_DESCRIPTION, self::VALID_ID],
             [self::VALID_WISH, null, self::VALID_DESCRIPTION, self::VALID_ID],
             [self::VALID_WISH, self::VALID_LINK, null, self::VALID_ID],
-
-            [self::VALID_WISH, self::VALID_LINK, self::VALID_DESCRIPTION, null],
-            [self::VALID_WISH, self::VALID_LINK, self::VALID_DESCRIPTION, '']
+            [self::VALID_WISH, self::VALID_LINK, self::VALID_DESCRIPTION, null]
         ];
     }
 }
