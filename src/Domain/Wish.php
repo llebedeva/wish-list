@@ -39,7 +39,7 @@ class Wish
     public function updateInStorage()
     {
         $storage = new Storage();
-        $sql = "UPDATE wishes SET wish='" . $this->wish . "', link='" . $this->link . "', description='" . $this->description . "' WHERE id='" . $this->id . "';";
+        $sql = "UPDATE wishes SET wish='" . $this->wish . "', link='" . $this->link . "', description='" . $this->description . "', modified_at=CURRENT_TIMESTAMP WHERE id='" . $this->id . "';";
         $storage->execute($sql);
     }
 

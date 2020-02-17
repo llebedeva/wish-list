@@ -5,5 +5,6 @@ CREATE TABLE wishes (
                                        wish TEXT,
                                        link TEXT,
                                        description TEXT,
-                                       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                                       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                       modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
