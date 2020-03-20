@@ -1,3 +1,7 @@
+table {
+    margin-top: 10px;
+}
+
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -17,6 +21,7 @@
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 700px;
 }
 
 .close {
@@ -33,6 +38,6 @@
     cursor: pointer;
 }
 
-#wishTable {
-    margin-top: 10px;
+.hide {
+    display: none;
 }
