@@ -10,11 +10,11 @@ use App\Infrastructure\Controller;
 $request = Request::createFromGlobals();
 $controller = new Controller();
 
-if (isset($_POST['add'])) {
+if ($request->request->get('add')) {
     $response = $controller->addWishAction($request);
-} elseif (isset($_POST['update'])) {
+} elseif ($request->request->get('update')) {
     $response = $controller->updateWishAction($request);
-} elseif (isset($_POST['delete'])) {
+} elseif ($request->request->get('delete')) {
     $response = $controller->deleteWishAction($request);
 } else {
     $response = $controller->indexAction($request);
