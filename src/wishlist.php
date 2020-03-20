@@ -87,8 +87,11 @@ $isEdit = false;
                 <textarea id="description" name="description" rows="3" cols="40"><?=$description?></textarea>
                 <br>
                 <input type="hidden" name="id" value="<?=$id?>">
-                <input type="submit" name="add" id="add" value="Create">
-                <input type="submit" name="update" id="update" value="Save">
+                <?php if ($isEdit): ?>
+                    <input type="submit" name="update" id="update" value="Save">
+                <?php else: ?>
+                    <input type="submit" name="add" id="add" value="Create">
+                <?php endif; ?>
             </form>
         </div>
     </div>

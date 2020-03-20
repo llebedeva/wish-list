@@ -39,5 +39,5 @@ table {
 }
 
 .show {
-    display: block;
+    display: block !important;
 }
