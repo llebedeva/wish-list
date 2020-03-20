@@ -10,31 +10,44 @@ $id = $variables['id'];
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Wishlist</title>
+    <link rel="stylesheet" type="text/css" href="wishlist.css">
+    <title>Wishes</title>
 </head>
 <body>
-    <form action="/" method="POST">
-        <h2>I wish...</h2>
-        <?php if ($stmt->rowCount() === 0): ?>
-            <p>You don't have any wishes yet. Please, create your first wish.</p>
-        <?php endif; ?>
-        <label for="wish">Wish:</label>
-        <br>
-        <input type="text" id="wish" name="wish" required>
-        <br>
-        <label for="link">Reference:</label>
-        <br>
-        <input type="text" id="link" name="link">
-        <br>
-        <label for="description">Additional information:</label>
-        <br>
-        <textarea id="description" name="description" rows="3" cols="40"></textarea>
-        <br>
-        <input type="submit" name="add" value="Create">
-    </form>
+    <h2>I wish...</h2>
+    <?php if ($stmt->rowCount() === 0): ?>
+        <p>You don't have any wishes yet. Please, create your first wish.</p>
+    <?php endif; ?>
+
+    <!--    Create button -->
+    <button id="createButton">New wish</button>
+
+    <!--    Modal form  -->
+    <div id="createModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form action="/" method="POST">
+                <label for="wish">Wish:</label>
+                <br>
+                <input type="text" id="wish" name="wish" required>
+                <br>
+                <label for="link">Reference:</label>
+                <br>
+                <input type="text" id="link" name="link">
+                <br>
+                <label for="description">Additional information:</label>
+                <br>
+                <textarea id="description" name="description" rows="3" cols="40"></textarea>
+                <br>
+                <input type="submit" name="add" value="Yes, I wish this">
+            </form>
+        </div>
+    </div>
+
+    <!--     Wish table -->
     <?php if ($stmt->rowCount() > 0): ?>
-        <h2>Wish list:</h2>
-        <table border="1">
+<!--        <h2>Wish list:</h2>-->
+        <table id="wishTable" border="1">
             <thead>
             <tr>
                 <td>Wish</td>
@@ -69,5 +82,6 @@ $id = $variables['id'];
             </tbody>
         </table>
     <?php endif; ?>
+    <script src="wishlist.js"></script>
 </body>
 </html>
