@@ -4,6 +4,10 @@
 /** @var string|null $id */
 $stmt = $variables['stmt'];
 $id = $variables['id'];
+$wish = null;
+$link = null;
+$description = null;
+$isEdit = false;
 ?>
 
 <!DOCTYPE html>
@@ -22,31 +26,8 @@ $id = $variables['id'];
     <!--    Create button -->
     <button id="createButton">New wish</button>
 
-    <!--    Modal form  -->
-    <div id="createModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <form action="/" method="POST">
-                <label for="wish">Wish:</label>
-                <br>
-                <input type="text" id="wish" name="wish" required>
-                <br>
-                <label for="link">Reference:</label>
-                <br>
-                <input type="text" id="link" name="link">
-                <br>
-                <label for="description">Additional information:</label>
-                <br>
-                <textarea id="description" name="description" rows="3" cols="40"></textarea>
-                <br>
-                <input type="submit" name="add" value="Yes, I wish this">
-            </form>
-        </div>
-    </div>
-
     <!--     Wish table -->
     <?php if ($stmt->rowCount() > 0): ?>
-<!--        <h2>Wish list:</h2>-->
         <table border="1">
             <thead>
             <tr>
@@ -57,31 +38,60 @@ $id = $variables['id'];
             </thead>
             <tbody>
             <?php while ($row = $stmt->fetch()): ?>
-                <form action="/" method="POST">
-                <?php if ($id===$row['id']):?>
-                    <tr>
-                        <td><input type="text" name="wish" value="<?=$row['wish'];?>"></td>
-                        <td><input type="text" name="link" value="<?=$row['link'];?>"></td>
-                        <td><input type="text" name="description" value="<?=$row['description'];?>"></td>
-                        <td class="hide"><input type="hidden" name="id" value="<?=$row['id'];?>"></td>
-                        <td><input type="submit" name="update" value="Save"></td>
-                        <td><input type="submit" name="cancel" value="Cancel"></td>
-                    </tr>
-                <?php else: ?>
-                    <tr>
-                        <td><?=$row['wish'];?></td>
-                        <td><a href="<?=$row['link'];?>"><?=$row['link'];?></td>
-                        <td><?=$row['description'];?></td>
-                        <td class="hide"><input type="hidden" name="id" value="<?=$row['id'];?>"></td>
-                        <td><input type="submit" name="edit" value="Edit"></td>
-                        <td><input type="submit" name="delete" value="Delete"></td>
-                    </tr>
-                <?php endif; ?>
-                </form>
+                <?php
+                if ($id===$row['id']) {
+                    $id = $row['id'];
+                    $wish = $row['wish'];
+                    $link = $row['link'];
+                    $description = $row['description'];
+                    $isEdit = true;
+                }
+                ?>
+                <tr>
+                    <td><?=$row['wish']?></td>
+                    <td><a href="<?=$row['link']?>"><?=$row['link']?></td>
+                    <td><?=$row['description']?></td>
+                    <td>
+                        <form action="/" method="POST">
+                            <input type="hidden" name="id" value="<?=$row['id']?>">
+                            <input type="submit" name="edit" value="Edit">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/" method="POST">
+                            <input type="hidden" name="id" value="<?=$row['id']?>">
+                            <input type="submit" name="delete" value="Delete">
+                        </form>
+                    </td>
+                </tr>
             <?php endwhile; ?>
             </tbody>
         </table>
     <?php endif; ?>
+
+    <!--    Modal form  -->
+    <div id="modal" class="modal<?=$isEdit ? ' show' : ''?>">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form action="/" method="POST">
+                <label for="wish">Wish:</label>
+                <br>
+                <input type="text" id="wish" name="wish" value="<?=$wish?>" required>
+                <br>
+                <label for="link">Reference:</label>
+                <br>
+                <input type="text" id="link" name="link" value="<?=$link?>">
+                <br>
+                <label for="description">Additional information:</label>
+                <br>
+                <textarea id="description" name="description" rows="3" cols="40"><?=$description?></textarea>
+                <br>
+                <input type="hidden" name="id" value="<?=$id?>">
+                <input type="submit" name="add" id="add" value="Create">
+                <input type="submit" name="update" id="update" value="Save">
+            </form>
+        </div>
+    </div>
     <script src="wishlist.js"></script>
 </body>
 </html>

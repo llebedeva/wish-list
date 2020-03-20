@@ -38,6 +38,6 @@ table {
     cursor: pointer;
 }
 
-.hide {
-    display: none;
+.show {
+    display: block;
 }
