@@ -17,7 +17,7 @@ class Controller
 
         $s = $this->render_php(PROJECT_ROOT . "/src/wishlist.php", [
             "stmt" => $stmt,
-            "id" => (isset($request->request->all()['edit'])) ? $request->request->get('id') : null
+            "id" => $request->request->get('edit') ? $request->request->get('id') : null
         ]);
 
         $response = new Response($s);
