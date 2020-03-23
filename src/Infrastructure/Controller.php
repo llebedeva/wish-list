@@ -16,8 +16,7 @@ class Controller
         $stmt = $storage->getWishTable();
 
         $s = $this->render_php(PROJECT_ROOT . "/src/wishlist.php", [
-            "stmt" => $stmt,
-            "id" => $request->request->get('edit') ? $request->request->get('id') : null
+            "stmt" => $stmt
         ]);
 
         $response = new Response($s);

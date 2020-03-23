@@ -1,13 +1,7 @@
 <?php
 /** @var array $variables */
 /** @var PDOStatement $stmt */
-/** @var string|null $id */
 $stmt = $variables['stmt'];
-$id = $variables['id'];
-$wish = null;
-$link = null;
-$description = null;
-$isEdit = false;
 ?>
 
 <!DOCTYPE html>
@@ -38,15 +32,6 @@ $isEdit = false;
             </thead>
             <tbody>
             <?php while ($row = $stmt->fetch()): ?>
-                <?php
-                if ($id===$row['id']) {
-                    $id = $row['id'];
-                    $wish = $row['wish'];
-                    $link = $row['link'];
-                    $description = $row['description'];
-                    $isEdit = true;
-                }
-                ?>
                 <tr>
                     <td><?=$row['wish']?></td>
                     <td><a href="<?=$row['link']?>"><?=$row['link']?></td>
@@ -67,28 +52,25 @@ $isEdit = false;
     <?php endif; ?>
 
     <!--    Modal form  -->
-    <div id="modal" class="modal<?=$isEdit ? ' show' : ''?>">
+    <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <form action="/" method="POST">
                 <label for="wish">Wish:</label>
                 <br>
-                <input type="text" id="wish" name="wish" value="<?=$wish?>" required>
+                <input type="text" id="wish" name="wish" required>
                 <br>
                 <label for="link">Reference:</label>
                 <br>
-                <input type="text" id="link" name="link" value="<?=$link?>">
+                <input type="text" id="link" name="link">
                 <br>
                 <label for="description">Additional information:</label>
                 <br>
-                <textarea id="description" name="description" rows="3" cols="40"><?=$description?></textarea>
+                <textarea id="description" name="description" rows="3" cols="40"></textarea>
                 <br>
-                <input type="hidden" name="id" value="<?=$id?>">
-                <?php if ($isEdit): ?>
-                    <input type="submit" name="update" id="update" value="Save">
-                <?php else: ?>
-                    <input type="submit" name="add" id="add" value="Create">
-                <?php endif; ?>
+                <input type="hidden" name="id">
+                <input type="submit" name="update" id="update" value="Save">
+                <input type="submit" name="add" id="add" value="Create">
             </form>
         </div>
     </div>
