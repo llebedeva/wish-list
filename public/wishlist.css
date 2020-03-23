@@ -1,5 +1,6 @@
-table {
+table, th, td {
     margin-top: 10px;
+    border: 1px solid #2e3437;
 }
 
 .modal {

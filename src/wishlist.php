@@ -22,7 +22,7 @@ $stmt = $variables['stmt'];
 
     <!--     Wish table -->
     <?php if ($stmt->rowCount() > 0): ?>
-        <table border="1">
+        <table>
             <thead>
             <tr>
                 <td>Wish</td>
