@@ -17,10 +17,8 @@ $stmt = $variables['stmt'];
         <p>You don't have any wishes yet. Please, create your first wish.</p>
     <?php endif; ?>
 
-    <!--    Create button -->
     <button id="createButton">New wish</button>
 
-    <!--     Wish table -->
     <?php if ($stmt->rowCount() > 0): ?>
         <table>
             <thead>
@@ -51,7 +49,6 @@ $stmt = $variables['stmt'];
         </table>
     <?php endif; ?>
 
-    <!--    Modal form  -->
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
