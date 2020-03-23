@@ -1,35 +1,46 @@
-const createBtn = document.querySelector('#createButton');
+const createBtn = document.getElementById('createButton');
 const editBtns = document.querySelectorAll('button[name="edit"]');
 
-const modal = document.querySelector('#modal');
-const span = document.querySelector('.close');
-const addBtn = modal.querySelector('#add');
-const updateBtn = modal.querySelector('#update');
+const modal = document.getElementById('modal');
+const closeBtn = document.querySelector('.close');
+const addBtn = document.getElementById('add');
+const updateBtn = document.getElementById('update');
 
-createBtn.onclick = function() {
+const wishInput = modal.querySelector('input[name="wish"]');
+const linkInput = modal.querySelector('input[name="link"]');
+const descriptionInput = modal.querySelector('textarea[name="description"]');
+const idinput = modal.querySelector('input[name="id"]');
+
+createBtn.onclick = () => {
+    wishInput.value = null;
+    linkInput.value = null;
+    descriptionInput.value = null;
+    idinput.value = null;
+
     addBtn.style.display = 'block';
     updateBtn.style.display = 'none';
 
     modal.style.display = 'block';
 };
 
-span.onclick = function() {
+closeBtn.onclick = () => {
     modal.style.display = 'none';
 };
 
-window.onclick = function(event) {
+window.onclick = event => {
     if (event.target === modal) {
         modal.style.display = 'none';
     }
 };
 
-editBtns.forEach((button) => {
-    button.onclick = (event) => {
+editBtns.forEach(button => {
+    button.onclick = event => {
         const tableRow = event.target.parentElement.parentElement;
-        modal.querySelector('input[name="wish"]').value = tableRow.querySelector('td').innerHTML;
-        modal.querySelector('input[name="link"]').value = tableRow.querySelector('td:nth-child(2) a').innerHTML;
-        modal.querySelector('textarea[name="description"]').value = tableRow.querySelector('td:nth-child(3)').innerHTML;
-        modal.querySelector('input[name="id"]').value = tableRow.querySelector('input[name="id"]').value;
+
+        wishInput.value = tableRow.querySelector('td').innerHTML;
+        linkInput.value = tableRow.querySelector('td:nth-child(2) a').innerHTML;
+        descriptionInput.value = tableRow.querySelector('td:nth-child(3)').innerHTML;
+        idinput.value = tableRow.querySelector('input[name="id"]').value;
 
         addBtn.style.display = 'none';
         updateBtn.style.display = 'block';
