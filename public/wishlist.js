@@ -23,3 +23,16 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 };
+
+const editBtns = document.querySelectorAll('button[name="edit"]');
+
+editBtns.forEach((button) => {
+    button.onclick = (event) => {
+        const tableRow = event.target.parentElement.parentElement;
+        modal.querySelector('input[name="wish"]').value = tableRow.querySelector('td').innerHTML;
+        modal.querySelector('input[name="link"]').value = tableRow.querySelector('td:nth-child(2) a').innerHTML;
+        modal.querySelector('textarea[name="description"]').value = tableRow.querySelector('td:nth-child(3)').innerHTML;
+        modal.querySelector('input[name="id"]').value = tableRow.querySelector('input[name="id"]').value;
+        modal.style.display = "block";
+    }
+});

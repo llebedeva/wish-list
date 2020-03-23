@@ -52,10 +52,7 @@ $isEdit = false;
                     <td><a href="<?=$row['link']?>"><?=$row['link']?></td>
                     <td><?=$row['description']?></td>
                     <td>
-                        <form action="/" method="POST">
-                            <input type="hidden" name="id" value="<?=$row['id']?>">
-                            <input type="submit" name="edit" value="Edit">
-                        </form>
+                        <button name="edit">Edit</button>
                     </td>
                     <td>
                         <form action="/" method="POST">
