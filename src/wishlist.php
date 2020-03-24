@@ -49,7 +49,7 @@ $stmt = $variables['stmt'];
         </table>
     <?php endif; ?>
 
-    <div id="modal" class="modal">
+    <div id="wishModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <form action="/" method="POST">
@@ -71,6 +71,7 @@ $stmt = $variables['stmt'];
             </form>
         </div>
     </div>
+
     <script src="wishlist.js"></script>
 </body>
 </html>

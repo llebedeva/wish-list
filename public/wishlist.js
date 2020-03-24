@@ -1,15 +1,16 @@
 const createBtn = document.getElementById('createButton');
 const editBtns = document.querySelectorAll('button[name="edit"]');
+const deleteBtns = document.querySelectorAll('input[name="delete"]');
 
-const modal = document.getElementById('modal');
+const wishModal = document.getElementById('wishModal');
 const closeBtn = document.querySelector('.close');
 const addBtn = document.getElementById('add');
 const updateBtn = document.getElementById('update');
 
-const wishInput = modal.querySelector('input[name="wish"]');
-const linkInput = modal.querySelector('input[name="link"]');
-const descriptionInput = modal.querySelector('textarea[name="description"]');
-const idInput = modal.querySelector('input[name="id"]');
+const wishInput = wishModal.querySelector('input[name="wish"]');
+const linkInput = wishModal.querySelector('input[name="link"]');
+const descriptionInput = wishModal.querySelector('textarea[name="description"]');
+const idInput = wishModal.querySelector('input[name="id"]');
 
 createBtn.onclick = () => {
     wishInput.value = null;
@@ -20,16 +21,16 @@ createBtn.onclick = () => {
     show(addBtn);
     hide(updateBtn);
 
-    show(modal);
+    show(wishModal);
 };
 
 closeBtn.onclick = () => {
-    hide(modal);
+    hide(wishModal);
 };
 
 window.onclick = event => {
-    if (event.target === modal) {
-        hide(modal);
+    if (event.target === wishModal) {
+        hide(wishModal);
     }
 };
 
@@ -45,7 +46,7 @@ editBtns.forEach(button => {
         hide(addBtn);
         show(updateBtn);
 
-        show(modal);
+        show(wishModal);
     }
 });
 
@@ -58,3 +59,14 @@ const hide = element => {
     element.classList.add('hide');
     element.classList.remove('show');
 };
+
+deleteBtns.forEach(button => {
+    button.onclick = event => {
+        const tableRow = event.target.parentElement.parentElement.parentElement;
+        const wish = tableRow.querySelector('td').innerHTML;
+
+        if (!confirm(`Remove ${wish}?`)) {
+            event.preventDefault();
+        }
+    }
+});
