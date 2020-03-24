@@ -38,3 +38,11 @@ table, th, td {
     text-decoration: none;
     cursor: pointer;
 }
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}

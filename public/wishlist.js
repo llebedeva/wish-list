@@ -9,27 +9,27 @@ const updateBtn = document.getElementById('update');
 const wishInput = modal.querySelector('input[name="wish"]');
 const linkInput = modal.querySelector('input[name="link"]');
 const descriptionInput = modal.querySelector('textarea[name="description"]');
-const idinput = modal.querySelector('input[name="id"]');
+const idInput = modal.querySelector('input[name="id"]');
 
 createBtn.onclick = () => {
     wishInput.value = null;
     linkInput.value = null;
     descriptionInput.value = null;
-    idinput.value = null;
+    idInput.value = null;
 
-    addBtn.style.display = 'block';
-    updateBtn.style.display = 'none';
+    show(addBtn);
+    hide(updateBtn);
 
-    modal.style.display = 'block';
+    show(modal);
 };
 
 closeBtn.onclick = () => {
-    modal.style.display = 'none';
+    hide(modal);
 };
 
 window.onclick = event => {
     if (event.target === modal) {
-        modal.style.display = 'none';
+        hide(modal);
     }
 };
 
@@ -40,11 +40,21 @@ editBtns.forEach(button => {
         wishInput.value = tableRow.querySelector('td').innerHTML;
         linkInput.value = tableRow.querySelector('td:nth-child(2) a').innerHTML;
         descriptionInput.value = tableRow.querySelector('td:nth-child(3)').innerHTML;
-        idinput.value = tableRow.querySelector('input[name="id"]').value;
+        idInput.value = tableRow.querySelector('input[name="id"]').value;
 
-        addBtn.style.display = 'none';
-        updateBtn.style.display = 'block';
+        hide(addBtn);
+        show(updateBtn);
 
-        modal.style.display = 'block';
+        show(modal);
     }
 });
+
+const show = element => {
+    element.classList.add('show');
+    element.classList.remove('hide');
+};
+
+const hide = element => {
+    element.classList.add('hide');
+    element.classList.remove('show');
+};
