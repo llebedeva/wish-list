@@ -34,27 +34,24 @@ class Storage
 
     public function createWish($wish, $link, $description, $priority)
     {
-        $storage = new Storage();
         $sql = "INSERT INTO wishes (wish, link, description, priority) 
             VALUES ('$wish', '$link', '$description', '$priority');";
-        $storage->execute($sql);
+        $this->execute($sql);
     }
 
     public function updateWish($wish, $link, $description, $id)
     {
-        $storage = new Storage();
         $sql = "UPDATE wishes 
             SET wish='$wish', link='$link', description='$description', modified_at=CURRENT_TIMESTAMP 
             WHERE id='$id';";
-        $storage->execute($sql);
+        $this->execute($sql);
     }
 
     public function deleteWish($id)
     {
-        $storage = new Storage();
         $sql = "DELETE FROM wishes 
             WHERE id='$id';";
-        $storage->execute($sql);
+        $this->execute($sql);
     }
 
     public function getMaxWishPriority() : \PDOStatement
