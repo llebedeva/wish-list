@@ -17,6 +17,6 @@ if ($request->request->get('add')) {
 } elseif ($request->request->get('delete')) {
     $response = $controller->deleteWishAction($request);
 } else {
-    $response = $controller->indexAction($request);
+    $response = $controller->indexAction();
 }
 $response->send();

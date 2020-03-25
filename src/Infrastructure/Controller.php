@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Controller
 {
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $storage = new Storage();
         $stmt = $storage->getWishTable();

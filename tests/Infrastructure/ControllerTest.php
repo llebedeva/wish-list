@@ -10,11 +10,10 @@ class ControllerTest extends SetUpTestCase
 {
     public function testIndex()
     {
-        $request = new Request();
         $controller = new Controller();
 
         /** @var Response $response */
-        $response = $controller->indexAction($request);
+        $response = $controller->indexAction();
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
