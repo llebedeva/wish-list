@@ -34,7 +34,8 @@ class Controller
             new CreateWishRequest($wish, $link, $description);
 
             $storage = new Storage();
-            $storage->createWish($wish, $link, $description);
+            $priority = $storage->getMaxWishPriority()->fetch()['MAX(priority)'] + 1000;
+            $storage->createWish($wish, $link, $description, $priority);
 
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
         } catch (\Exception $e) {

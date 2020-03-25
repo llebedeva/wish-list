@@ -5,6 +5,7 @@ CREATE TABLE wishes (
                                        wish TEXT,
                                        link TEXT,
                                        description TEXT,
+                                       priority INT,
                                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                        modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

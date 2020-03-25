@@ -29,15 +29,14 @@ class Storage
     public function getWishTable() : \PDOStatement
     {
         $sql = 'SELECT * FROM wishes';
-        $stmt = $this->dbh->query($sql);
-        return $stmt;
+        return $this->dbh->query($sql);
     }
 
-    public function createWish($wish, $link, $description)
+    public function createWish($wish, $link, $description, $priority)
     {
         $storage = new Storage();
-        $sql = "INSERT INTO wishes (wish, link, description) 
-            VALUES ('$wish', '$link', '$description');";
+        $sql = "INSERT INTO wishes (wish, link, description, priority) 
+            VALUES ('$wish', '$link', '$description', '$priority');";
         $storage->execute($sql);
     }
 
@@ -56,5 +55,11 @@ class Storage
         $sql = "DELETE FROM wishes 
             WHERE id='$id';";
         $storage->execute($sql);
+    }
+
+    public function getMaxWishPriority() : \PDOStatement
+    {
+        $sql = "SELECT MAX(priority) FROM wishes;";
+        return $this->dbh->query($sql);
     }
 }
