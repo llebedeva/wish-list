@@ -21,7 +21,7 @@ class Storage
         $this->dbh = new \PDO('mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database . ';charset=' . $charset, $user, $password);
     }
 
-    public function execute(string $sql)
+    public function execute(string $sql) : void
     {
         $this->dbh->exec($sql);
     }
@@ -32,14 +32,14 @@ class Storage
         return $this->dbh->query($sql);
     }
 
-    public function createWish($wish, $link, $description, $priority)
+    public function createWish($wish, $link, $description, $priority) : void
     {
         $sql = "INSERT INTO wishes (wish, link, description, priority) 
             VALUES ('$wish', '$link', '$description', '$priority');";
         $this->execute($sql);
     }
 
-    public function updateWish($wish, $link, $description, $id)
+    public function updateWish($wish, $link, $description, $id) : void
     {
         $sql = "UPDATE wishes 
             SET wish='$wish', link='$link', description='$description', modified_at=CURRENT_TIMESTAMP 
@@ -47,7 +47,7 @@ class Storage
         $this->execute($sql);
     }
 
-    public function deleteWish($id)
+    public function deleteWish($id) : void
     {
         $sql = "DELETE FROM wishes 
             WHERE id='$id';";
