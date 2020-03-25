@@ -31,10 +31,11 @@ class Controller
             $link = $request->request->get('link');
             $description = $request->request->get('description');
 
-            new CreateWishRequest($wish, $link, $description);
-
             $storage = new Storage();
-            $priority = $storage->getMaxWishPriority()->fetch()['MAX(priority)'] + 1000;
+            $priority = $storage->getMaxWishPriority()->fetch()['MAX(priority)'] + 100;
+
+            new CreateWishRequest($wish, $link, $description, $priority);
+
             $storage->createWish($wish, $link, $description, $priority);
 
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
@@ -51,12 +52,13 @@ class Controller
             $wish = $request->request->get('wish');
             $link = $request->request->get('link');
             $description = $request->request->get('description');
+            $priority = $request->request->get('priority');
             $id = $request->request->get('id');
 
-            new UpdateWishRequest($wish, $link, $description, $id);
+            new UpdateWishRequest($wish, $link, $description, $priority, $id);
 
             $storage = new Storage();
-            $storage->updateWish($wish, $link, $description, $id);
+            $storage->updateWish($wish, $link, $description, $priority, $id);
 
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
         } catch (\Exception $e) {

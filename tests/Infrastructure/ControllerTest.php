@@ -46,7 +46,8 @@ class ControllerTest extends SetUpTestCase
 
     public function testUpdateWish_success()
     {
-        $request = new Request([], ['wish' => 'Wish', 'link' => 'Link', 'description' => 'Description', 'id' => 'id']);
+        $request = new Request([], ['wish' => 'Wish', 'link' => 'Link', 'description' => 'Description',
+            'priority' => 1,'id' => 1]);
         $controller = new Controller();
 
         /** @var Response $response */

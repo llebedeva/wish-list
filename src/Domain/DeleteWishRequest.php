@@ -12,7 +12,7 @@ class DeleteWishRequest
 
     private function validateId($id) : void
     {
-        Assert::string($id);
-        Assert::stringNotEmpty($id);
+        Assert::integerish($id);
+        Assert::integer((int)$id);
     }
 }

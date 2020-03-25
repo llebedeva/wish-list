@@ -27,6 +27,8 @@ $stmt = $variables['stmt'];
                 <td>Reference</td>
                 <td>Additional information</td>
                 <td>Priority</td>   <!---Temporary field---->
+                <td>Edit</td>
+                <td>Delete</td>
             </tr>
             </thead>
             <tbody>
@@ -67,6 +69,9 @@ $stmt = $variables['stmt'];
                 <br>
                 <textarea id="description" name="description" rows="3" cols="40"></textarea>
                 <br>
+                <label for="priority">Priority:</label> <!---Temporary field---->
+                <br>
+                <input type="text" id="priority" name="priority">
                 <input type="hidden" name="id">
                 <input type="submit" name="update" id="update" value="Save">
                 <input type="submit" name="add" id="add" value="Create">

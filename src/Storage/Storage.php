@@ -39,10 +39,14 @@ class Storage
         $this->execute($sql);
     }
 
-    public function updateWish($wish, $link, $description, $id) : void
+    public function updateWish($wish, $link, $description, $priority, $id) : void
     {
         $sql = "UPDATE wishes 
-            SET wish='$wish', link='$link', description='$description', modified_at=CURRENT_TIMESTAMP 
+            SET wish='$wish', 
+                link='$link', 
+                description='$description', 
+                priority='$priority', 
+                modified_at=CURRENT_TIMESTAMP 
             WHERE id='$id';";
         $this->execute($sql);
     }

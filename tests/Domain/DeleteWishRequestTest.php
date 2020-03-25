@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class DeleteWishRequestTest extends TestCase
 {
-    private const VALID_ID = '15';
+    private const VALID_ID = 1;
 
     public function testSuccessIfVaidAgruments()
     {
@@ -17,10 +17,22 @@ class DeleteWishRequestTest extends TestCase
         $this->assertInstanceOf(DeleteWishRequest::class, $request);
     }
 
-    public function testThrowsExceptionIfInvalidArguments()
+    /**
+     * @dataProvider providerInvalidArguments
+     * @param $id
+     */
+    public function testThrowsExceptionIfInvalidArguments($id)
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        new DeleteWishRequest(null);
+        new DeleteWishRequest($id);
+    }
+
+    public function providerInvalidArguments()
+    {
+        return [
+            [null],
+            ['']
+        ];
     }
 }
