@@ -26,6 +26,7 @@ $stmt = $variables['stmt'];
                 <td>Wish</td>
                 <td>Reference</td>
                 <td>Additional information</td>
+                <td>Priority</td>   <!---Temporary field---->
             </tr>
             </thead>
             <tbody>
@@ -34,6 +35,7 @@ $stmt = $variables['stmt'];
                     <td><?=$row['wish']?></td>
                     <td><a href="<?=$row['link']?>"><?=$row['link']?></td>
                     <td><?=$row['description']?></td>
+                    <td><?=$row['priority']?></td>  <!---Temporary field---->
                     <td>
                         <button name="edit">Edit</button>
                     </td>
