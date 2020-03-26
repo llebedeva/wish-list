@@ -28,7 +28,7 @@ class Storage
 
     public function getWishTable() : \PDOStatement
     {
-        $sql = 'SELECT * FROM wishes';
+        $sql = 'SELECT * FROM wishes ORDER BY priority ASC;';
         return $this->dbh->query($sql);
     }
 
