@@ -1,8 +1,4 @@
-// import Sortable from './Sortable.min';
-// let Sortable = require('./Sortable.min');
-//
-//
+import Sortable from './sortable.complete.esm.js';
+
 let el = document.getElementById('items');
-console.log(el);
 Sortable.create(el);
-// console.log(Sortable);

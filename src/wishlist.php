@@ -85,7 +85,6 @@ $stmt = $variables['stmt'];
         <li>item 3</li>
     </ul>
 
-    <script src="Sortable.min.js"></script>
     <script src="wishlist.js"></script>
     <script type="module" src="drag&drop.js"></script>
 </body>
