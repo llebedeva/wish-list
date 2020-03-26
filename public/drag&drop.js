@@ -1,4 +1,9 @@
 import Sortable from './sortable.complete.esm.js';
 
-let el = document.getElementById('items');
-Sortable.create(el);
+let element = document.getElementById('items');
+Sortable.create(element, {
+    multiDrag: true,
+    selectedClass: 'selected',
+    fallbackTolerance: 3,
+    animation: 150
+});
