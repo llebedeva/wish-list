@@ -1,6 +1,10 @@
+body {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    color: #212529;
+}
 table, th, td {
     margin-top: 10px;
-    border: 1px solid #2e3437;
+    border: 1px solid #6c757d;
 }
 
 .modal {
@@ -45,4 +49,25 @@ table, th, td {
 
 .hide {
     display: none;
+}
+
+.list-group {
+    padding-left: 0;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 70%;
+}
+
+.list-group-item {
+    border: 1px solid #6c757d;
+    margin: 5px 0;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+.inline {
+    display: inline-block;
 }

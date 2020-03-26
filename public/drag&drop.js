@@ -1,6 +1,6 @@
 import Sortable from './sortable.complete.esm.js';
 
-let element = document.getElementById('items');
+let element = document.getElementById('list');
 Sortable.create(element, {
     multiDrag: true,
     selectedClass: 'selected',

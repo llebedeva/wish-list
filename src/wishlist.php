@@ -17,41 +17,27 @@ $stmt = $variables['stmt'];
         <p>You don't have any wishes yet. Please, create your first wish.</p>
     <?php endif; ?>
 
-    <button id="createButton">New wish</button>
-
     <?php if ($stmt->rowCount() > 0): ?>
-        <table>
-            <thead>
-            <tr>
-                <td>Wish</td>
-                <td>Reference</td>
-                <td>Additional information</td>
-                <td>Priority</td>   <!---Temporary field---->
-                <td>Edit</td>
-                <td>Delete</td>
-            </tr>
-            </thead>
-            <tbody>
-            <?php while ($row = $stmt->fetch()): ?>
-                <tr>
-                    <td><?=$row['wish']?></td>
-                    <td><a href="<?=$row['link']?>"><?=$row['link']?></td>
-                    <td><?=$row['description']?></td>
-                    <td><?=$row['priority']?></td>  <!---Temporary field---->
-                    <td>
-                        <button name="edit">Edit</button>
-                    </td>
-                    <td>
-                        <form action="/" method="POST">
-                            <input type="hidden" name="id" value="<?=$row['id']?>">
-                            <input type="submit" name="delete" value="Delete">
-                        </form>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-            </tbody>
-        </table>
+    <div id="list" class="list-group col">
+        <?php while ($row = $stmt->fetch()): ?>
+        <div class="list-group-item">
+            <div><?=$row['wish']?></div>
+            <div><a href="<?=$row['link']?>"><?=$row['link']?></a></div>
+            <div><?=$row['description']?></div>
+            <div>
+                <button name="edit" class="inline">Edit</button>
+                <form action="/" method="POST" class="inline">
+                    <input type="hidden" name="id" value="<?=$row['id']?>">
+                    <input type="submit" name="delete" value="Delete">
+                </form>
+                <div class="inline">Priority: <?=$row['priority']?></div>  <!---Temporary field---->
+            </div>
+        </div>
+        <?php endwhile; ?>
+    </div>
     <?php endif; ?>
+
+    <button id="createButton">New wish</button>
 
     <div id="wishModal" class="modal">
         <div class="modal-content">
@@ -78,12 +64,6 @@ $stmt = $variables['stmt'];
             </form>
         </div>
     </div>
-
-    <ul id="items">
-        <li>item 1</li>
-        <li>item 2</li>
-        <li>item 3</li>
-    </ul>
 
     <script src="wishlist.js"></script>
     <script type="module" src="drag&drop.js"></script>

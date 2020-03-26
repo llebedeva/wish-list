@@ -41,12 +41,14 @@ window.onclick = event => {
 
 editBtns.forEach(button => {
     button.onclick = event => {
-        const tableRow = event.target.parentElement.parentElement;
+        const listItem = event.target.parentElement.parentElement;
 
-        wishInput.value = tableRow.querySelector('td').innerHTML;
-        linkInput.value = tableRow.querySelector('td:nth-child(2) a').innerHTML;
-        descriptionInput.value = tableRow.querySelector('td:nth-child(3)').innerHTML;
-        idInput.value = tableRow.querySelector('input[name="id"]').value;
+        wishInput.value = listItem.querySelector('div').innerHTML;
+        linkInput.value = listItem.querySelector('div:nth-child(2) a').innerHTML;
+        descriptionInput.value = listItem.querySelector('div:nth-child(3)').innerHTML;
+        priorityInput.value = listItem.querySelector('input[name="priority"]').value;
+        idInput.value = listItem.querySelector('input[name="id"]').value;
+
 
         show(priorityInput);
         show(priorityLabel);
