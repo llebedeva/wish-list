@@ -1,10 +1,5 @@
 body {
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     color: #212529;
-}
-table, th, td {
-    margin-top: 10px;
-    border: 1px solid #6c757d;
 }
 
 .modal {
