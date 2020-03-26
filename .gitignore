@@ -3,6 +3,7 @@
 docker/my-db
 vendor
 tests/report
+node_modules
 
 docker/.env
 .phpunit.result.cache
