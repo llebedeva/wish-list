@@ -28,7 +28,7 @@ class Storage
 
     public function getWishTable() : \PDOStatement
     {
-        $sql = 'SELECT * FROM wishes;';
+        $sql = 'SELECT * FROM wish_table;';
         return $this->dbh->query($sql);
     }
 
@@ -40,7 +40,26 @@ class Storage
 
         $wish_id = $this->dbh->lastInsertId();
         $this->insertWishPriority($wish_id);
+    }
 
+    private function generateNewWishPriority() : int
+    {
+        if ($this->dbh->query("SELECT priority FROM wish_priority;")->rowCount() === 0) {
+            return 0;
+        }
+        $sql = "SELECT MAX(priority) FROM wish_priority;";
+        $maxPriority = $this->dbh->query($sql)->fetch()['MAX(priority)'];
+        return (int)$maxPriority + 1;
+    }
+
+    private function insertWishPriority($wish_id) : void
+    {
+        $priority = $this->generateNewWishPriority();
+
+        $sql = "INSERT INTO wish_priority (wish_id, priority) 
+            VALUES ('$wish_id', '$priority');";
+        $this->execute($sql);
+        $this->orderingWishesByPriority();
     }
 
     public function updateWish($wish, $link, $description, $id) : void
@@ -63,29 +82,28 @@ class Storage
         $this->deleteWishPriority($id);
     }
 
-    private function generateNextPriority() : int
-    {
-        if ($this->dbh->query("SELECT priority FROM wish_priority;")->rowCount() === 0) {
-            return 0;
-        }
-        $sql = "SELECT MAX(priority) FROM wish_priority;";
-        $maxPriority = $this->dbh->query($sql)->fetch()['MAX(priority)'];
-        return (int)$maxPriority + 1;
-    }
-
-    private function insertWishPriority($wish_id) : void
-    {
-        $priority = $this->generateNextPriority();
-
-        $sql = "INSERT INTO wish_priority (wish_id, priority) 
-            VALUES ('$wish_id', '$priority');";
-        $this->execute($sql);
-    }
-
     private function deleteWishPriority($wish_id) : void
     {
         $sql = "DELETE FROM wish_priority 
             WHERE wish_id='$wish_id';";
+        $this->execute($sql);
+        $this->orderingWishesByPriority();
+    }
+
+    private function orderingWishesByPriority() : void
+    {
+        $sql = "CREATE OR REPLACE VIEW wish_table AS
+            SELECT
+                W.id,
+                W.wish,
+                W.link,
+                W.description,
+                P.priority
+            FROM
+                wishes AS W
+                    INNER JOIN wish_priority AS P
+                               ON W.id = P.wish_id
+            ORDER BY P.priority ASC;";
         $this->execute($sql);
     }
 }

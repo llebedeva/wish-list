@@ -16,3 +16,16 @@ CREATE TABLE wish_priority
     wish_id INT NOT NULL,
     priority INT NOT NULL
 );
+
+CREATE OR REPLACE VIEW wish_table AS
+SELECT
+    W.id,
+    W.wish,
+    W.link,
+    W.description,
+    P.priority
+FROM
+    wishes AS W
+        INNER JOIN wish_priority AS P
+                   ON W.id = P.wish_id
+ORDER BY P.priority ASC;
