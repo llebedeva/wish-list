@@ -28,24 +28,27 @@ class Storage
 
     public function getWishTable() : \PDOStatement
     {
-        $sql = 'SELECT * FROM wishes ORDER BY priority ASC;';
+        $sql = 'SELECT * FROM wishes;';
         return $this->dbh->query($sql);
     }
 
-    public function createWish($wish, $link, $description, $priority) : void
+    public function createWish($wish, $link, $description) : void
     {
-        $sql = "INSERT INTO wishes (wish, link, description, priority) 
-            VALUES ('$wish', '$link', '$description', '$priority');";
+        $sql = "INSERT INTO wishes (wish, link, description) 
+            VALUES ('$wish', '$link', '$description');";
         $this->execute($sql);
+
+        $wish_id = $this->dbh->lastInsertId();
+        $this->insertWishPriority($wish_id);
+
     }
 
-    public function updateWish($wish, $link, $description, $priority, $id) : void
+    public function updateWish($wish, $link, $description, $id) : void
     {
         $sql = "UPDATE wishes 
             SET wish='$wish', 
                 link='$link', 
                 description='$description', 
-                priority='$priority', 
                 modified_at=CURRENT_TIMESTAMP 
             WHERE id='$id';";
         $this->execute($sql);
@@ -56,11 +59,33 @@ class Storage
         $sql = "DELETE FROM wishes 
             WHERE id='$id';";
         $this->execute($sql);
+
+        $this->deleteWishPriority($id);
     }
 
-    public function getMaxWishPriority() : \PDOStatement
+    private function generateNextPriority() : int
     {
-        $sql = "SELECT MAX(priority) FROM wishes;";
-        return $this->dbh->query($sql);
+        if ($this->dbh->query("SELECT priority FROM wish_priority;")->rowCount() === 0) {
+            return 0;
+        }
+        $sql = "SELECT MAX(priority) FROM wish_priority;";
+        $maxPriority = $this->dbh->query($sql)->fetch()['MAX(priority)'];
+        return (int)$maxPriority + 1;
+    }
+
+    private function insertWishPriority($wish_id) : void
+    {
+        $priority = $this->generateNextPriority();
+
+        $sql = "INSERT INTO wish_priority (wish_id, priority) 
+            VALUES ('$wish_id', '$priority');";
+        $this->execute($sql);
+    }
+
+    private function deleteWishPriority($wish_id) : void
+    {
+        $sql = "DELETE FROM wish_priority 
+            WHERE wish_id='$wish_id';";
+        $this->execute($sql);
     }
 }

@@ -10,8 +10,6 @@ const updateBtn = document.getElementById('update');
 const wishInput = wishModal.querySelector('input[name="wish"]');
 const linkInput = wishModal.querySelector('input[name="link"]');
 const descriptionInput = wishModal.querySelector('textarea[name="description"]');
-const priorityInput = wishModal.querySelector('input[name="priority"]'); // Temporary field
-const priorityLabel = wishModal.querySelector('label[for="priority"]'); // Temporary field
 const idInput = wishModal.querySelector('input[name="id"]');
 
 createBtn.onclick = () => {
@@ -19,9 +17,6 @@ createBtn.onclick = () => {
     linkInput.value = null;
     descriptionInput.value = null;
     idInput.value = null;
-
-    hide(priorityInput);
-    hide(priorityLabel);
 
     show(addBtn);
     hide(updateBtn);
@@ -46,12 +41,7 @@ editBtns.forEach(button => {
         wishInput.value = listItem.querySelector('div').innerHTML;
         linkInput.value = listItem.querySelector('div:nth-child(2) a').innerHTML;
         descriptionInput.value = listItem.querySelector('div:nth-child(3)').innerHTML;
-        priorityInput.value = listItem.querySelector('input[name="priority"]').value;
         idInput.value = listItem.querySelector('input[name="id"]').value;
-
-
-        show(priorityInput);
-        show(priorityLabel);
 
         hide(addBtn);
         show(updateBtn);

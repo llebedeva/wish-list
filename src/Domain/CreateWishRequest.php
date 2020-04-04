@@ -5,12 +5,11 @@ use Webmozart\Assert\Assert;
 
 class CreateWishRequest
 {
-    public function __construct($wish, $link, $description, $priority)
+    public function __construct($wish, $link, $description)
     {
         $this->validateWish($wish);
         $this->validateLink($link);
         $this->validateDescription($description);
-        $this->validatePriority($priority);
     }
 
     protected function validateWish($wish) : void
@@ -30,11 +29,5 @@ class CreateWishRequest
     {
         Assert::string($description);
         Assert::maxLength($description, 2000);
-    }
-
-    protected function validatePriority($priority) : void
-    {
-        Assert::integerish($priority);
-        Assert::integer((int)$priority);
     }
 }

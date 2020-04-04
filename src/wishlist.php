@@ -21,7 +21,6 @@ $stmt = $variables['stmt'];
     <div id="list" class="list-group col">
         <?php while ($row = $stmt->fetch()): ?>
         <div class="list-group-item">
-            <input type="hidden" name="priority" value="<?=$row['priority']?>">
             <div><?=$row['wish']?></div>
             <div><a href="<?=$row['link']?>"><?=$row['link']?></a></div>
             <div><?=$row['description']?></div>
@@ -55,9 +54,6 @@ $stmt = $variables['stmt'];
                 <br>
                 <textarea id="description" name="description" rows="3" cols="40"></textarea>
                 <br>
-                <label for="priority">Priority:</label> <!---Temporary field---->
-                <br>
-                <input type="text" id="priority" name="priority">
                 <input type="hidden" name="id">
                 <input type="submit" name="update" id="update" value="Save">
                 <input type="submit" name="add" id="add" value="Create">
