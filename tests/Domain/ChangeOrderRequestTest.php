@@ -3,17 +3,22 @@ namespace App\Tests\Domain;
 
 use App\Domain\ChangeOrderRequest;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
 
 class ChangeOrderRequestTest extends TestCase
 {
+    private const OLD_NAME = 'old';
+    private const NEW_NAME = 'new';
+    private const CORRECT_VALUE = 1;
+
     /**
      * @dataProvider providerValidArguments
-     * @param $old
-     * @param $new
+     * @param $data
      */
-    public function testValidArguments($old, $new)
+    public function testValidArguments($data)
     {
-        $request = new ChangeOrderRequest($old, $new);
+        $request = new Request([], $data);
+        $request = new ChangeOrderRequest($request);
 
         $this->assertInstanceOf(ChangeOrderRequest::class, $request);
     }
@@ -21,32 +26,32 @@ class ChangeOrderRequestTest extends TestCase
     public function providerValidArguments()
     {
         return [
-            [1, 4],
-            [5, 0],
-            ['1', '2']
+            [[self::OLD_NAME => 1, self::NEW_NAME => 4]],
+            [[self::OLD_NAME => 5, self::NEW_NAME => 0]],
+            [[self::OLD_NAME => '1', self::NEW_NAME => '2']]
         ];
     }
 
     /**
      * @dataProvider providerInvalidArguments
-     * @param $old
-     * @param $new
+     * @param $data
      */
-    public function testThrowsExceptionIfInvalidArguments($old, $new)
+    public function testThrowsExceptionIfInvalidArguments($data)
     {
+        $request = new Request([], $data);
         $this->expectException(\InvalidArgumentException::class);
 
-        new ChangeOrderRequest($old, $new);
+        new ChangeOrderRequest($request);
     }
 
     public function providerInvalidArguments()
     {
         return [
-            ['r', 4],
-            [5, 't'],
-            [1, null],
-            [null, 1],
-            [5, 5]
+            [[self::OLD_NAME => 'r',                     self::NEW_NAME => self::CORRECT_VALUE]],
+            [[self::OLD_NAME => self::CORRECT_VALUE,     self::NEW_NAME => 't'                ]],
+            [[self::OLD_NAME => self::CORRECT_VALUE,     self::NEW_NAME => null               ]],
+            [[self::OLD_NAME => null,                    self::NEW_NAME => self::CORRECT_VALUE]],
+            [[self::OLD_NAME => self::CORRECT_VALUE,     self::NEW_NAME => self::CORRECT_VALUE]]
         ];
     }
 }

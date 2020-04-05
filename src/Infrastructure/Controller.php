@@ -98,12 +98,9 @@ class Controller
     public function changeOrderAction(Request $request)
     {
         try {
-            $old = $request->request->get('old');
-            $new = $request->request->get('new');
+            $request = new ChangeOrderRequest($request);
 
-            new ChangeOrderRequest($old, $new);
-
-            $this->storage->updateWishOrder($old, $new);
+            $this->storage->updateWishOrder($request->old(), $request->new());
 
             $response = new Response('', Response::HTTP_OK);
         } catch (\Exception $e) {
