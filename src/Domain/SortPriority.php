@@ -3,19 +3,21 @@ namespace App\Domain;
 
 class SortPriority
 {
-    public static function lowPriority(&$temp, $new, $columnName) : void
+    private const COLUMN_NAME = 'priority';
+
+    public static function putIndexToBottom(&$temp, $index) : void
     {
         for ($i = 0; $i < count($temp); $i++) {
-            $temp[$i][$columnName] = $temp[$i][$columnName] - 1;
+            $temp[$i][self::COLUMN_NAME] = $temp[$i][self::COLUMN_NAME] - 1;
         }
-        $temp[0][$columnName] = $new;
+        $temp[0][self::COLUMN_NAME] = $index;
     }
 
-    public static function upPriority(&$temp, $new, $columnName) : void
+    public static function putIndexToTop(&$temp, $index) : void
     {
         for ($i = 0; $i < count($temp); $i++) {
-            $temp[$i][$columnName] = $temp[$i][$columnName] + 1;
+            $temp[$i][self::COLUMN_NAME] = $temp[$i][self::COLUMN_NAME] + 1;
         }
-        $temp[count($temp) - 1][$columnName] = $new;
+        $temp[count($temp) - 1][self::COLUMN_NAME] = $index;
     }
 }

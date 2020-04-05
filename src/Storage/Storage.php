@@ -78,35 +78,27 @@ class Storage
     {
         $old = (int)$old;
         $new = (int)$new;
-        $columnName = 'priority';
-        $arr = ($old > $new) ?
-            $this->upPriority($old, $new, $columnName) : $this->lowPriority($old, $new, $columnName);
+        if ($old > $new) {
+            $arr = $this->getPrioritiesBetween($new, $old);
+            SortPriority::putIndexToTop($arr, $new);
+        } else {
+            $arr = $this->getPrioritiesBetween($old, $new);
+            SortPriority::putIndexToBottom($arr, $new);
+        }
         $sth = $this->dbh->prepare("UPDATE wish_priority
             SET
                 priority = ?
             WHERE wish_id = ?;");
         foreach ($arr as $row) {
-            $sth->execute([$row[$columnName], $row['wish_id']]);
+            $sth->execute([$row['priority'], $row['wish_id']]);
         }
         $this->orderingWishesByPriority();
     }
 
-    private function lowPriority($old, $new, $columnName) : array
+    private function getPrioritiesBetween($x, $y) : array
     {
-        $sql = "SELECT * FROM wish_priority WHERE priority BETWEEN $old AND $new ORDER BY priority ASC;";
-        $arr = $this->dbh->query($sql)->fetchAll();
-
-        SortPriority::lowPriority($arr, $new, $columnName);
-        return $arr;
-    }
-
-    private function upPriority($old, $new, $columnName) : array
-    {
-        $sql = "SELECT * FROM wish_priority WHERE priority BETWEEN $new AND $old ORDER BY priority ASC;";
-        $arr = $this->dbh->query($sql)->fetchAll();
-
-        SortPriority::upPriority($arr, $new, $columnName);
-        return $arr;
+        $sql = "SELECT * FROM wish_priority WHERE priority BETWEEN $x AND $y ORDER BY priority ASC;";
+        return $this->dbh->query($sql)->fetchAll();
     }
 
     public function deleteWish($id) : void

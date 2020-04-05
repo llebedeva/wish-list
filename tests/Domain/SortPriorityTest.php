@@ -8,7 +8,7 @@ class SortPriorityTest extends TestCase
 {
     private const COLUMN_NAME = 'priority';
 
-    public function test_lowPriority()
+    public function testPutIndexToBottom()
     {
         $columnName = self::COLUMN_NAME;
         $temp = [
@@ -19,7 +19,7 @@ class SortPriorityTest extends TestCase
         ];
         $new = 5;
 
-        SortPriority::lowPriority($temp, $new, self::COLUMN_NAME);
+        SortPriority::putIndexToBottom($temp, $new);
         $expected = [
             [$columnName => 5],
             [$columnName => 2],
@@ -29,7 +29,7 @@ class SortPriorityTest extends TestCase
         $this->assertEquals($expected, $temp);
     }
 
-    public function test_upPriority()
+    public function testPutIndexToTop()
     {
         $columnName = self::COLUMN_NAME;
         $temp = [
@@ -40,7 +40,7 @@ class SortPriorityTest extends TestCase
         ];
         $new = 2;
 
-        SortPriority::upPriority($temp, $new, $columnName);
+        SortPriority::putIndexToTop($temp, $new);
         $expected = [
             [$columnName => 3],
             [$columnName => 4],
