@@ -3,12 +3,19 @@ namespace App\Tests\Domain;
 
 use App\Domain\UpdateWishRequest;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
 
 class UpdateWishRequestTest extends TestCase
 {
+    private const WISH_NAME = 'wish';
+    private const LINK_NAME = 'link';
+    private const DESCRIPTION_NAME = 'description';
+    private const ID_NAME = 'id';
+
     private const VALID_WISH = 'I wish something';
     private const VALID_LINK = 'https://ru.wikipedia.org/wiki/URL';
     private const VALID_DESCRIPTION = 'text message about my wish';
+    private const VALID_ID = 1;
 
     private const TOO_LONG_WISH = 'RIXviHKDcR9RZry5x8EyrM117hnBGWFdoTTNPEiVhe3qDODHjJwX75sFdRJ502KtkdLJ65PKcIjjHN5O8MU2IwlMgCtQAdP4xMxA9';
     private const TOO_LONG_LINK = 'nPcjuYdz5SjoNUj6s3ySjx6y1yfaMe7qoX7xB9S9qgseGrHezJLHYfCok0UcJQ3heRYE5J8bENmJScczVl23n38En6gV1oxrPpz5AWhNZSTXBxgdU48WjeBaNI6ElGmK811OHmq44SfPgulLNSebUuQSCJWpcOxbEsLsmkkreg3jJpPuUj7bwNZXXkovdQv8oWIxPfx4oMO8tEcxYrrLtzdMHdORuTnKnxrTjRjH5LYciUcygfSyezBJTMlfXMOJ0ZSLdFcHWUtK4PZWDYDHbmvbROwxx7cUjVLpNk9a7eyumMX2aUwmw2GssCNTR7fs7sZKdXfsXr76a4iZpNUTpEWszuT4cZ89NHp4lAmXr7WYeK5xNhaha54hYlpBAgmBMgbFx4uvBfNNNvElGLzZXZZj3fiZueZBnExG4t8BswZOVrLs4H8HyT8XlXuMCwfeUR7nUfNcMeDuLy2B8k3I63NNeSwoJCWeTtCYF56e3knFrFbEiMTkkFOEbyJTvdEeUAXh4D6PKZAhpoiHFKJN9GP5DAXui4Du2vyLpEjQa2IdXCyRhVozZ24XVeyp4ujNrSjDlUhoW1lC4LCH0QJeqrdc31Sy9TSweDyCwPBl5AsTO1UddMrrnB44n2Fe378tY2YFb7dXGR4VxqEL8s2fBvM6FTj1n1SXRMooIxiBa79FxN03iyvSaZ9mtKHSTSaOB8Ov4qYmsLohBnlHdhRgLaVtsFvAjllbkZfLq2EXtawf1FHIiUdPoeZh3KTbXiTZDVeWLmk84hspu6DDl795bU79wThG6Aj1vbRh1qqYT30SgK7qW3eprYBvJiUgORj4fKJFFnFdHJtffwLrtEQbf7akI3ZemoQ3TahWys0GRhq5KodxCYq7NmU4wVE4r0EnjhsLPOfHeYvmQGKNRqUsoUfj6LQVUX7EkqverUyFnOJ3HktyXtMYO6VhNML7C9zmBCoUm6NNzO91mRk3N5AxMa4Ca1t0qeKl0EkuLosvMHxLhxRK1OaPOiXnolBb98aElSIoBeSXZGGer4OGGkmYcdoDTh6LMby4OC3AUmWAnXI6PysD6wdeymvy4oFULRFAG9hZ7xnLsFyv4DjxnvjXC2h8jkeFIY4jBkm2zBg1uZnzEi0IO5XaELEL7RRuILDpcfeLzhoW889l9bxnXVxmCFo8rhivptGVP8rYqavVtyF4ZudbUyhLJ0bC65Tp7hXkZHTvbRI0zRtvbah1homhhN3lmtP7MuL9BrIAaJvghMZSpdFdS3Zz2kJcrryosHBy7Xnve9CkClARHhMydsYMuaztI8gPycYAVXbpYC1HQD6WoxG6iKsKZHHH9BGvxXU94a2WwCDEAbkSk25NtcYcCnNlMM4BfLLiDaqQ3U4eY0uI0dnp6AcoVvUzbpQD570a2umH4XeRETlnE8khytBpe7hYHY2tVVm8LuZTPwhxPxMPCjgojMPlvpFOrf6RpJPjEYz6FX8iKUFDubio0c601TIrhruj8df4anE5Nb79j9V1mjbqN3jkSgdg0ZzrttUHukYdqe8UgYfK2Bk4EUTzFyEkhruWuNCxJQEIbOD6KJ40THEfWaQWqA9VUKJIE69uMa64GPz4HAc2OSh8cgeqNMc6U68Z4C7bQtHTkgOjpLjD9TGcyoeMXEHBCwEF9htWJdygQPXlRsqexOan3tUQVLRZsUzy3YjXmy9kBMg8tIlX0ixMmHRG3n5oaGIw5YLlDoCXKMcR5HhpTBh3Yvsm1eVHF2APBAabGVT33CRJ2FF10BQJHe5hPtD2kpL0VgS9In8r9Ni41BEV5OtAhsLNKWktDYjczHiHyAHskbYJhL1Sq39mPeU4iaCWbQ0SUCrysYRuEWsEwjXUKk5Qfp1YTQK6L1jSTXpnGcep51G2exN6TnBJUblCnfUVtyOSA8AMBDznILvVRCnDQD4kppEC3Z1tQnovGcFXrurllzaG2qnUfVZ9WgqVQSoQNe0jHZfOhTp9Q4po2ikG2rh8p8H5QPwmzRnSPKvFGi0A4B6l1W4qWJgFWU7e9Iskern59C90O';
@@ -16,11 +23,14 @@ class UpdateWishRequestTest extends TestCase
 
     public function testSuccessIfVaidAgruments()
     {
-        $wish = self::VALID_WISH;
-        $link = self::VALID_LINK;
-        $description = self::VALID_DESCRIPTION;
+        $request = new Request(
+            [],
+            [   self::WISH_NAME => self::VALID_WISH,
+                self::LINK_NAME => self::VALID_LINK,
+                self::DESCRIPTION_NAME => self::VALID_DESCRIPTION,
+                self::ID_NAME => self::VALID_ID]);
 
-        $request = new UpdateWishRequest($wish, $link, $description);
+        $request = new UpdateWishRequest($request);
 
         $this->assertInstanceOf(UpdateWishRequest::class, $request);
     }
@@ -30,26 +40,38 @@ class UpdateWishRequestTest extends TestCase
      * @param $wish
      * @param $link
      * @param $description
+     * @param $id
      */
-    public function testThrowsExceptionIfInvalidArguments($wish, $link, $description)
+    public function testThrowsExceptionIfInvalidArguments($wish, $link, $description, $id)
     {
+        $request = new Request(
+            [],
+            [   self::WISH_NAME => $wish,
+                self::LINK_NAME => $link,
+                self::DESCRIPTION_NAME => $description,
+                self::ID_NAME => $id]);
+
         $this->expectException(\InvalidArgumentException::class);
 
-        new UpdateWishRequest($wish, $link, $description);
+        new UpdateWishRequest($request);
     }
 
     public function providerInvalidArguments()
     {
         return [
-            ['', self::VALID_LINK, self::VALID_DESCRIPTION],
+            ['', self::VALID_LINK, self::VALID_DESCRIPTION, self::VALID_ID],
+            [self::VALID_WISH, self::VALID_LINK, self::VALID_DESCRIPTION, ''],
 
-            [self::TOO_LONG_WISH, self::VALID_LINK, self::VALID_DESCRIPTION],
-            [self::VALID_WISH, self::TOO_LONG_LINK, self::VALID_DESCRIPTION],
-            [self::VALID_WISH, self::VALID_LINK, self::TOO_LONG_DESCRIPTION],
+            [self::TOO_LONG_WISH, self::VALID_LINK, self::VALID_DESCRIPTION, self::VALID_ID],
+            [self::VALID_WISH, self::TOO_LONG_LINK, self::VALID_DESCRIPTION, self::VALID_ID],
+            [self::VALID_WISH, self::VALID_LINK, self::TOO_LONG_DESCRIPTION, self::VALID_ID],
 
-            [null, self::VALID_LINK, self::VALID_DESCRIPTION],
-            [self::VALID_WISH, null, self::VALID_DESCRIPTION],
-            [self::VALID_WISH, self::VALID_LINK, null],
+            [null, self::VALID_LINK, self::VALID_DESCRIPTION, self::VALID_ID],
+            [self::VALID_WISH, null, self::VALID_DESCRIPTION, self::VALID_ID],
+            [self::VALID_WISH, self::VALID_LINK, null, self::VALID_ID],
+            [self::VALID_WISH, self::VALID_LINK, self::VALID_DESCRIPTION, null],
+
+            [self::VALID_WISH, self::VALID_LINK, self::VALID_DESCRIPTION, 't']
         ];
     }
 }

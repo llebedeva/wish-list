@@ -61,14 +61,13 @@ class Controller
     public function updateWishAction(Request $request)
     {
         try {
-            $wish = $request->request->get('wish');
-            $link = $request->request->get('link');
-            $description = $request->request->get('description');
-            $id = $request->request->get('id');
+            $request = new UpdateWishRequest($request);
 
-            new UpdateWishRequest($wish, $link, $description);
-
-            $this->storage->updateWish($wish, $link, $description, $id);
+            $this->storage->updateWish(
+                $request->wish(),
+                $request->link(),
+                $request->description(),
+                $request->id());
 
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
         } catch (\Exception $e) {
@@ -98,7 +97,9 @@ class Controller
         try {
             $request = new ChangeOrderRequest($request);
 
-            $this->storage->updateWishOrder($request->old(), $request->new());
+            $this->storage->updateWishOrder(
+                $request->old(),
+                $request->new());
 
             $response = new Response('', Response::HTTP_OK);
         } catch (\Exception $e) {
