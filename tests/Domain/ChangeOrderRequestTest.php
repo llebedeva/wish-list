@@ -9,7 +9,7 @@ class ChangeOrderRequestTest extends TestCase
 {
     private const OLD_NAME = 'old';
     private const NEW_NAME = 'new';
-    private const CORRECT_VALUE = 1;
+    private const VALID_VALUE = 1;
 
     /**
      * @dataProvider providerValidArguments
@@ -47,11 +47,11 @@ class ChangeOrderRequestTest extends TestCase
     public function providerInvalidArguments()
     {
         return [
-            [[self::OLD_NAME => 'r',                     self::NEW_NAME => self::CORRECT_VALUE]],
-            [[self::OLD_NAME => self::CORRECT_VALUE,     self::NEW_NAME => 't'                ]],
-            [[self::OLD_NAME => self::CORRECT_VALUE,     self::NEW_NAME => null               ]],
-            [[self::OLD_NAME => null,                    self::NEW_NAME => self::CORRECT_VALUE]],
-            [[self::OLD_NAME => self::CORRECT_VALUE,     self::NEW_NAME => self::CORRECT_VALUE]]
+            [[self::OLD_NAME => 'r',                     self::NEW_NAME => self::VALID_VALUE]],
+            [[self::OLD_NAME => self::VALID_VALUE,       self::NEW_NAME => 't'              ]],
+            [[self::OLD_NAME => self::VALID_VALUE,       self::NEW_NAME => null             ]],
+            [[self::OLD_NAME => null,                    self::NEW_NAME => self::VALID_VALUE]],
+            [[self::OLD_NAME => self::VALID_VALUE,       self::NEW_NAME => self::VALID_VALUE]]
         ];
     }
 }

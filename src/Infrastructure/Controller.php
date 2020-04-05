@@ -81,11 +81,9 @@ class Controller
     public function deleteWishAction(Request $request)
     {
         try {
-            $id = $request->request->get('id');
+            $request = new DeleteWishRequest($request);
 
-            new DeleteWishRequest($id);
-
-            $this->storage->deleteWish($id);
+            $this->storage->deleteWish($request->id());
 
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
         } catch (\Exception $e) {
