@@ -57,7 +57,7 @@ const hide = element => {
 deleteBtns.forEach(button => {
     button.onclick = event => {
         const tableRow = event.target.parentElement.parentElement.parentElement;
-        const wish = tableRow.querySelector('td').innerHTML;
+        const wish = tableRow.querySelector('div').innerHTML;
 
         if (!confirm(`Remove ${wish}?`)) {
             event.preventDefault();
