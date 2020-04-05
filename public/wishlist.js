@@ -28,12 +28,6 @@ closeBtn.onclick = () => {
     hide(wishModal);
 };
 
-window.onclick = event => {
-    if (event.target === wishModal) {
-        hide(wishModal);
-    }
-};
-
 editBtns.forEach(button => {
     button.onclick = event => {
         const listItem = event.target.parentElement.parentElement;
