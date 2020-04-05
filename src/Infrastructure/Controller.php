@@ -83,6 +83,24 @@ class Controller
         return $response;
     }
 
+    public function changeOrderAction(Request $request)
+    {
+        try {
+            $old = $request->request->get('old');
+            $new = $request->request->get('new');
+
+//            new DeleteWishRequest($id);
+
+            $storage = new Storage();
+            $storage->updateWishOrder($old, $new);
+
+            $response = new Response('', Response::HTTP_OK);
+        } catch (\Exception $e) {
+            $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+        return $response;
+    }
+
     private function render_php($path, array $variables)
     {
         ob_start();

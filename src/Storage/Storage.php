@@ -1,6 +1,7 @@
 <?php
 namespace App\Storage;
 
+use App\Domain\SortPriority;
 use App\Infrastructure\Config;
 
 class Storage
@@ -71,6 +72,41 @@ class Storage
                 modified_at=CURRENT_TIMESTAMP 
             WHERE id='$id';";
         $this->execute($sql);
+    }
+
+    public function updateWishOrder($old, $new) : void
+    {
+        $old = (int)$old;
+        $new = (int)$new;
+        $columnName = 'priority';
+        $temp = ($old > $new) ?
+            $this->upPriority($old, $new, $columnName) : $this->lowPriority($old, $new, $columnName);
+        foreach ($temp as $row) {
+            $sql = "UPDATE wish_priority
+            SET
+                priority={$row[$columnName]}
+            WHERE wish_id={$row['wish_id']};";
+            $this->execute($sql);
+        }
+        $this->orderingWishesByPriority();
+    }
+
+    private function lowPriority($old, $new, $columnName) : array
+    {
+        $sql = "SELECT * FROM wish_priority WHERE priority BETWEEN $old AND $new ORDER BY priority ASC;";
+        $temp = $this->dbh->query($sql)->fetchAll();
+
+        SortPriority::lowPriority($temp, $new, $columnName);
+        return $temp;
+    }
+
+    private function upPriority($old, $new, $columnName) : array
+    {
+        $sql = "SELECT * FROM wish_priority WHERE priority BETWEEN $new AND $old ORDER BY priority ASC;";
+        $temp = $this->dbh->query($sql)->fetchAll();
+
+        SortPriority::upPriority($temp, $new, $columnName);
+        return $temp;
     }
 
     public function deleteWish($id) : void
