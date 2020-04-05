@@ -21,11 +21,11 @@ class DeleteWishRequestTest extends TestCase
 
     /**
      * @dataProvider providerInvalidArguments
-     * @param $data
+     * @param $id
      */
-    public function testThrowsExceptionIfInvalidArguments($data)
+    public function testThrowsExceptionIfInvalidArguments($id)
     {
-        $request = new Request([], $data);
+        $request = new Request([], [self::ID_NAME => $id]);
 
         $this->expectException(\InvalidArgumentException::class);
 
@@ -35,9 +35,9 @@ class DeleteWishRequestTest extends TestCase
     public function providerInvalidArguments()
     {
         return [
-            [[self::ID_NAME => null]],
-            [[self::ID_NAME => '']],
-            [[self::ID_NAME => 't']]
+            [null],
+            [''],
+            ['t']
         ];
     }
 }
