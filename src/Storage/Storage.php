@@ -6,6 +6,9 @@ use App\Infrastructure\Config;
 
 class Storage
 {
+    private const WISH_PRIORITY_TABLE = 'wish_priority';
+    private const WISH_ID_COLUMN = 'wish_id';
+    private const PRIORITY_COLUMN = 'priority';
     private $dbh;
 
     public function __construct()
@@ -85,13 +88,8 @@ class Storage
             $arr = $this->getPrioritiesBetween($old, $new);
             SortPriority::putIndexToBottom($arr, $new);
         }
-        $sth = $this->dbh->prepare("UPDATE wish_priority
-            SET
-                priority = ?
-            WHERE wish_id = ?;");
-        foreach ($arr as $row) {
-            $sth->execute([$row['priority'], $row['wish_id']]);
-        }
+        $this->deleteWishPriorities($arr);
+        $this->insertWishPriorities($arr);
         $this->orderingWishesByPriority();
     }
 
@@ -116,6 +114,29 @@ class Storage
             WHERE wish_id = '$wish_id';";
         $this->execute($sql);
         $this->orderingWishesByPriority();
+    }
+
+    private function deleteWishPriorities($arr) : void
+    {
+        $arr_id = [];
+        foreach ($arr as $row) {
+            array_push($arr_id, $row['wish_id']);
+        }
+        $sql = "DELETE FROM wish_priority 
+            WHERE wish_id IN (".implode(", ", $arr_id).");";
+        $this->execute($sql);
+    }
+
+    private function insertWishPriorities($arr) : void
+    {
+        $arr_pair = [];
+        foreach ($arr as $row) {
+            array_push($arr_pair,  "{$row['wish_id']}, {$row['priority']}");
+        }
+        $sql = "INSERT INTO wish_priority (wish_id, priority)
+        VALUES
+            (".implode("), (", $arr_pair).");";
+        $this->execute($sql);
     }
 
     private function orderingWishesByPriority() : void
