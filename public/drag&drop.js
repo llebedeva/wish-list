@@ -1,20 +1,22 @@
 import Sortable from './sortable.complete.esm.js';
 
 const element = document.getElementById('list');
-Sortable.create(element, {
-    multiDrag: true,
-    fallbackTolerance: 3,
-    animation: 150,
 
-    onEnd: function (/**Event*/evt) {
-        const oldIndex = evt.oldIndex;
-        let newIndex = evt.newIndex;
+if (element !== null) {
+    Sortable.create(element, {
+        multiDrag: true,
+        fallbackTolerance: 3,
+        animation: 150,
 
-        if (oldIndex !== newIndex) {
-            changeOrder(oldIndex, newIndex);
+        onEnd: function (/**Event*/evt) {
+            const oldIndex = evt.oldIndex;
+            let newIndex = evt.newIndex;
+            if (oldIndex !== newIndex) {
+                changeOrder(oldIndex, newIndex);
+            }
         }
-    }
-});
+    });
+}
 
 const changeOrder = (oldIndex, newIndex) => {
     const xhr = new XMLHttpRequest();
