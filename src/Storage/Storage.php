@@ -19,7 +19,7 @@ class Storage
         $user = $config->dbUser();
         $password = $config->dbRootPassword();
 
-        $this->dbh = new \PDO('mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database . ';charset=' . $charset, $user, $password);
+        $this->dbh = new \PDO("mysql:host=$host;port=$port;dbname=$database;charset=$charset", $user, $password);
     }
 
     public function execute(string $sql) : void
@@ -66,11 +66,11 @@ class Storage
     public function updateWish($wish, $link, $description, $id) : void
     {
         $sql = "UPDATE wishes 
-            SET wish='$wish', 
-                link='$link', 
-                description='$description', 
-                modified_at=CURRENT_TIMESTAMP 
-            WHERE id='$id';";
+            SET wish = '$wish', 
+                link = '$link', 
+                description = '$description', 
+                modified_at = CURRENT_TIMESTAMP 
+            WHERE id = '$id';";
         $this->execute($sql);
     }
 
@@ -112,7 +112,7 @@ class Storage
     public function deleteWish($id) : void
     {
         $sql = "DELETE FROM wishes 
-            WHERE id='$id';";
+            WHERE id = '$id';";
         $this->execute($sql);
 
         $this->deleteWishPriority($id);
@@ -121,7 +121,7 @@ class Storage
     private function deleteWishPriority($wish_id) : void
     {
         $sql = "DELETE FROM wish_priority 
-            WHERE wish_id='$wish_id';";
+            WHERE wish_id = '$wish_id';";
         $this->execute($sql);
         $this->orderingWishesByPriority();
     }
