@@ -13,11 +13,12 @@ class ChangeOrderRequestTest extends TestCase
 
     /**
      * @dataProvider providerValidArguments
-     * @param $data
+     * @param $old
+     * @param $new
      */
-    public function testValidArguments($data)
+    public function testValidArguments($old, $new)
     {
-        $request = new Request([], $data);
+        $request = new Request([], [self::OLD_NAME => $old, self::NEW_NAME => $new]);
         $request = new ChangeOrderRequest($request);
 
         $this->assertInstanceOf(ChangeOrderRequest::class, $request);
@@ -26,19 +27,20 @@ class ChangeOrderRequestTest extends TestCase
     public function providerValidArguments()
     {
         return [
-            [[self::OLD_NAME => 1, self::NEW_NAME => 4]],
-            [[self::OLD_NAME => 5, self::NEW_NAME => 0]],
-            [[self::OLD_NAME => '1', self::NEW_NAME => '2']]
+            [1, 4],
+            [5, 0],
+            ['1', '2']
         ];
     }
 
     /**
      * @dataProvider providerInvalidArguments
-     * @param $data
+     * @param $old
+     * @param $new
      */
-    public function testThrowsExceptionIfInvalidArguments($data)
+    public function testThrowsExceptionIfInvalidArguments($old, $new)
     {
-        $request = new Request([], $data);
+        $request = new Request([], [self::OLD_NAME => $old, self::NEW_NAME => $new]);
         $this->expectException(\InvalidArgumentException::class);
 
         new ChangeOrderRequest($request);
@@ -47,11 +49,11 @@ class ChangeOrderRequestTest extends TestCase
     public function providerInvalidArguments()
     {
         return [
-            [[self::OLD_NAME => 'r',                     self::NEW_NAME => self::VALID_VALUE]],
-            [[self::OLD_NAME => self::VALID_VALUE,       self::NEW_NAME => 't'              ]],
-            [[self::OLD_NAME => self::VALID_VALUE,       self::NEW_NAME => null             ]],
-            [[self::OLD_NAME => null,                    self::NEW_NAME => self::VALID_VALUE]],
-            [[self::OLD_NAME => self::VALID_VALUE,       self::NEW_NAME => self::VALID_VALUE]]
+            ['t', self::VALID_VALUE],
+            [self::VALID_VALUE, 't'],
+            [null, self::VALID_VALUE],
+            [self::VALID_VALUE, null],
+            [self::VALID_VALUE, self::VALID_VALUE]
         ];
     }
 }
