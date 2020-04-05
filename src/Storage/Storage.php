@@ -79,9 +79,9 @@ class Storage
         $old = (int)$old;
         $new = (int)$new;
         $columnName = 'priority';
-        $temp = ($old > $new) ?
+        $arr = ($old > $new) ?
             $this->upPriority($old, $new, $columnName) : $this->lowPriority($old, $new, $columnName);
-        foreach ($temp as $row) {
+        foreach ($arr as $row) {
             $sql = "UPDATE wish_priority
             SET
                 priority={$row[$columnName]}
@@ -94,19 +94,19 @@ class Storage
     private function lowPriority($old, $new, $columnName) : array
     {
         $sql = "SELECT * FROM wish_priority WHERE priority BETWEEN $old AND $new ORDER BY priority ASC;";
-        $temp = $this->dbh->query($sql)->fetchAll();
+        $arr = $this->dbh->query($sql)->fetchAll();
 
-        SortPriority::lowPriority($temp, $new, $columnName);
-        return $temp;
+        SortPriority::lowPriority($arr, $new, $columnName);
+        return $arr;
     }
 
     private function upPriority($old, $new, $columnName) : array
     {
         $sql = "SELECT * FROM wish_priority WHERE priority BETWEEN $new AND $old ORDER BY priority ASC;";
-        $temp = $this->dbh->query($sql)->fetchAll();
+        $arr = $this->dbh->query($sql)->fetchAll();
 
-        SortPriority::upPriority($temp, $new, $columnName);
-        return $temp;
+        SortPriority::upPriority($arr, $new, $columnName);
+        return $arr;
     }
 
     public function deleteWish($id) : void

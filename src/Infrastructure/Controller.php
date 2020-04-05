@@ -1,6 +1,7 @@
 <?php
 namespace App\Infrastructure;
 
+use App\Domain\ChangeOrderRequest;
 use App\Domain\CreateWishRequest;
 use App\Domain\DeleteWishRequest;
 use App\Domain\UpdateWishRequest;
@@ -89,7 +90,7 @@ class Controller
             $old = $request->request->get('old');
             $new = $request->request->get('new');
 
-//            new DeleteWishRequest($id);
+            new ChangeOrderRequest($old, $new);
 
             $storage = new Storage();
             $storage->updateWishOrder($old, $new);

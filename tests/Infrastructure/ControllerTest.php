@@ -92,4 +92,28 @@ class ControllerTest extends SetUpTestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
     }
+
+    public function testChangeOrderAction_success()
+    {
+        $request = new Request([], ['old' => 2, 'new' => 5]);
+        $controller = new Controller();
+
+        /** @var Response $response */
+        $response = $controller->changeOrderAction($request);
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+    }
+
+    public function testChangeOrderAction_error()
+    {
+        $request = new Request();
+        $controller = new Controller();
+
+        /** @var Response $response */
+        $response = $controller->changeOrderAction($request);
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
+    }
 }
