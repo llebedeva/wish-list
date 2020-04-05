@@ -6,9 +6,6 @@ use App\Infrastructure\Config;
 
 class Storage
 {
-    private const WISH_PRIORITY_TABLE = 'wish_priority';
-    private const WISH_ID_COLUMN = 'wish_id';
-    private const PRIORITY_COLUMN = 'priority';
     private $dbh;
 
     public function __construct()
