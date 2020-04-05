@@ -81,12 +81,12 @@ class Storage
         $columnName = 'priority';
         $arr = ($old > $new) ?
             $this->upPriority($old, $new, $columnName) : $this->lowPriority($old, $new, $columnName);
-        foreach ($arr as $row) {
-            $sql = "UPDATE wish_priority
+        $sth = $this->dbh->prepare("UPDATE wish_priority
             SET
-                priority={$row[$columnName]}
-            WHERE wish_id={$row['wish_id']};";
-            $this->execute($sql);
+                priority = ?
+            WHERE wish_id = ?;");
+        foreach ($arr as $row) {
+            $sth->execute([$row[$columnName], $row['wish_id']]);
         }
         $this->orderingWishesByPriority();
     }
