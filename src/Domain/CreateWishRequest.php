@@ -1,15 +1,23 @@
 <?php
 namespace App\Domain;
 
+use Symfony\Component\HttpFoundation\Request;
 use Webmozart\Assert\Assert;
 
 class CreateWishRequest
 {
-    public function __construct($wish, $link, $description)
+    private $wish;
+    private $link;
+    private $description;
+
+    public function __construct(Request $request)
     {
-        $this->validateWish($wish);
-        $this->validateLink($link);
-        $this->validateDescription($description);
+        $this->wish = $request->request->get('wish');
+        $this->link = $request->request->get('link');
+        $this->description = $request->request->get('description');
+        $this->validateWish($this->wish);
+        $this->validateLink($this->link);
+        $this->validateDescription($this->description);
     }
 
     protected function validateWish($wish) : void
@@ -29,5 +37,20 @@ class CreateWishRequest
     {
         Assert::string($description);
         Assert::maxLength($description, 2000);
+    }
+
+    public function wish() : string
+    {
+        return $this->wish;
+    }
+
+    public function link() : string
+    {
+        return $this->link;
+    }
+
+    public function description() : string
+    {
+        return $this->description;
     }
 }

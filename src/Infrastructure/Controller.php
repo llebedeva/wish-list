@@ -42,13 +42,12 @@ class Controller
     public function addWishAction(Request $request)
     {
         try {
-            $wish = $request->request->get('wish');
-            $link = $request->request->get('link');
-            $description = $request->request->get('description');
+            $request = new CreateWishRequest($request);
 
-            new CreateWishRequest($wish, $link, $description);
-
-            $this->storage->createWish($wish, $link, $description);
+            $this->storage->createWish(
+                $request->wish(),
+                $request->link(),
+                $request->description());
 
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
         } catch (\Exception $e) {

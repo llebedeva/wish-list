@@ -17,7 +17,7 @@ class UpdateWishRequest extends CreateWishRequest
         $this->link = $request->request->get('link');
         $this->description = $request->request->get('description');
         $this->id = $request->request->get('id');
-        parent::__construct($this->wish, $this->link, $this->description);
+        parent::__construct($request);
         $this->validateId($this->id);
     }
 

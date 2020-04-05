@@ -3,9 +3,14 @@ namespace App\Tests\Domain;
 
 use App\Domain\CreateWishRequest;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
 
 class CreateWishRequestTest extends TestCase
 {
+    private const WISH_NAME = 'wish';
+    private const LINK_NAME = 'link';
+    private const DESCRIPTION_NAME = 'description';
+
     private const VALID_WISH = 'I wish something';
     private const VALID_LINK = 'https://ru.wikipedia.org/wiki/URL';
     private const VALID_DESCRIPTION = 'text message about my wish';
@@ -16,11 +21,13 @@ class CreateWishRequestTest extends TestCase
 
     public function testSuccessIfVaidAgruments()
     {
-        $wish = self::VALID_WISH;
-        $link = self::VALID_LINK;
-        $description = self::VALID_DESCRIPTION;
+        $request = new Request(
+            [],
+            [   self::WISH_NAME => self::VALID_WISH,
+                self::LINK_NAME => self::VALID_LINK,
+                self::DESCRIPTION_NAME => self::VALID_DESCRIPTION]);
 
-        $request = new CreateWishRequest($wish, $link, $description);
+        $request = new CreateWishRequest($request);
 
         $this->assertInstanceOf(CreateWishRequest::class, $request);
     }
@@ -33,9 +40,15 @@ class CreateWishRequestTest extends TestCase
      */
     public function testThrowsExceptionIfInvalidArguments($wish, $link, $description)
     {
+        $request = new Request(
+            [],
+            [   self::WISH_NAME => $wish,
+                self::LINK_NAME => $link,
+                self::DESCRIPTION_NAME => $description]);
+
         $this->expectException(\InvalidArgumentException::class);
 
-        new CreateWishRequest($wish, $link, $description);
+        new CreateWishRequest($request);
     }
 
     public function providerInvalidArguments()
