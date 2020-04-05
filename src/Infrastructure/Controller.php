@@ -11,10 +11,24 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Controller
 {
+    private $storage;
+
+    /**
+     * @codeCoverageIgnore
+     * (StorageTest)
+     */
+    public function __construct()
+    {
+        try {
+            $this->storage = new Storage();
+        } catch (\Exception $e) {
+            print("Error!: " . $e->getMessage());
+        }
+    }
+
     public function indexAction()
     {
-        $storage = new Storage();
-        $stmt = $storage->getWishTable();
+        $stmt = $this->storage->getWishTable();
 
         $s = $this->render_php(PROJECT_ROOT . "/src/wishlist.php", [
             "stmt" => $stmt
@@ -34,8 +48,7 @@ class Controller
 
             new CreateWishRequest($wish, $link, $description);
 
-            $storage = new Storage();
-            $storage->createWish($wish, $link, $description);
+            $this->storage->createWish($wish, $link, $description);
 
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
         } catch (\Exception $e) {
@@ -55,8 +68,7 @@ class Controller
 
             new UpdateWishRequest($wish, $link, $description);
 
-            $storage = new Storage();
-            $storage->updateWish($wish, $link, $description, $id);
+            $this->storage->updateWish($wish, $link, $description, $id);
 
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
         } catch (\Exception $e) {
@@ -73,8 +85,7 @@ class Controller
 
             new DeleteWishRequest($id);
 
-            $storage = new Storage();
-            $storage->deleteWish($id);
+            $this->storage->deleteWish($id);
 
             $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
         } catch (\Exception $e) {
@@ -92,8 +103,7 @@ class Controller
 
             new ChangeOrderRequest($old, $new);
 
-            $storage = new Storage();
-            $storage->updateWishOrder($old, $new);
+            $this->storage->updateWishOrder($old, $new);
 
             $response = new Response('', Response::HTTP_OK);
         } catch (\Exception $e) {
