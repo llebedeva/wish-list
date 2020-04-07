@@ -2,8 +2,14 @@ const createBtn = document.getElementById('createButton');
 const editBtns = document.querySelectorAll('button[name="edit"]');
 const deleteBtns = document.querySelectorAll('input[name="delete"]');
 
+const confirmModal = document.getElementById('confirmModal');
+const confirmMessage = confirmModal.querySelector('p');
+const yesBtn = confirmModal.querySelector('button[name="yes"]');
+const noBtn = confirmModal.querySelector('button[name="no"]');
+
 const wishModal = document.getElementById('wishModal');
 const closeBtn = document.querySelector('.close');
+const title = document.querySelector('h3');
 const addBtn = document.getElementById('add');
 const updateBtn = document.getElementById('update');
 
@@ -17,6 +23,8 @@ createBtn.onclick = () => {
     linkInput.value = null;
     descriptionInput.value = null;
     idInput.value = null;
+
+    title.innerHTML = 'Create new wish';
 
     show(addBtn);
     hide(updateBtn);
@@ -37,6 +45,8 @@ editBtns.forEach(button => {
         descriptionInput.value = listItem.querySelector('div:nth-child(3)').innerHTML;
         idInput.value = listItem.querySelector('input[name="id"]').value;
 
+        title.innerHTML = 'Edit wish';
+
         hide(addBtn);
         show(updateBtn);
 
@@ -56,11 +66,25 @@ const hide = element => {
 
 deleteBtns.forEach(button => {
     button.onclick = event => {
-        const tableRow = event.target.parentElement.parentElement.parentElement;
-        const wish = tableRow.querySelector('div').innerHTML;
+        const item = event.target.parentElement.parentElement.parentElement;
+        const wishValue = item.querySelector('div').innerHTML;
 
-        if (!confirm(`Remove ${wish}?`)) {
+        if (!confirm(`Remove ${wishValue}?`)) {
             event.preventDefault();
         }
+
+        // confirmMessage.innerHTML = `Remove ${wishValue}?`;
+        // show(confirmModal);
+
+        // if yesBtn.onclick
+        // hide(confirmModal);
+        // hide(item);
+
+        // if noBtn.onclick
+        // hide(confirmModal);
+        // event.preventDefault();
+
     }
 });
+
+

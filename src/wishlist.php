@@ -17,6 +17,8 @@ $stmt = $variables['stmt'];
         <p>You don't have any wishes yet. Please, create your first wish.</p>
     <?php endif; ?>
 
+    <button id="createButton">New wish</button>
+
     <?php if ($stmt->rowCount() > 0): ?>
     <div id="list" class="list-group col">
         <?php while ($row = $stmt->fetch()): ?>
@@ -36,11 +38,10 @@ $stmt = $variables['stmt'];
     </div>
     <?php endif; ?>
 
-    <button id="createButton">New wish</button>
-
     <div id="wishModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
+            <h3></h3>
             <form action="/" method="POST">
                 <label for="wish">Wish:</label>
                 <br>
@@ -58,6 +59,15 @@ $stmt = $variables['stmt'];
                 <input type="submit" name="update" id="update" value="Save">
                 <input type="submit" name="add" id="add" value="Create">
             </form>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p></p>
+            <button name="yes">Yes</button>
+            <button name="no">No</button>
         </div>
     </div>
 
