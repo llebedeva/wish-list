@@ -1,4 +1,5 @@
 import Sortable from './sortable.complete.esm.js';
+import {serialize} from './lib.js';
 
 const element = document.getElementById('list');
 
@@ -36,13 +37,4 @@ const changeOrder = (oldIndex, newIndex) => {
             return xhr.response;
         }
     };
-};
-
-const serialize = obj => {
-    let str = [];
-    for (let p in obj)
-        if (obj.hasOwnProperty(p)) {
-            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-        }
-    return str.join("&");
 };

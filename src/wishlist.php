@@ -69,7 +69,7 @@ $stmt = $variables['stmt'];
         </div>
     </div>
 
-    <script src="wishlist.js"></script>
+    <script type="module" src="wishlist.js"></script>
     <script type="module" src="drag&drop.js"></script>
 </body>
 </html>

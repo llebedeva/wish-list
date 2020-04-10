@@ -83,7 +83,7 @@ class Controller
 
             $this->storage->deleteWish($request->id());
 
-            $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
+            $response = new Response('', Response::HTTP_OK);
         } catch (\Exception $e) {
             $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }

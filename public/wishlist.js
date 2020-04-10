@@ -1,3 +1,4 @@
+import {serialize} from './lib.js';
 const createBtn = document.getElementById('createButton');
 const editBtns = document.querySelectorAll('button[name="edit"]');
 const deleteBtns = document.querySelectorAll('button[name="delete"]');
@@ -92,20 +93,11 @@ const deleteWish = async (wishId) => {
             headers: {'Content-type': 'application/x-www-form-urlencoded'},
             body: serialize({id: wishId, delete: 'Delete'})
         });
-        if (!response.ok) {
+        if (!(response.ok)) {
             // noinspection ExceptionCaughtLocallyJS
             throw new Error('Request failed!');
         }
     } catch(error){
         console.log(error);
     }
-};
-
-const serialize = obj => {
-    let str = [];
-    for (let p in obj)
-        if (obj.hasOwnProperty(p)) {
-            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-        }
-    return str.join("&");
 };
