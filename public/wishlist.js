@@ -1,4 +1,5 @@
 import {serialize} from './lib.js';
+
 const createBtn = document.getElementById('createButton');
 const editBtns = document.querySelectorAll('button[name="edit"]');
 const deleteBtns = document.querySelectorAll('button[name="delete"]');
@@ -31,6 +32,7 @@ createBtn.onclick = () => {
     hide(updateBtn);
 
     show(wishModal);
+    getFocus();
 };
 
 closeBtn.onclick = () => {
@@ -52,6 +54,7 @@ editBtns.forEach(button => {
         show(updateBtn);
 
         show(wishModal);
+        getFocus();
     }
 });
 
@@ -63,6 +66,10 @@ const show = element => {
 const hide = element => {
     element.classList.add('hide');
     element.classList.remove('show');
+};
+
+const getFocus = () => {
+    wishInput.focus();
 };
 
 deleteBtns.forEach(button => {
