@@ -78,7 +78,7 @@ class ControllerTest extends SetUpTestCase
         $response = $controller->deleteWishAction($request);
 
         $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(Response::HTTP_MOVED_PERMANENTLY, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
     }
 
     public function testDeleteWish_error()
