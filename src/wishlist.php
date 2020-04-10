@@ -27,11 +27,9 @@ $stmt = $variables['stmt'];
             <div><a href="<?=$row['link']?>"><?=$row['link']?></a></div>
             <div><?=$row['description']?></div>
             <div>
-                <button name="edit" class="inline">Edit</button>
-                <form action="/" method="POST" class="inline">
-                    <input type="hidden" name="id" value="<?=$row['id']?>">
-                    <input type="submit" name="delete" value="Delete">
-                </form>
+                <input type="hidden" name="id" value="<?=$row['id']?>">
+                <button name="edit">Edit</button>
+                <button name="delete">Delete</button>
             </div>
         </div>
         <?php endwhile; ?>
@@ -66,8 +64,8 @@ $stmt = $variables['stmt'];
         <div class="modal-content">
             <span class="close">&times;</span>
             <p></p>
-            <button name="yes">Yes</button>
-            <button name="no">No</button>
+            <button name="ok">Ok</button>
+            <button name="cancel">Cancel</button>
         </div>
     </div>
 

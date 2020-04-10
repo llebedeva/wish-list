@@ -1,11 +1,11 @@
 const createBtn = document.getElementById('createButton');
 const editBtns = document.querySelectorAll('button[name="edit"]');
-const deleteBtns = document.querySelectorAll('input[name="delete"]');
+const deleteBtns = document.querySelectorAll('button[name="delete"]');
 
 const confirmModal = document.getElementById('confirmModal');
 const confirmMessage = confirmModal.querySelector('p');
-const yesBtn = confirmModal.querySelector('button[name="yes"]');
-const noBtn = confirmModal.querySelector('button[name="no"]');
+const yesBtn = confirmModal.querySelector('button[name="ok"]');
+const noBtn = confirmModal.querySelector('button[name="cancel"]');
 
 const wishModal = document.getElementById('wishModal');
 const closeBtn = document.querySelector('.close');
@@ -66,25 +66,46 @@ const hide = element => {
 
 deleteBtns.forEach(button => {
     button.onclick = event => {
-        const item = event.target.parentElement.parentElement.parentElement;
+        const item = event.target.parentElement.parentElement;
         const wishValue = item.querySelector('div').innerHTML;
+        const wishId = item.querySelector('input[name="id"]').value;
 
-        if (!confirm(`Remove ${wishValue}?`)) {
-            event.preventDefault();
-        }
+        confirmMessage.innerHTML = `Remove ${wishValue}?`;
+        show(confirmModal);
 
-        // confirmMessage.innerHTML = `Remove ${wishValue}?`;
-        // show(confirmModal);
+        yesBtn.onclick = async () => {
+            hide(confirmModal);
+            hide(item);
+            await deleteWish(wishId);
+        };
 
-        // if yesBtn.onclick
-        // hide(confirmModal);
-        // hide(item);
-
-        // if noBtn.onclick
-        // hide(confirmModal);
-        // event.preventDefault();
-
+        noBtn.onclick = () => {
+            hide(confirmModal);
+        };
     }
 });
 
+const deleteWish = async (wishId) => {
+    try {
+        const response = await fetch('/', {
+            method: 'POST',
+            headers: {'Content-type': 'application/x-www-form-urlencoded'},
+            body: serialize({id: wishId, delete: 'Delete'})
+        });
+        if (!response.ok) {
+            // noinspection ExceptionCaughtLocallyJS
+            throw new Error('Request failed!');
+        }
+    } catch(error){
+        console.log(error);
+    }
+};
 
+const serialize = obj => {
+    let str = [];
+    for (let p in obj)
+        if (obj.hasOwnProperty(p)) {
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+    return str.join("&");
+};

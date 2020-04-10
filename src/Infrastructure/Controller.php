@@ -87,7 +87,6 @@ class Controller
         } catch (\Exception $e) {
             $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
-        $response->headers->set('Location', '/');
         return $response;
     }
 
