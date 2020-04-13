@@ -78,9 +78,9 @@ const deleteHandler = event => {
     show(confirmModal);
 
     yesBtn.onclick = async () => {
-        hide(confirmModal);
-        hide(item);
         await deleteWishPOST(wishId);
+        wishList.removeChild(item);
+        hide(confirmModal);
     };
 
     noBtn.onclick = () => {
