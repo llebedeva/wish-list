@@ -33,7 +33,7 @@ class Storage
         return $this->dbh->query($sql);
     }
 
-    public function createWish($wish, $link, $description) : void
+    public function createWish($wish, $link, $description) : int
     {
         $sql = "INSERT INTO wishes (wish, link, description) 
             VALUES ('$wish', '$link', '$description');";
@@ -41,6 +41,7 @@ class Storage
 
         $wish_id = $this->dbh->lastInsertId();
         $this->insertWishPriority($wish_id);
+        return $wish_id;
     }
 
     private function generateNewWishPriority() : int

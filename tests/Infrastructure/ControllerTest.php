@@ -29,7 +29,7 @@ class ControllerTest extends SetUpTestCase
         $response = $controller->addWishAction($request);
 
         $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(Response::HTTP_MOVED_PERMANENTLY, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
     }
 
     public function testAddWish_error()
@@ -54,7 +54,7 @@ class ControllerTest extends SetUpTestCase
         $response = $controller->updateWishAction($request);
 
         $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(Response::HTTP_MOVED_PERMANENTLY, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
     }
 
     public function testUpdateWish_error()

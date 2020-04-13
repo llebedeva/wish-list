@@ -40,23 +40,21 @@ $stmt = $variables['stmt'];
         <div class="modal-content">
             <span class="close">&times;</span>
             <h3></h3>
-            <form action="/" method="POST">
-                <label for="wish">Wish:</label>
-                <br>
-                <input type="text" id="wish" name="wish" required>
-                <br>
-                <label for="link">Reference:</label>
-                <br>
-                <input type="text" id="link" name="link">
-                <br>
-                <label for="description">Additional information:</label>
-                <br>
-                <textarea id="description" name="description" rows="3" cols="40"></textarea>
-                <br>
-                <input type="hidden" name="id">
-                <input type="submit" name="update" id="update" value="Save">
-                <input type="submit" name="add" id="add" value="Create">
-            </form>
+            <label for="wish">Wish:</label>
+            <br>
+            <input type="text" id="wish" name="wish" required>
+            <br>
+            <label for="link">Reference:</label>
+            <br>
+            <input type="text" id="link" name="link">
+            <br>
+            <label for="description">Additional information:</label>
+            <br>
+            <textarea id="description" name="description" rows="3" cols="40"></textarea>
+            <br>
+            <input type="hidden" name="id">
+            <button id="update">Save</button>
+            <button id="add">Create</button>
         </div>
     </div>
 

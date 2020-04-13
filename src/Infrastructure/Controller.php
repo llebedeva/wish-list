@@ -44,16 +44,15 @@ class Controller
         try {
             $request = new CreateWishRequest($request);
 
-            $this->storage->createWish(
+            $id = $this->storage->createWish(
                 $request->wish(),
                 $request->link(),
                 $request->description());
 
-            $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
+            $response = new Response(json_encode(['id' => $id]), Response::HTTP_OK);
         } catch (\Exception $e) {
             $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
-        $response->headers->set('Location', '/');
         return $response;
     }
 
@@ -68,11 +67,10 @@ class Controller
                 $request->description(),
                 $request->id());
 
-            $response = new Response('', Response::HTTP_MOVED_PERMANENTLY);
+            $response = new Response('', Response::HTTP_OK);
         } catch (\Exception $e) {
             $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
-        $response->headers->set('Location', '/');
         return $response;
     }
 
