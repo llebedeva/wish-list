@@ -22,11 +22,6 @@ class Storage
         $this->dbh = new \PDO("mysql:host=$host;port=$port;dbname=$database;charset=$charset", $user, $password);
     }
 
-    public function execute(string $sql) : void
-    {
-        $this->dbh->exec($sql);
-    }
-
     public function getWishTable() : \PDOStatement
     {
         $sql = 'SELECT * FROM wish_table;';
@@ -37,7 +32,7 @@ class Storage
     {
         $sql = "INSERT INTO wishes (wish, link, description) 
             VALUES ('$wish', '$link', '$description');";
-        $this->execute($sql);
+        $this->dbh->exec($sql);
 
         $wish_id = $this->dbh->lastInsertId();
         $this->insertWishPriority($wish_id);
@@ -60,7 +55,7 @@ class Storage
 
         $sql = "INSERT INTO wish_priority (wish_id, priority) 
             VALUES ('$wish_id', '$priority');";
-        $this->execute($sql);
+        $this->dbh->exec($sql);
         $this->orderingWishesByPriority();
     }
 
@@ -72,7 +67,7 @@ class Storage
                 description = '$description', 
                 modified_at = CURRENT_TIMESTAMP 
             WHERE id = '$id';";
-        $this->execute($sql);
+        $this->dbh->exec($sql);
     }
 
     public function updateWishOrder($old, $new) : void
@@ -101,7 +96,7 @@ class Storage
     {
         $sql = "DELETE FROM wishes 
             WHERE id = '$id';";
-        $this->execute($sql);
+        $this->dbh->exec($sql);
 
         $this->deleteWishPriority($id);
     }
@@ -110,7 +105,7 @@ class Storage
     {
         $sql = "DELETE FROM wish_priority 
             WHERE wish_id = '$wish_id';";
-        $this->execute($sql);
+        $this->dbh->exec($sql);
         $this->orderingWishesByPriority();
     }
 
@@ -122,7 +117,7 @@ class Storage
         }
         $sql = "DELETE FROM wish_priority 
             WHERE wish_id IN (".implode(", ", $arr_id).");";
-        $this->execute($sql);
+        $this->dbh->exec($sql);
     }
 
     private function insertWishPriorities($arr) : void
@@ -134,7 +129,7 @@ class Storage
         $sql = "INSERT INTO wish_priority (wish_id, priority)
         VALUES
             (".implode("), (", $arr_pair).");";
-        $this->execute($sql);
+        $this->dbh->exec($sql);
     }
 
     private function orderingWishesByPriority() : void
@@ -151,6 +146,6 @@ class Storage
                     INNER JOIN wish_priority AS P
                                ON W.id = P.wish_id
             ORDER BY P.priority ASC;";
-        $this->execute($sql);
+        $this->dbh->exec($sql);
     }
 }
