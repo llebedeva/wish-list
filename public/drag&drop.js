@@ -9,32 +9,31 @@ if (element !== null) {
         fallbackTolerance: 3,
         animation: 150,
 
-        onEnd: function (/**Event*/evt) {
+        onEnd: async function (/**Event*/evt) {
             const oldIndex = evt.oldIndex;
-            let newIndex = evt.newIndex;
+            const newIndex = evt.newIndex;
             if (oldIndex !== newIndex) {
-                changeOrder(oldIndex, newIndex);
+                await changeOrderPOST(oldIndex, newIndex);
             }
         }
     });
 }
 
-const changeOrder = (oldIndex, newIndex) => {
-    const xhr = new XMLHttpRequest();
-    const url = '/';
-    const data = serialize({
-        old: oldIndex,
-        new: newIndex,
-        change_order: 'change_order'
-    });
-
-    xhr.open('POST', url);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send(data);
-
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            return xhr.response;
+const changeOrderPOST = async (oldIndex, newIndex) => {
+    try {
+        const response = await fetch('/', {
+            method: 'POST',
+            headers: {'Content-type': 'application/x-www-form-urlencoded'},
+            body: serialize({
+                old: oldIndex,
+                new: newIndex,
+                change_order: 'change_order'})
+        });
+        if (!(response.ok)) {
+            // noinspection ExceptionCaughtLocallyJS
+            throw new Error('Request failed!');
         }
-    };
+    } catch(error){
+        console.log(error);
+    }
 };
