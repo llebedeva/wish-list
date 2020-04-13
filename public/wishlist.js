@@ -21,6 +21,8 @@ const linkInput = wishModal.querySelector('input[name="link"]');
 const descriptionInput = wishModal.querySelector('textarea[name="description"]');
 const idInput = wishModal.querySelector('input[name="id"]');
 
+let currentListItem;
+
 const show = element => {
     element.classList.add('show');
     element.classList.remove('hide');
@@ -51,12 +53,12 @@ const createHandler = () => {
 };
 
 const editHandler = event => {
-    const listItem = event.target.parentElement.parentElement;
+    currentListItem = event.target.parentElement.parentElement;
 
-    wishInput.value = listItem.querySelector('div').innerHTML;
-    linkInput.value = listItem.querySelector('div:nth-child(2) a').innerHTML;
-    descriptionInput.value = listItem.querySelector('div:nth-child(3)').innerHTML;
-    idInput.value = listItem.querySelector('input[name="id"]').value;
+    wishInput.value = currentListItem.querySelector('div').innerHTML;
+    linkInput.value = currentListItem.querySelector('div:nth-child(2) a').innerHTML;
+    descriptionInput.value = currentListItem.querySelector('div:nth-child(3)').innerHTML;
+    idInput.value = currentListItem.querySelector('input[name="id"]').value;
 
     title.innerHTML = 'Edit wish';
 
@@ -94,6 +96,7 @@ addBtn.onclick = async () => {
     const description = descriptionInput.value;
 
     const id = await createWishPOST(wish, link, description);
+
     wishList.insertAdjacentHTML('beforeend', `<div class="list-group-item">
             <div>${wish}</div>
             <div><a href="${link}">${link}</a></div>
@@ -121,6 +124,12 @@ updateBtn.onclick = async () => {
     const description = descriptionInput.value;
 
     await updateWishPOST(id, wish, link, description);
+
+    currentListItem.querySelector('div:nth-child(1)').innerHTML = wish;
+    const a = currentListItem.querySelector('div:nth-child(2) a');
+    a.innerHTML = link;
+    a.setAttribute('href', link);
+    currentListItem.querySelector('div:nth-child(3)').innerHTML = description;
 
     hide(wishModal);
 };
