@@ -1,4 +1,4 @@
-import Sortable from './sortable.complete.esm.js';
+import Sortable from './ext/sortable.complete.esm.js';
 import {changeOrderPOST} from "./wishActions.js";
 
 const element = document.getElementById('list');

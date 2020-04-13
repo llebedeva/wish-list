@@ -33,7 +33,7 @@ const hide = element => {
     element.classList.remove('show');
 };
 
-const getFocus = () => {
+const focusOnWishInput = () => {
     wishInput.focus();
 };
 
@@ -49,7 +49,7 @@ const createHandler = () => {
     hide(updateBtn);
 
     show(wishModal);
-    getFocus();
+    focusOnWishInput();
 };
 
 const editHandler = event => {
@@ -66,7 +66,7 @@ const editHandler = event => {
     show(updateBtn);
 
     show(wishModal);
-    getFocus();
+    focusOnWishInput();
 };
 
 const deleteHandler = event => {
