@@ -35,6 +35,21 @@ const getFocus = () => {
     wishInput.focus();
 };
 
+const createHandler = () => {
+    wishInput.value = null;
+    linkInput.value = null;
+    descriptionInput.value = null;
+    idInput.value = null;
+
+    title.innerHTML = 'Create new wish';
+
+    show(addBtn);
+    hide(updateBtn);
+
+    show(wishModal);
+    getFocus();
+};
+
 const editHandler = event => {
     const listItem = event.target.parentElement.parentElement;
 
@@ -71,20 +86,7 @@ const deleteHandler = event => {
     };
 };
 
-createBtn.onclick = () => {
-    wishInput.value = null;
-    linkInput.value = null;
-    descriptionInput.value = null;
-    idInput.value = null;
-
-    title.innerHTML = 'Create new wish';
-
-    show(addBtn);
-    hide(updateBtn);
-
-    show(wishModal);
-    getFocus();
-};
+createBtn.onclick = createHandler;
 
 addBtn.onclick = async () => {
     const wish = wishInput.value;
