@@ -104,8 +104,8 @@ addBtn.onclick = async () => {
                 <button name="delete">Delete</button>
             </div>
         </div>`);
-    document.querySelectorAll('.list-group-item:last-child button[name="edit"]')[0].onclick = editHandler;
-    document.querySelectorAll('.list-group-item:last-child button[name="delete"]')[0].onclick = deleteHandler;
+    document.querySelector('.list-group-item:last-child button[name="edit"]').onclick = editHandler;
+    document.querySelector('.list-group-item:last-child button[name="delete"]').onclick = deleteHandler;
 
     hide(wishModal);
 };
