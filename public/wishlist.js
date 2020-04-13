@@ -88,6 +88,20 @@ const deleteHandler = event => {
     };
 };
 
+const enterKeyPressHandler = event => {
+    if(event.keyCode === 13){
+        submitWishModal();
+    }
+};
+
+const submitWishModal = () => {
+    if (addBtn.classList.value === 'show') {
+        addBtn.click();
+    } else if (updateBtn.classList.value === 'show') {
+        updateBtn.click();
+    }
+};
+
 createBtn.onclick = createHandler;
 
 addBtn.onclick = async () => {
@@ -141,3 +155,7 @@ deleteBtns.forEach(button => {
 closeBtn.onclick = () => {
     hide(wishModal);
 };
+
+wishInput.onkeydown = enterKeyPressHandler;
+linkInput.onkeydown = enterKeyPressHandler;
+descriptionInput.onkeydown = enterKeyPressHandler;
