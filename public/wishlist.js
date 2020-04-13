@@ -1,4 +1,4 @@
-import {serialize} from './lib.js';
+import {createWishPOST, updateWishPOST, deleteWishPOST} from "./wishActions.js";
 
 const wishList = document.getElementById('list');
 const createBtn = document.getElementById('createButton');
@@ -21,8 +21,18 @@ const linkInput = wishModal.querySelector('input[name="link"]');
 const descriptionInput = wishModal.querySelector('textarea[name="description"]');
 const idInput = wishModal.querySelector('input[name="id"]');
 
-closeBtn.onclick = () => {
-    hide(wishModal);
+const show = element => {
+    element.classList.add('show');
+    element.classList.remove('hide');
+};
+
+const hide = element => {
+    element.classList.add('hide');
+    element.classList.remove('show');
+};
+
+const getFocus = () => {
+    wishInput.focus();
 };
 
 const editHandler = event => {
@@ -113,71 +123,10 @@ updateBtn.onclick = async () => {
     hide(wishModal);
 };
 
-const show = element => {
-    element.classList.add('show');
-    element.classList.remove('hide');
-};
-
-const hide = element => {
-    element.classList.add('hide');
-    element.classList.remove('show');
-};
-
-const getFocus = () => {
-    wishInput.focus();
-};
-
 deleteBtns.forEach(button => {
     button.onclick = deleteHandler;
 });
 
-const createWishPOST = async (wish, link, description) => {
-    try {
-        const response = await fetch('/', {
-            method: 'POST',
-            headers: {'Content-type': 'application/x-www-form-urlencoded'},
-            body: serialize({wish: wish, link: link, description: description, add: 'add'})
-        });
-        if (response.ok) {
-            let json = await response.json();
-            return json.id;
-        } else {
-            // noinspection ExceptionCaughtLocallyJS
-            throw new Error('Request failed! HTTP code=' + response.status);
-        }
-    } catch(error){
-        console.log(error);
-    }
-};
-
-const updateWishPOST = async (id, wish, link, description) => {
-    try {
-        const response = await fetch('/', {
-            method: 'POST',
-            headers: {'Content-type': 'application/x-www-form-urlencoded'},
-            body: serialize({id: id, wish: wish, link: link, description: description, update: 'update'})
-        });
-        if (!(response.ok)) {
-            // noinspection ExceptionCaughtLocallyJS
-            throw new Error('Request failed!');
-        }
-    } catch(error){
-        console.log(error);
-    }
-};
-
-const deleteWishPOST = async wishId => {
-    try {
-        const response = await fetch('/', {
-            method: 'POST',
-            headers: {'Content-type': 'application/x-www-form-urlencoded'},
-            body: serialize({id: wishId, delete: 'delete'})
-        });
-        if (!(response.ok)) {
-            // noinspection ExceptionCaughtLocallyJS
-            throw new Error('Request failed!');
-        }
-    } catch(error){
-        console.log(error);
-    }
+closeBtn.onclick = () => {
+    hide(wishModal);
 };
