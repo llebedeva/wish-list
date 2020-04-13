@@ -98,15 +98,29 @@ class Storage
             WHERE id = '$id';";
         $this->dbh->exec($sql);
 
-        $this->deleteWishPriority($id);
+        $this->updateWishPriorities($id);
     }
 
-    private function deleteWishPriority($wish_id) : void
+    private function updateWishPriorities($wish_id) : void
     {
+        $this->moveUpLowerPriorities($wish_id);
+
         $sql = "DELETE FROM wish_priority 
             WHERE wish_id = '$wish_id';";
         $this->dbh->exec($sql);
+
         $this->orderingWishesByPriority();
+    }
+
+    private function moveUpLowerPriorities($wish_id) : void
+    {
+        $sql = "SELECT * FROM wish_priority WHERE priority > 
+                                  (SELECT priority FROM wish_priority where wish_id = $wish_id);";
+        $arr = $this->dbh->query($sql)->fetchAll();
+        SortPriority::moveUpAllIndexesByOneStep($arr);
+
+        $this->deleteWishPriorities($arr);
+        $this->insertWishPriorities($arr);
     }
 
     private function deleteWishPriorities($arr) : void

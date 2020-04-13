@@ -20,4 +20,11 @@ class SortPriority
         }
         $temp[count($temp) - 1][self::COLUMN_NAME] = $index;
     }
+
+    public static function moveUpAllIndexesByOneStep(&$temp) : void
+    {
+        for ($i = 0; $i < count($temp); $i++) {
+            $temp[$i][self::COLUMN_NAME] = $temp[$i][self::COLUMN_NAME] - 1;
+        }
+    }
 }

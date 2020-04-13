@@ -49,4 +49,24 @@ class SortPriorityTest extends TestCase
         ];
         $this->assertEquals($expected, $temp);
     }
+
+    public function moveUpAllIndexesByOneStep()
+    {
+        $columnName = self::COLUMN_NAME;
+        $temp = [
+            [$columnName => 2],
+            [$columnName => 3],
+            [$columnName => 4],
+            [$columnName => 5]
+        ];
+
+        SortPriority::moveUpAllIndexesByOneStep($temp);
+        $expected = [
+            [$columnName => 1],
+            [$columnName => 2],
+            [$columnName => 3],
+            [$columnName => 4]
+        ];
+        $this->assertEquals($expected, $temp);
+    }
 }
