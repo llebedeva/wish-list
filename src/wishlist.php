@@ -8,7 +8,7 @@ $stmt = $variables['stmt'];
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="wishlist.css">
+    <link rel="stylesheet" type="text/css" href="css/wishlist.css">
     <title>Wishes</title>
 </head>
 <body>
@@ -67,7 +67,7 @@ $stmt = $variables['stmt'];
         </div>
     </div>
 
-    <script type="module" src="wishlist.js"></script>
-    <script type="module" src="drag&drop.js"></script>
+    <script type="module" src="js/wishlist.js"></script>
+    <script type="module" src="js/drag&drop.js"></script>
 </body>
 </html>
