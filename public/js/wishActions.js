@@ -1,14 +1,13 @@
 import {serialize} from "./lib.js";
 
 const createWishPOST = async (wish, link, description) => {
-    const response = await fetch('/', {
+    const response = await fetch('/create_wish', {
         method: 'POST',
         headers: {'Content-type': 'application/x-www-form-urlencoded'},
         body: serialize({
             wish: wish,
             link: link,
-            description: description,
-            add: 'add'
+            description: description
         })
     });
     if (response.ok) {
@@ -20,15 +19,14 @@ const createWishPOST = async (wish, link, description) => {
 };
 
 const updateWishPOST = async (id, wish, link, description) => {
-    const response = await fetch('/', {
+    const response = await fetch('/update_wish', {
         method: 'POST',
         headers: {'Content-type': 'application/x-www-form-urlencoded'},
         body: serialize({
             id: id,
             wish: wish,
             link: link,
-            description: description,
-            update: 'update'
+            description: description
         })
     });
     if (!response.ok) {
@@ -37,12 +35,11 @@ const updateWishPOST = async (id, wish, link, description) => {
 };
 
 const deleteWishPOST = async wishId => {
-    const response = await fetch('/', {
+    const response = await fetch('/delete_wish', {
         method: 'POST',
         headers: {'Content-type': 'application/x-www-form-urlencoded'},
         body: serialize({
-            id: wishId,
-            delete: 'delete'
+            id: wishId
         })
     });
     if (!(response.ok)) {
@@ -51,13 +48,12 @@ const deleteWishPOST = async wishId => {
 };
 
 const changeOrderPOST = async (oldIndex, newIndex) => {
-    const response = await fetch('/', {
+    const response = await fetch('/change_wish_order', {
         method: 'POST',
         headers: {'Content-type': 'application/x-www-form-urlencoded'},
         body: serialize({
             old: oldIndex,
-            new: newIndex,
-            change_order: 'change_order'
+            new: newIndex
         })
     });
     if (!(response.ok)) {
