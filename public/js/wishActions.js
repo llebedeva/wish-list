@@ -1,7 +1,9 @@
 import {serialize} from "./lib.js";
 
+const path = '/wish'
+
 const createWishPOST = async (wish, link, description) => {
-    const response = await fetch('/create_wish', {
+    const response = await fetch(path + '/create', {
         method: 'POST',
         headers: {'Content-type': 'application/x-www-form-urlencoded'},
         body: serialize({
@@ -19,7 +21,7 @@ const createWishPOST = async (wish, link, description) => {
 };
 
 const updateWishPOST = async (id, wish, link, description) => {
-    const response = await fetch('/update_wish', {
+    const response = await fetch(path + '/update', {
         method: 'POST',
         headers: {'Content-type': 'application/x-www-form-urlencoded'},
         body: serialize({
@@ -35,7 +37,7 @@ const updateWishPOST = async (id, wish, link, description) => {
 };
 
 const deleteWishPOST = async wishId => {
-    const response = await fetch('/delete_wish', {
+    const response = await fetch(path + '/delete', {
         method: 'POST',
         headers: {'Content-type': 'application/x-www-form-urlencoded'},
         body: serialize({
@@ -48,7 +50,7 @@ const deleteWishPOST = async wishId => {
 };
 
 const changeOrderPOST = async (oldIndex, newIndex) => {
-    const response = await fetch('/change_wish_order', {
+    const response = await fetch(path + '/change_order', {
         method: 'POST',
         headers: {'Content-type': 'application/x-www-form-urlencoded'},
         body: serialize({

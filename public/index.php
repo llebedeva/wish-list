@@ -11,16 +11,16 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->get('/', function(Controller $controller) {
         return $controller->indexAction();
     });
-    $r->post('/create_wish', function(Controller $controller, Request $request) {
+    $r->post('/wish/create', function(Controller $controller, Request $request) {
         return $controller->addWishAction($request);
     });
-    $r->post('/update_wish', function(Controller $controller, Request $request) {
+    $r->post('/wish/update', function(Controller $controller, Request $request) {
         return $controller->updateWishAction($request);
     });
-    $r->post('/delete_wish', function(Controller $controller, Request $request) {
+    $r->post('/wish/delete', function(Controller $controller, Request $request) {
         return $controller->deleteWishAction($request);
     });
-    $r->post('/change_wish_order', function(Controller $controller, Request $request) {
+    $r->post('/wish/change_order', function(Controller $controller, Request $request) {
         return $controller->changeOrderAction($request);
     });
 });
