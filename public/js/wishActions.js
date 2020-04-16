@@ -2,7 +2,7 @@ import {serialize} from "./lib.js";
 
 const path = '/wish'
 
-const createWishPOST = async (wish, link, description) => {
+const createWishAction = async (wish, link, description) => {
     const response = await fetch(path + '/create', {
         method: 'POST',
         headers: {'Content-type': 'application/x-www-form-urlencoded'},
@@ -20,7 +20,7 @@ const createWishPOST = async (wish, link, description) => {
     }
 };
 
-const updateWishPOST = async (id, wish, link, description) => {
+const updateWishAction = async (id, wish, link, description) => {
     const response = await fetch(path + '/update', {
         method: 'POST',
         headers: {'Content-type': 'application/x-www-form-urlencoded'},
@@ -36,7 +36,7 @@ const updateWishPOST = async (id, wish, link, description) => {
     }
 };
 
-const deleteWishPOST = async wishId => {
+const deleteWishAction = async wishId => {
     const response = await fetch(path + '/delete', {
         method: 'POST',
         headers: {'Content-type': 'application/x-www-form-urlencoded'},
@@ -49,7 +49,7 @@ const deleteWishPOST = async wishId => {
     }
 };
 
-const changeOrderPOST = async (oldIndex, newIndex) => {
+const changeOrderWishesAction = async (oldIndex, newIndex) => {
     const response = await fetch(path + '/change_order', {
         method: 'POST',
         headers: {'Content-type': 'application/x-www-form-urlencoded'},
@@ -63,4 +63,4 @@ const changeOrderPOST = async (oldIndex, newIndex) => {
     }
 };
 
-export {createWishPOST, updateWishPOST, deleteWishPOST, changeOrderPOST};
+export {createWishAction, updateWishAction, deleteWishAction, changeOrderWishesAction};

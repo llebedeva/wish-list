@@ -1,4 +1,5 @@
-import {createWishPOST, updateWishPOST, deleteWishPOST} from "./wishActions.js";
+import {createWishAction, updateWishAction, deleteWishAction, changeOrderWishesAction} from "./wishActions.js";
+import Sortable from './ext/sortable.complete.esm.js';
 
 const wishList = document.getElementById('list');
 const createBtn = document.getElementById('createButton');
@@ -78,7 +79,7 @@ const deleteHandler = event => {
     show(confirmModal);
 
     yesBtn.onclick = async () => {
-        await deleteWishPOST(wishId);
+        await deleteWishAction(wishId);
         wishList.removeChild(item);
         hide(confirmModal);
     };
@@ -109,7 +110,7 @@ addBtn.onclick = async () => {
     const link = linkInput.value;
     const description = descriptionInput.value;
 
-    const id = await createWishPOST(wish, link, description);
+    const id = await createWishAction(wish, link, description);
 
     wishList.insertAdjacentHTML('beforeend', `<div class="list-group-item">
             <div>${wish}</div>
@@ -137,7 +138,7 @@ updateBtn.onclick = async () => {
     const link = linkInput.value;
     const description = descriptionInput.value;
 
-    await updateWishPOST(id, wish, link, description);
+    await updateWishAction(id, wish, link, description);
 
     currentListItem.querySelector('div:nth-child(1)').innerHTML = wish;
     const a = currentListItem.querySelector('div:nth-child(2) a');
@@ -159,3 +160,19 @@ closeBtn.onclick = () => {
 wishInput.onkeydown = enterKeyPressHandler;
 linkInput.onkeydown = enterKeyPressHandler;
 descriptionInput.onkeydown = enterKeyPressHandler;
+
+if (wishList !== null) {
+    Sortable.create(wishList, {
+        multiDrag: true,
+        fallbackTolerance: 3,
+        animation: 150,
+
+        onEnd: async function (/**Event*/evt) {
+            const oldIndex = evt.oldIndex;
+            const newIndex = evt.newIndex;
+            if (oldIndex !== newIndex) {
+                await changeOrderWishesAction(oldIndex, newIndex);
+            }
+        }
+    });
+}

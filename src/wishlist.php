@@ -68,6 +68,5 @@ $stmt = $variables['stmt'];
     </div>
 
     <script type="module" src="js/wishlist.js"></script>
-    <script type="module" src="js/drag&drop.js"></script>
 </body>
 </html>
