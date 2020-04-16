@@ -22,7 +22,7 @@ const createWishAction = async (wish, link, description) => {
 
 const updateWishAction = async (id, wish, link, description) => {
     const response = await fetch(path + '/update', {
-        method: 'POST',
+        method: 'PUT',
         headers: {'Content-type': 'application/x-www-form-urlencoded'},
         body: serialize({
             id: id,
@@ -51,7 +51,7 @@ const deleteWishAction = async wishId => {
 
 const changeOrderWishesAction = async (oldIndex, newIndex) => {
     const response = await fetch(path + '/change_order', {
-        method: 'POST',
+        method: 'PUT',
         headers: {'Content-type': 'application/x-www-form-urlencoded'},
         body: serialize({
             old: oldIndex,

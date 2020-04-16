@@ -14,14 +14,14 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->post('/wish/create', function(Controller $controller, Request $request) {
         return $controller->addWishAction($request);
     });
-    $r->post('/wish/update', function(Controller $controller, Request $request) {
+    $r->put('/wish/update', function(Controller $controller, Request $request) {
         return $controller->updateWishAction($request);
+    });
+    $r->put('/wish/change_order', function(Controller $controller, Request $request) {
+        return $controller->changeOrderAction($request);
     });
     $r->post('/wish/delete', function(Controller $controller, Request $request) {
         return $controller->deleteWishAction($request);
-    });
-    $r->post('/wish/change_order', function(Controller $controller, Request $request) {
-        return $controller->changeOrderAction($request);
     });
 });
 
