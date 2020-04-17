@@ -12,13 +12,13 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->get('/', function(Controller $controller) {
         return $controller->indexAction();
     });
-    $r->post('/wish', function(Controller $controller, Request $request, array $vars) {
+    $r->post('/wish', function(Controller $controller, Request $request) {
         return $controller->addWishAction($request);
     });
-    $r->put('/wish', function(Controller $controller, Request $request, array $vars) {
+    $r->put('/wish', function(Controller $controller, Request $request) {
         return $controller->updateWishAction($request);
     });
-    $r->put('/wish/order', function(Controller $controller, Request $request, array $vars) {
+    $r->put('/wish/order', function(Controller $controller, Request $request) {
         return $controller->changeOrderAction($request);
     });
     $r->delete('/wish/{id:\d+}', function(Controller $controller, Request $request, array $vars) {
