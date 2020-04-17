@@ -71,11 +71,11 @@ class ControllerTest extends SetUpTestCase
 
     public function testDeleteWish_success()
     {
-        $request = new Request([], ['wish' => '', 'link' => '', 'description' => '', 'id' => '15']);
+        $id = 15;
         $controller = new Controller();
 
         /** @var Response $response */
-        $response = $controller->deleteWishAction($request);
+        $response = $controller->deleteWishAction($id);
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
@@ -83,11 +83,11 @@ class ControllerTest extends SetUpTestCase
 
     public function testDeleteWish_error()
     {
-        $request = new Request();
+        $id = 'tt';
         $controller = new Controller();
 
         /** @var Response $response */
-        $response = $controller->deleteWishAction($request);
+        $response = $controller->deleteWishAction($id);
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());

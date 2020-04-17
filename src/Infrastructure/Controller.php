@@ -3,8 +3,8 @@ namespace App\Infrastructure;
 
 use App\Domain\ChangeOrderRequest;
 use App\Domain\CreateWishRequest;
-use App\Domain\DeleteWishRequest;
 use App\Domain\UpdateWishRequest;
+use App\Domain\DeleteWishRequest;
 use App\Storage\Storage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,10 +74,10 @@ class Controller
         return $response;
     }
 
-    public function deleteWishAction(Request $request)
+    public function deleteWishAction($id)
     {
         try {
-            $request = new DeleteWishRequest($request);
+            $request = new DeleteWishRequest($id);
 
             $this->storage->deleteWish($request->id());
 

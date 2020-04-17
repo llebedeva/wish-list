@@ -3,18 +3,14 @@ namespace App\Tests\Domain;
 
 use App\Domain\DeleteWishRequest;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Request;
 
 class DeleteWishRequestTest extends TestCase
 {
-    private const ID_NAME = 'id';
     private const VALID_ID = 1;
 
-    public function testSuccessIfVaidAgruments()
+    public function testSuccessIfValidAgrument()
     {
-        $request = new Request([], [self::ID_NAME => self::VALID_ID]);
-
-        $request = new DeleteWishRequest($request);
+        $request = new DeleteWishRequest(self::VALID_ID);
 
         $this->assertInstanceOf(DeleteWishRequest::class, $request);
     }
@@ -25,19 +21,18 @@ class DeleteWishRequestTest extends TestCase
      */
     public function testThrowsExceptionIfInvalidArguments($id)
     {
-        $request = new Request([], [self::ID_NAME => $id]);
-
         $this->expectException(\InvalidArgumentException::class);
 
-        new DeleteWishRequest($request);
+        new DeleteWishRequest($id);
     }
 
     public function providerInvalidArguments()
     {
         return [
             [null],
+            ['s'],
             [''],
-            ['t']
+            [11.1]
         ];
     }
 }

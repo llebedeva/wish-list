@@ -1,16 +1,15 @@
 <?php
 namespace App\Domain;
 
-use Symfony\Component\HttpFoundation\Request;
 use Webmozart\Assert\Assert;
 
 class DeleteWishRequest
 {
     private $id;
 
-    public function __construct(Request $request)
+    public function __construct($id)
     {
-        $this->id = $request->request->get('id');
+        $this->id = $id;
         $this->validateId($this->id);
     }
 
