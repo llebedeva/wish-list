@@ -21,8 +21,8 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->put('/wish/order', function(Controller $controller, Request $request) {
         return $controller->changeOrderAction($request);
     });
-    $r->delete('/wish/{id:\d+}', function(Controller $controller, Request $request, array $vars) {
-        return $controller->deleteWishAction($vars['id']);
+    $r->delete('/wish/{id:\d+}', function(Controller $controller, Request $request) {
+        return $controller->deleteWishAction($request->request->get('args')['id']);
     });
 });
 
@@ -52,6 +52,7 @@ switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::FOUND:
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];
-        $handler($controller, $request, $vars)->send();
+        $request->request->add(['args' => $vars]);
+        $handler($controller, $request)->send();
         break;
 }
