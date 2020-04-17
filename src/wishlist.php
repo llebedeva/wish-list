@@ -23,7 +23,7 @@ $stmt = $variables['stmt'];
     <div id="list" class="list-group col">
         <?php while ($row = $stmt->fetch()): ?>
         <div class="list-group-item">
-            <div><?=$row['wish']?></div>
+            <div><a href="/wish/<?=$row['id']?>"><?=$row['wish']?></a></div>
             <div><a href="<?=$row['link']?>"><?=$row['link']?></a></div>
             <div><?=$row['description']?></div>
             <div>

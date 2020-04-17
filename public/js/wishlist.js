@@ -56,7 +56,7 @@ const createHandler = () => {
 const editHandler = event => {
     currentListItem = event.target.parentElement.parentElement;
 
-    wishInput.value = currentListItem.querySelector('div').innerHTML;
+    wishInput.value = currentListItem.querySelector('div a').innerHTML;
     linkInput.value = currentListItem.querySelector('div:nth-child(2) a').innerHTML;
     descriptionInput.value = currentListItem.querySelector('div:nth-child(3)').innerHTML;
     idInput.value = currentListItem.querySelector('input[name="id"]').value;
@@ -72,7 +72,7 @@ const editHandler = event => {
 
 const deleteHandler = event => {
     const item = event.target.parentElement.parentElement;
-    const wishValue = item.querySelector('div').innerHTML;
+    const wishValue = item.querySelector('div a').innerHTML;
     const wishId = item.querySelector('input[name="id"]').value;
 
     confirmMessage.innerHTML = `Remove ${wishValue}?`;
@@ -140,7 +140,7 @@ updateBtn.onclick = async () => {
 
     await updateWishAction(id, wish, link, description);
 
-    currentListItem.querySelector('div:nth-child(1)').innerHTML = wish;
+    currentListItem.querySelector('div:nth-child(1) a').innerHTML = wish;
     const a = currentListItem.querySelector('div:nth-child(2) a');
     a.innerHTML = link;
     a.setAttribute('href', link);
