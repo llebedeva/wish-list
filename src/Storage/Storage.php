@@ -28,6 +28,12 @@ class Storage
         return $this->dbh->query($sql);
     }
 
+    public function getWish($id) : \PDOStatement
+    {
+        $sql = "SELECT * FROM wish_table WHERE id = '$id';";
+        return $this->dbh->query($sql);
+    }
+
     public function createWish($wish, $link, $description) : int
     {
         $sql = "INSERT INTO wishes (wish, link, description) 

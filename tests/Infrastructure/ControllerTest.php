@@ -20,6 +20,19 @@ class ControllerTest extends SetUpTestCase
         $this->assertNotEmpty($response->getContent());
     }
 
+    public function testWishPage()
+    {
+        $id = 1;
+        $controller = new Controller();
+
+        /** @var Response $response */
+        $response = $controller->wishPage($id);
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertNotEmpty($response->getContent());
+    }
+
     public function testAddWish_success()
     {
         $request = new Request([], ['wish' => 'Wish', 'link' => 'Link', 'description' => 'Description']);

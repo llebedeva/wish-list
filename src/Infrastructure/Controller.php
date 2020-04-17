@@ -39,6 +39,19 @@ class Controller
         return $response;
     }
 
+    public function wishPage($id)
+    {
+        $stmt = $this->storage->getWish($id);
+
+        $s = $this->render_php(PROJECT_ROOT . "/src/wish.php", [
+            "stmt" => $stmt
+        ]);
+
+        $response = new Response($s);
+        $response->headers->set('Content-Type', 'text/html');
+        return $response;
+    }
+
     public function addWishAction(Request $request)
     {
         try {
