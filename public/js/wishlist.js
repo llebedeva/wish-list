@@ -113,7 +113,7 @@ addBtn.onclick = async () => {
     const id = await createWishAction(wish, link, description);
 
     wishList.insertAdjacentHTML('beforeend', `<div class="list-group-item">
-            <div>${wish}</div>
+            <div><a href="/wish/${id}">${wish}</a></div>
             <div><a href="${link}">${link}</a></div>
             <div>${description}</div>
             <div>
