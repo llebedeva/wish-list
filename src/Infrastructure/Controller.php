@@ -26,7 +26,7 @@ class Controller
         }
     }
 
-    public function indexAction()
+    public function indexAction() : Response
     {
         $stmt = $this->storage->getWishTable();
 
@@ -39,7 +39,7 @@ class Controller
         return $response;
     }
 
-    public function wishPage($id)
+    public function wishPage($id) : Response
     {
         $stmt = $this->storage->getWish($id);
 
@@ -52,7 +52,7 @@ class Controller
         return $response;
     }
 
-    public function addWishAction(Request $request)
+    public function addWishAction(Request $request) : Response
     {
         try {
             $request = new CreateWishRequest($request);
@@ -69,7 +69,7 @@ class Controller
         return $response;
     }
 
-    public function updateWishAction(Request $request)
+    public function updateWishAction(Request $request) : Response
     {
         try {
             $request = new UpdateWishRequest($request);
@@ -87,7 +87,7 @@ class Controller
         return $response;
     }
 
-    public function deleteWishAction($id)
+    public function deleteWishAction($id) : Response
     {
         try {
             $request = new DeleteWishRequest($id);
@@ -101,7 +101,7 @@ class Controller
         return $response;
     }
 
-    public function changeOrderAction(Request $request)
+    public function changeOrderAction(Request $request) : Response
     {
         try {
             $request = new ChangeOrderRequest($request);
