@@ -1,10 +1,13 @@
 import {createWishAction, updateWishAction, deleteWishAction, changeOrderWishesAction} from "./wishActions.js";
+import {show, hide} from "./style.js";
 import Sortable from './ext/sortable.complete.esm.js';
 
 const wishList = document.getElementById('list');
 const createBtn = document.getElementById('createButton');
-const editBtns = document.querySelectorAll('button[name="edit"]');
-const deleteBtns = document.querySelectorAll('button[name="delete"]');
+const editBthPath = 'button[name="edit"]';
+const editBtns = document.querySelectorAll(editBthPath);
+const deleteBthPath = 'button[name="delete"]';
+const deleteBtns = document.querySelectorAll(deleteBthPath);
 
 const confirmModal = document.getElementById('confirmModal');
 const confirmMessage = confirmModal.querySelector('p');
@@ -23,16 +26,6 @@ const descriptionInput = wishModal.querySelector('textarea[name="description"]')
 const idInput = wishModal.querySelector('input[name="id"]');
 
 let currentListItem;
-
-const show = element => {
-    element.classList.add('show');
-    element.classList.remove('hide');
-};
-
-const hide = element => {
-    element.classList.add('hide');
-    element.classList.remove('show');
-};
 
 const focusOnWishInput = () => {
     wishInput.focus();
@@ -122,8 +115,9 @@ addBtn.onclick = async () => {
                 <button name="delete">Delete</button>
             </div>
         </div>`);
-    document.querySelector('.list-group-item:last-child button[name="edit"]').onclick = editHandler;
-    document.querySelector('.list-group-item:last-child button[name="delete"]').onclick = deleteHandler;
+    const lastListItemPath = '.list-group-item:last-child'
+    document.querySelector(lastListItemPath + ' ' + editBthPath).onclick = editHandler;
+    document.querySelector(lastListItemPath + ' ' + deleteBthPath).onclick = deleteHandler;
 
     hide(wishModal);
 };
