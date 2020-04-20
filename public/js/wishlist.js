@@ -20,10 +20,15 @@ const title = document.querySelector('h3');
 const addBtn = document.getElementById('add');
 const updateBtn = document.getElementById('update');
 
-const wishInput = wishModal.querySelector('input[name="wish"]');
-const linkInput = wishModal.querySelector('input[name="link"]');
-const descriptionInput = wishModal.querySelector('textarea[name="description"]');
-const idInput = wishModal.querySelector('input[name="id"]');
+const wishInputPath = 'input[name="wish"]';
+const wishInput = wishModal.querySelector(wishInputPath);
+const linkInputPath = 'input[name="link"]';
+const linkInput = wishModal.querySelector(linkInputPath);
+const descriptionInputPath = 'input[name="description"]';
+const descriptionTextareaPath = 'textarea[name="description"]';
+const descriptionTextarea = wishModal.querySelector(descriptionTextareaPath);
+const idInputPath = 'input[name="id"]';
+const idInput = wishModal.querySelector(idInputPath);
 
 let currentListItem;
 
@@ -34,7 +39,7 @@ const focusOnWishInput = () => {
 const createHandler = () => {
     wishInput.value = null;
     linkInput.value = null;
-    descriptionInput.value = null;
+    descriptionTextarea.value = null;
     idInput.value = null;
 
     title.innerHTML = 'Create new wish';
@@ -49,10 +54,10 @@ const createHandler = () => {
 const editHandler = event => {
     currentListItem = event.target.parentElement.parentElement;
 
-    wishInput.value = currentListItem.querySelector('div a').innerHTML;
-    linkInput.value = currentListItem.querySelector('div:nth-child(2) a').innerHTML;
-    descriptionInput.value = currentListItem.querySelector('div:nth-child(3)').innerHTML;
-    idInput.value = currentListItem.querySelector('input[name="id"]').value;
+    wishInput.value = currentListItem.querySelector(wishInputPath).value;
+    linkInput.value = currentListItem.querySelector(linkInputPath).value;
+    descriptionTextarea.value = currentListItem.querySelector(descriptionInputPath).value;
+    idInput.value = currentListItem.querySelector(idInputPath).value;
 
     title.innerHTML = 'Edit wish';
 
@@ -65,8 +70,8 @@ const editHandler = event => {
 
 const deleteHandler = event => {
     const item = event.target.parentElement.parentElement;
-    const wishValue = item.querySelector('div a').innerHTML;
-    const wishId = item.querySelector('input[name="id"]').value;
+    const wishValue = item.querySelector(wishInputPath).value;
+    const wishId = item.querySelector(idInputPath).value;
 
     confirmMessage.innerHTML = `Remove ${wishValue}?`;
     show(confirmModal);
@@ -101,15 +106,16 @@ createBtn.onclick = createHandler;
 addBtn.onclick = async () => {
     const wish = wishInput.value;
     const link = linkInput.value;
-    const description = descriptionInput.value;
+    const description = descriptionTextarea.value;
 
     const id = await createWishAction(wish, link, description);
 
     wishList.insertAdjacentHTML('beforeend', `<div class="list-group-item">
             <div><a href="/wish/${id}">${wish}</a></div>
-            <div><a href="${link}">${link}</a></div>
-            <div>${description}</div>
             <div>
+                <input type="hidden" name="wish" value="${wish}">
+                <input type="hidden" name="link" value="${link}">
+                <input type="hidden" name="description" value="${description}">
                 <input type="hidden" name="id" value="${id}">
                 <button name="edit">Edit</button>
                 <button name="delete">Delete</button>
@@ -130,15 +136,15 @@ updateBtn.onclick = async () => {
     const id = idInput.value;
     const wish = wishInput.value;
     const link = linkInput.value;
-    const description = descriptionInput.value;
+    const description = descriptionTextarea.value;
 
     await updateWishAction(id, wish, link, description);
 
-    currentListItem.querySelector('div:nth-child(1) a').innerHTML = wish;
-    const a = currentListItem.querySelector('div:nth-child(2) a');
-    a.innerHTML = link;
-    a.setAttribute('href', link);
-    currentListItem.querySelector('div:nth-child(3)').innerHTML = description;
+    currentListItem.querySelector('div a').innerHTML = wish;
+    currentListItem.querySelector(wishInputPath).value = wish;
+    currentListItem.querySelector(linkInputPath).value = link;
+    currentListItem.querySelector(descriptionInputPath).value = description;
+    currentListItem.querySelector(idInputPath).value = id;
 
     hide(wishModal);
 };
@@ -153,7 +159,7 @@ closeBtn.onclick = () => {
 
 wishInput.onkeydown = enterKeyPressHandler;
 linkInput.onkeydown = enterKeyPressHandler;
-descriptionInput.onkeydown = enterKeyPressHandler;
+descriptionTextarea.onkeydown = enterKeyPressHandler;
 
 if (wishList !== null) {
     Sortable.create(wishList, {

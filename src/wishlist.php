@@ -24,9 +24,10 @@ $stmt = $variables['stmt'];
         <?php while ($row = $stmt->fetch()): ?>
         <div class="list-group-item">
             <div><a href="/wish/<?=$row['id']?>"><?=$row['wish']?></a></div>
-            <div><a href="<?=$row['link']?>"><?=$row['link']?></a></div>
-            <div><?=$row['description']?></div>
             <div>
+                <input type="hidden" name="wish" value="<?=$row['wish']?>">
+                <input type="hidden" name="link" value="<?=$row['link']?>">
+                <input type="hidden" name="description" value="<?=$row['description']?>">
                 <input type="hidden" name="id" value="<?=$row['id']?>">
                 <button name="edit">Edit</button>
                 <button name="delete">Delete</button>
