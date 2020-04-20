@@ -15,18 +15,21 @@ $row = $stmt->fetch();
 <body>
     <h2>Wish: <?=$row['wish']?></h2>
 
-    <div class="list-group-item">
+    <div id="wishItem" class="list-group-item">
         <div><?=$row['wish']?></div>
         <div><a href="<?=$row['link']?>"><?=$row['link']?></a></div>
         <div><?=$row['description']?></div>
         <div>
+            <input type="hidden" name="wish" value="<?=$row['wish']?>">
+            <input type="hidden" name="link" value="<?=$row['link']?>">
+            <input type="hidden" name="description" value="<?=$row['description']?>">
             <input type="hidden" name="id" value="<?=$row['id']?>">
             <button name="edit">Edit</button>
             <button name="delete">Delete</button>
         </div>
     </div>
 
-    <a href="/">Back to wishlist</a>
+    <a id="back" href="/">Back to wishlist</a>
 
     <div id="wishModal" class="modal">
         <div class="modal-content">

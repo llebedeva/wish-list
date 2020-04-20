@@ -1,5 +1,6 @@
-import {createWishAction, updateWishAction, deleteWishAction, changeOrderWishesAction} from "./wishActions.js";
-import {show, hide} from "./style.js";
+import {createWishAction, updateWishAction, deleteWishAction, changeOrderWishesAction} from './wishActions.js';
+import {hide} from './style.js';
+import {enterKeyPressHandler, closeWishModal, confirmDeleting, openEditWishModal, openCreateWishModal, closeBtn, updateFunc} from './wishLib.js';
 import Sortable from './ext/sortable.complete.esm.js';
 
 const wishList = document.getElementById('list');
@@ -9,14 +10,6 @@ const editBtns = document.querySelectorAll(editBthPath);
 const deleteBthPath = 'button[name="delete"]';
 const deleteBtns = document.querySelectorAll(deleteBthPath);
 
-const confirmModal = document.getElementById('confirmModal');
-const confirmMessage = confirmModal.querySelector('p');
-const yesBtn = confirmModal.querySelector('button[name="ok"]');
-const noBtn = confirmModal.querySelector('button[name="cancel"]');
-
-const wishModal = document.getElementById('wishModal');
-const closeBtn = document.querySelector('.close');
-const title = document.querySelector('h3');
 const addBtn = document.getElementById('add');
 const updateBtn = document.getElementById('update');
 
@@ -32,76 +25,28 @@ const idInput = wishModal.querySelector(idInputPath);
 
 let currentListItem;
 
-const focusOnWishInput = () => {
-    wishInput.focus();
-};
-
-const createHandler = () => {
-    wishInput.value = null;
-    linkInput.value = null;
-    descriptionTextarea.value = null;
-    idInput.value = null;
-
-    title.innerHTML = 'Create new wish';
-
-    show(addBtn);
-    hide(updateBtn);
-
-    show(wishModal);
-    focusOnWishInput();
-};
-
 const editHandler = event => {
     currentListItem = event.target.parentElement.parentElement;
+    const wishValue = currentListItem.querySelector(wishInputPath).value;
+    const linkValue = currentListItem.querySelector(linkInputPath).value;
+    const descriptionValue = currentListItem.querySelector(descriptionInputPath).value;
+    const idValue = currentListItem.querySelector(idInputPath).value;
 
-    wishInput.value = currentListItem.querySelector(wishInputPath).value;
-    linkInput.value = currentListItem.querySelector(linkInputPath).value;
-    descriptionTextarea.value = currentListItem.querySelector(descriptionInputPath).value;
-    idInput.value = currentListItem.querySelector(idInputPath).value;
-
-    title.innerHTML = 'Edit wish';
-
-    hide(addBtn);
-    show(updateBtn);
-
-    show(wishModal);
-    focusOnWishInput();
+    openEditWishModal(wishValue, linkValue, descriptionValue, idValue);
 };
 
 const deleteHandler = event => {
     const item = event.target.parentElement.parentElement;
     const wishValue = item.querySelector(wishInputPath).value;
-    const wishId = item.querySelector(idInputPath).value;
+    const wishIdValue = item.querySelector(idInputPath).value;
 
-    confirmMessage.innerHTML = `Remove ${wishValue}?`;
-    show(confirmModal);
-
-    yesBtn.onclick = async () => {
-        await deleteWishAction(wishId);
-        wishList.removeChild(item);
-        hide(confirmModal);
-    };
-
-    noBtn.onclick = () => {
-        hide(confirmModal);
-    };
+    confirmDeleting(wishValue, async () => {
+        await deleteWishAction(wishIdValue);
+        await wishList.removeChild(item);
+    });
 };
 
-const enterKeyPressHandler = event => {
-    if(event.keyCode === 13){
-        submitWishModal();
-    }
-};
-
-const submitWishModal = () => {
-    if (addBtn.classList.value === 'show') {
-        addBtn.click();
-    } else if (updateBtn.classList.value === 'show') {
-        updateBtn.click();
-    }
-};
-
-createBtn.onclick = createHandler;
+createBtn.onclick = openCreateWishModal;
 
 addBtn.onclick = async () => {
     const wish = wishInput.value;
@@ -146,20 +91,18 @@ updateBtn.onclick = async () => {
     currentListItem.querySelector(descriptionInputPath).value = description;
     currentListItem.querySelector(idInputPath).value = id;
 
-    hide(wishModal);
+    await closeWishModal();
 };
 
 deleteBtns.forEach(button => {
     button.onclick = deleteHandler;
 });
 
-closeBtn.onclick = () => {
-    hide(wishModal);
-};
-
 wishInput.onkeydown = enterKeyPressHandler;
 linkInput.onkeydown = enterKeyPressHandler;
 descriptionTextarea.onkeydown = enterKeyPressHandler;
+
+closeBtn.onclick = closeWishModal;
 
 if (wishList !== null) {
     Sortable.create(wishList, {
