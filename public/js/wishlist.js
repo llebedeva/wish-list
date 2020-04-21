@@ -1,29 +1,17 @@
-import {createWishAction, updateWishAction, deleteWishAction, changeOrderWishesAction} from './wishActions.js';
-import {hide} from './style.js';
-import {enterKeyPressHandler, closeWishModal, confirmDeleting, openEditWishModal, openCreateWishModal, closeBtn, updateFunc} from './wishLib.js';
 import Sortable from './ext/sortable.complete.esm.js';
 
-const wishList = document.getElementById('list');
+import {changeOrderWishesAction} from './wishActions.js';
+import {enterKeyPressHandler, closeWishModal, confirmDeleting, openEditWishModal, openCreateWishModal, closeBtn,
+    updateFunc, createWish, editBthPath, deleteBthPath, addBtn, updateBtn, wishList,
+    wishInputPath, linkInputPath, descriptionInputPath, descriptionTextareaPath, idInputPath,
+    wishInput, linkInput, descriptionTextarea} from './wishLib.js';
+
 const createBtn = document.getElementById('createButton');
-const editBthPath = 'button[name="edit"]';
 const editBtns = document.querySelectorAll(editBthPath);
-const deleteBthPath = 'button[name="delete"]';
 const deleteBtns = document.querySelectorAll(deleteBthPath);
 
-const addBtn = document.getElementById('add');
-const updateBtn = document.getElementById('update');
-
-const wishInputPath = 'input[name="wish"]';
-const wishInput = wishModal.querySelector(wishInputPath);
-const linkInputPath = 'input[name="link"]';
-const linkInput = wishModal.querySelector(linkInputPath);
-const descriptionInputPath = 'input[name="description"]';
-const descriptionTextareaPath = 'textarea[name="description"]';
-const descriptionTextarea = wishModal.querySelector(descriptionTextareaPath);
-const idInputPath = 'input[name="id"]';
-const idInput = wishModal.querySelector(idInputPath);
-
 let currentListItem;
+
 
 const editHandler = event => {
     currentListItem = event.target.parentElement.parentElement;
@@ -40,8 +28,7 @@ const deleteHandler = event => {
     const wishValue = item.querySelector(wishInputPath).value;
     const wishIdValue = item.querySelector(idInputPath).value;
 
-    confirmDeleting(wishValue, async () => {
-        await deleteWishAction(wishIdValue);
+    confirmDeleting(wishValue, wishIdValue, async () => {
         await wishList.removeChild(item);
     });
 };
@@ -49,28 +36,11 @@ const deleteHandler = event => {
 createBtn.onclick = openCreateWishModal;
 
 addBtn.onclick = async () => {
-    const wish = wishInput.value;
-    const link = linkInput.value;
-    const description = descriptionTextarea.value;
-
-    const id = await createWishAction(wish, link, description);
-
-    wishList.insertAdjacentHTML('beforeend', `<div class="list-group-item">
-            <div><a href="/wish/${id}">${wish}</a></div>
-            <div>
-                <input type="hidden" name="wish" value="${wish}">
-                <input type="hidden" name="link" value="${link}">
-                <input type="hidden" name="description" value="${description}">
-                <input type="hidden" name="id" value="${id}">
-                <button name="edit">Edit</button>
-                <button name="delete">Delete</button>
-            </div>
-        </div>`);
+    await createWish();
+    
     const lastListItemPath = '.list-group-item:last-child'
     document.querySelector(lastListItemPath + ' ' + editBthPath).onclick = editHandler;
     document.querySelector(lastListItemPath + ' ' + deleteBthPath).onclick = deleteHandler;
-
-    hide(wishModal);
 };
 
 editBtns.forEach(button => {
@@ -78,20 +48,9 @@ editBtns.forEach(button => {
 });
 
 updateBtn.onclick = async () => {
-    const id = idInput.value;
-    const wish = wishInput.value;
-    const link = linkInput.value;
-    const description = descriptionTextarea.value;
-
-    await updateWishAction(id, wish, link, description);
-
-    currentListItem.querySelector('div a').innerHTML = wish;
-    currentListItem.querySelector(wishInputPath).value = wish;
-    currentListItem.querySelector(linkInputPath).value = link;
-    currentListItem.querySelector(descriptionInputPath).value = description;
-    currentListItem.querySelector(idInputPath).value = id;
-
-    await closeWishModal();
+    await updateFunc(currentListItem, (wish, link, description) => {
+        currentListItem.querySelector('div a').innerHTML = wish;
+    });
 };
 
 deleteBtns.forEach(button => {
