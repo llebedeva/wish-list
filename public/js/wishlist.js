@@ -3,7 +3,7 @@ import Sortable from './ext/sortable.complete.esm.js';
 import {changeOrderWishesAction} from './wishActions.js';
 import {enterKeyPressHandler, closeWishModal, confirmDeleting, openEditWishModal, openCreateWishModal, closeBtn,
     updateFunc, createWish, editBthPath, deleteBthPath, addBtn, updateBtn, wishList,
-    wishInputPath, linkInputPath, descriptionInputPath, descriptionTextareaPath, idInputPath,
+    wishInputPath, linkInputPath, descriptionInputPath, idInputPath,
     wishInput, linkInput, descriptionTextarea} from './wishLib.js';
 
 const createBtn = document.getElementById('createButton');
@@ -37,7 +37,7 @@ createBtn.onclick = openCreateWishModal;
 
 addBtn.onclick = async () => {
     await createWish();
-    
+
     const lastListItemPath = '.list-group-item:last-child'
     document.querySelector(lastListItemPath + ' ' + editBthPath).onclick = editHandler;
     document.querySelector(lastListItemPath + ' ' + deleteBthPath).onclick = deleteHandler;
