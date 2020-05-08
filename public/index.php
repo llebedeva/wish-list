@@ -12,6 +12,9 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->get('/', function(Controller $controller) {
         return $controller->indexAction();
     });
+    $r->get('/wishlist', function(Controller $controller) {
+        return $controller->getWishlist();
+    });
     $r->get('/wish/{id:\d+}', function(Controller $controller, Request $request) {
         return $controller->wishPage($request->request->get('args')['id']);
     });

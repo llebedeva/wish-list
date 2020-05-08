@@ -22,7 +22,14 @@ class Storage
         $this->dbh = new \PDO("mysql:host=$host;port=$port;dbname=$database;charset=$charset", $user, $password);
     }
 
-    public function getWishTable() : \PDOStatement
+    public function getWishTable() : array
+    {
+        $sql = 'SELECT * FROM wish_table;';
+        $stmt = $this->dbh->query($sql);
+        return $stmt->fetchAll();
+    }
+
+    public function getWishTable1() : \PDOStatement
     {
         $sql = 'SELECT * FROM wish_table;';
         return $this->dbh->query($sql);

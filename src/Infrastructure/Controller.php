@@ -28,6 +28,23 @@ class Controller
 
     public function indexAction() : Response
     {
+        print file_get_contents(PROJECT_ROOT . "/public/home.html");
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/html');
+        return $response;
+    }
+
+    public function getWishlist() : Response
+    {
+        $arr = json_encode($this->storage->getWishTable());
+
+        $response = new Response($arr);
+        $response->headers->set('Content-Type', 'text/html');
+        return $response;
+    }
+
+    public function indexAction1() : Response
+    {
         $stmt = $this->storage->getWishTable();
 
         $s = $this->render_php(PROJECT_ROOT . "/src/wishlist.php", [

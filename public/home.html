@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="css/wishlist.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
+</head>
+<body>
+    <div id="app">
+        <h2>I wish...</h2>
+        <p v-if="!wishlist.length">You don't have any wishes yet. Please, create your first wish.</p>
+        <button @click="showModal">New wish</button>
+        <wish v-for="item in wishlist"
+              :name="item.name"
+              :id="item.id"
+        ></wish>
+
+        <wish-modal v-show="showWishModal" @hide-modal="hideModal"></wish-modal>
+    </div>
+
+    <script type="module" src="js/home.js"></script>
+</body>
+</html>
