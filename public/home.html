@@ -12,7 +12,7 @@
         <p v-if="!wishlist.length">You don't have any wishes yet. Please, create your first wish.</p>
         <button @click="showModal">New wish</button>
         <wish-item v-for="item in wishlist"
-              :id="item.id"
+              :item="item"
         ></wish-item>
 
         <wish-modal v-show="showWishModal" @hide-modal="hideModal"></wish-modal>

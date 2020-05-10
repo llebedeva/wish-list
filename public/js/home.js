@@ -2,7 +2,7 @@ import {getWishlist} from './wishActions.js';
 
 Vue.component('wish-item', {
     props: {
-        id: String
+        item: Object
     },
     computed: {
         url: function() {
@@ -10,14 +10,11 @@ Vue.component('wish-item', {
         },
     },
     created: function() {
-        app.wishlist.forEach(item => {
-            if (item['id'] === this.id) {
-                this.name = item['name'];
-                this.link = item['link'];
-                this.description = item['description'];
-                this.priority = item['priority'];
-            }
-        })
+        this.id = this.item['id'];
+        this.name = this.item['name'];
+        this.link = this.item['link'];
+        this.description = this.item['description'];
+        this.priority = this.item['priority'];
     },
     template: `
     <div>
