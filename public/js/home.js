@@ -1,4 +1,4 @@
-import {getWishlist} from './wishActions.js';
+import {getWishlist, deleteWishAction} from './wishActions.js';
 
 Vue.component('wish-item', {
     props: {
@@ -16,11 +16,18 @@ Vue.component('wish-item', {
         this.description = this.item['description'];
         this.priority = this.item['priority'];
     },
+    methods: {
+        async deleteItem() {
+            if (await deleteWishAction(this.id)) {
+                app.removeWishItem(this.id);
+            }
+        },
+    },
     template: `
     <div>
         <a v-bind:href="url">{{ name }}</a>
         <button>Edit</button>
-        <button>Delete</button>
+        <button @click="deleteItem">Delete</button>
     </div>
     `
 });
@@ -72,11 +79,21 @@ let app = new Vue({
         });
     },
     methods: {
-        showModal: function () {
+        showModal() {
             this.showWishModal = true;
         },
-        hideModal: function () {
+        hideModal() {
             this.showWishModal = false;
+        },
+        removeWishItem(id) {
+            let index = 0;
+            for (let item of this.wishlist) {
+                if (item.id === id) {
+                    app.wishlist.splice(index, 1);
+                    break;
+                }
+                index++;
+            }
         }
     }
 });

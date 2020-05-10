@@ -56,6 +56,8 @@ const deleteWishAction = async wishId => {
     });
     if (!(response.ok)) {
         console.log('Request failed! HTTP code=' + response.status);
+    } else {
+        return true;
     }
 };
 
