@@ -1,18 +1,29 @@
 import {getWishlist} from './wishActions.js';
 
-Vue.component('wish', {
+Vue.component('wish-item', {
     props: {
-        name: String,
         id: String
     },
     computed: {
         url: function() {
             return "/wish/" + this.id;
-        }
+        },
+    },
+    created: function() {
+        app.wishlist.forEach(item => {
+            if (item['id'] === this.id) {
+                this.name = item['name'];
+                this.link = item['link'];
+                this.description = item['description'];
+                this.priority = item['priority'];
+            }
+        })
     },
     template: `
     <div>
         <a v-bind:href="url">{{ name }}</a>
+        <button>Edit</button>
+        <button>Delete</button>
     </div>
     `
 });
@@ -57,7 +68,7 @@ let app = new Vue({
             this.wishlist.push({
                 id: wish['id'],
                 name: wish['wish'],
-                url: wish['link'],
+                link: wish['link'],
                 description: wish['description'],
                 priority: wish['priority']
             });
