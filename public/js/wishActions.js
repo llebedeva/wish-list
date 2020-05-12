@@ -17,6 +17,7 @@ const createWishAction = async (wish, link, description) => {
         return json.id;
     } else {
         console.log('Request failed! HTTP code=' + response.status);
+        return false;
     }
 };
 
@@ -33,6 +34,8 @@ const updateWishAction = async (id, wish, link, description) => {
     });
     if (!response.ok) {
         console.log('Request failed! HTTP code=' + response.status);
+    } else {
+        return true;
     }
 };
 

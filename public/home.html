@@ -7,17 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
 </head>
 <body>
-    <div id="app">
-        <h2>I wish...</h2>
-        <p v-if="!wishlist.length">You don't have any wishes yet. Please, create your first wish.</p>
-        <button @click="showModal">New wish</button>
-        <wish-item v-for="item in wishlist"
-              :item="item"
-        ></wish-item>
-
-        <wish-modal v-show="showWishModal" @hide-modal="hideModal"></wish-modal>
-    </div>
-
+    <div id="app"></div>
     <script type="module" src="js/home.js"></script>
 </body>
 </html>
