@@ -5,11 +5,6 @@ Vue.component('wish-item', {
         item: Object,
         show: Function
     },
-    data() {
-        return {
-            isShownWishModal: false
-        }
-    },
     computed: {
         url: function() {
             return "/wish/" + this.id;
@@ -18,16 +13,13 @@ Vue.component('wish-item', {
     template: `
     <div>
         <a v-bind:href="url">{{ name }}</a>
-        <button @click="show">Edit</button>
+        <button @click="show(item)">Edit</button>
         <button @click="deleteItem">Delete</button>
     </div>
     `,
     created: function() {
         this.id = this.item['id'];
         this.name = this.item['name'];
-        this.link = this.item['link'];
-        this.description = this.item['description'];
-        this.priority = this.item['priority'];
     },
     methods: {
         async deleteItem() {
@@ -52,7 +44,7 @@ Vue.component('wish-modal', {
             this.$emit('hide');
         }
     }
-})
+});
 
 let app = new Vue({
     el: '#app',
@@ -104,7 +96,13 @@ let app = new Vue({
         });
     },
     methods: {
-        showModal() {
+        showModal(item=null) {
+            if (item) {
+                this.id = item['id'];
+                this.name = item['name'];
+                this.link = item['link'];
+                this.description = item['description'];
+            }
             this.isModalVisible = true;
         },
         hideModal() {
