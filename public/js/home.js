@@ -1,33 +1,9 @@
 import {getWishlist, createWishAction, updateWishAction, deleteWishAction} from './wishActions.js';
 
-Vue.component('create-button', {
-    data() {
-        return {
-            isShownWishModal: false
-        }
-    },
-    template: `
-    <div>
-        <button @click="showWishModal">New wish</button>
-        <wish-modal 
-            v-show="isShownWishModal" 
-            @hide-modal="hideWishModal"
-            ></wish-modal>
-    </div>
-    `,
-    methods: {
-        showWishModal() {
-            this.isShownWishModal = true;
-        },
-        hideWishModal() {
-            this.isShownWishModal = false;
-        }
-    }
-});
-
 Vue.component('wish-item', {
     props: {
-        item: Object
+        item: Object,
+        show: Function
     },
     data() {
         return {
@@ -42,13 +18,8 @@ Vue.component('wish-item', {
     template: `
     <div>
         <a v-bind:href="url">{{ name }}</a>
-        <button @click="showWishModal">Edit</button>
+        <button @click="show">Edit</button>
         <button @click="deleteItem">Delete</button>
-        <wish-modal 
-        :wishObj="item"
-        v-show="isShownWishModal" 
-        @hide-modal="hideWishModal"
-        ></wish-modal>
     </div>
     `,
     created: function() {
@@ -63,73 +34,22 @@ Vue.component('wish-item', {
             if (await deleteWishAction(this.id)) {
                 app.removeWishItem(this.id);
             }
-        },
-        showWishModal() {
-            this.isShownWishModal = true;
-        },
-        hideWishModal() {
-            this.isShownWishModal = false;
         }
     }
 });
 
 Vue.component('wish-modal', {
-    props: {
-        wishObj: {
-            type: Object,
-            default: function () {
-                return {
-                    id: null,
-                    name: '',
-                    link: '',
-                    description: ''
-                }
-            }
-        },
-    },
-    created: function() {
-        this.id = this.wishObj['id'];
-        this.name = this.wishObj['name'];
-        this.link = this.wishObj['link'];
-        this.description = this.wishObj['description'];
-    },
     template: `
     <div class="modal">
-        <form class="modal-content" @submit.prevent="formSubmit">
-        <span class="close" @click="hideModal">&times;</span>
-            <label for="wish">Wish:</label>
-            <br>
-            <input v-model.trim="name" type="text" required>
-            <br>
-            <label for="link">Reference:</label>
-            <br>
-            <input v-model.trim="link" type="text">
-            <br>
-            <label for="description">Additional information:</label>
-            <br>
-            <textarea v-model.trim="description" rows="3" cols="40"></textarea>
-            <br>
-            <input type="submit">
-        </form>
+        <div class="modal-content">
+            <span class="close" @click="hideModal">&times;</span>
+            <slot></slot>
+        </div>
     </div>
     `,
     methods: {
         hideModal() {
-            this.$emit('hide-modal');
-        },
-        async formSubmit() {
-            if (this.id) {
-                if (await updateWishAction(this.id, this.name, this.link, this.description)) {
-                    app.updateWishItem(this.id, this.name, this.link, this.description);
-                    this.hideModal();
-                }
-            } else {
-                this.id = await createWishAction(this.name, this.link, this.description);
-                if (this.id) {
-                    app.addWishItem(this.id, this.name, this.link, this.description);
-                    this.hideModal();
-                }
-            }
+            this.$emit('hide');
         }
     }
 })
@@ -140,13 +60,36 @@ let app = new Vue({
         <div>
             <h2>I wish...</h2>
             <p v-if="!wishlist.length">You don't have any wishes yet. Please, create your first wish.</p>
-            <create-button></create-button>
+            <button @click="showModal">New wish</button>
             <wish-item v-for="item in wishlist"
                   :item="item"
+                  :show="showModal"
             ></wish-item>
+            <wish-modal v-show="isModalVisible" @hide="hideModal">
+                <form @submit.prevent="formSubmit">
+                    <label for="wish">Wish:</label>
+                    <br>
+                    <input v-model.trim="name" type="text" required>
+                    <br>
+                    <label for="link">Reference:</label>
+                    <br>
+                    <input v-model.trim="link" type="text">
+                    <br>
+                    <label for="description">Additional information:</label>
+                    <br>
+                    <textarea v-model.trim="description" rows="3" cols="40"></textarea>
+                    <br>
+                    <input type="submit">
+                </form>
+            </wish-modal>
         </div>`,
     data: {
-        wishlist: []
+        wishlist: [],
+        isModalVisible: false,
+        id: null,
+        name: '',
+        link: '',
+        description: ''
     },
     created : async function() {
         let wishlist = await getWishlist();
@@ -161,6 +104,12 @@ let app = new Vue({
         });
     },
     methods: {
+        showModal() {
+            this.isModalVisible = true;
+        },
+        hideModal() {
+            this.isModalVisible = false;
+        },
         addWishItem(id, name, link, description) {
             this.wishlist.push({
                 id: id,
@@ -180,6 +129,20 @@ let app = new Vue({
                     break;
                 }
                 index++;
+            }
+        },
+        async formSubmit() {
+            if (this.id) {
+                if (await updateWishAction(this.id, this.name, this.link, this.description)) {
+                    app.updateWishItem(this.id, this.name, this.link, this.description);
+                    this.hideModal();
+                }
+            } else {
+                this.id = await createWishAction(this.name, this.link, this.description);
+                if (this.id) {
+                    app.addWishItem(this.id, this.name, this.link, this.description);
+                    this.hideModal();
+                }
             }
         }
     }
