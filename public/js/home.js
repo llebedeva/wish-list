@@ -1,17 +1,26 @@
 import {getWishlist, createWishAction, updateWishAction, deleteWishAction} from './wishActions.js';
 
 Vue.component('create-button', {
+    data() {
+        return {
+            isShownWishModal: false
+        }
+    },
     template: `
-    <button @click="showWishModal">New wish</button>
+    <div>
+        <button @click="showWishModal">New wish</button>
+        <wish-modal 
+            v-show="isShownWishModal" 
+            @hide-modal="hideWishModal"
+            ></wish-modal>
+    </div>
     `,
     methods: {
         showWishModal() {
-            this.$emit('show-wish-modal', {
-                id: null,
-                name: '',
-                link: '',
-                description: ''
-            });
+            this.isShownWishModal = true;
+        },
+        hideWishModal() {
+            this.isShownWishModal = false;
         }
     }
 });
@@ -67,7 +76,15 @@ Vue.component('wish-item', {
 Vue.component('wish-modal', {
     props: {
         wishObj: {
-            type: Object
+            type: Object,
+            default: function () {
+                return {
+                    id: null,
+                    name: '',
+                    link: '',
+                    description: ''
+                }
+            }
         },
     },
     created: function() {
@@ -119,25 +136,17 @@ Vue.component('wish-modal', {
 
 let app = new Vue({
     el: '#app',
-    template: `<div>
-        <h2>I wish...</h2>
-        <p v-if="!wishlist.length">You don't have any wishes yet. Please, create your first wish.</p>
-        <create-button @show-wish-modal="showWishModal"></create-button>
-        <wish-item @show-wish-modal="showWishModal" 
-        v-for="item in wishlist"
-              :item="item"
-        ></wish-item>
-
-        <wish-modal 
-        :wishObj="wishObj"
-        v-show="isShownWishModal" 
-        @hide-modal="hideModal"
-        ></wish-modal>
+    template: `
+        <div>
+            <h2>I wish...</h2>
+            <p v-if="!wishlist.length">You don't have any wishes yet. Please, create your first wish.</p>
+            <create-button></create-button>
+            <wish-item v-for="item in wishlist"
+                  :item="item"
+            ></wish-item>
         </div>`,
     data: {
-        wishlist: [],
-        isShownWishModal: false,
-        wishObj: {}
+        wishlist: []
     },
     created : async function() {
         let wishlist = await getWishlist();
@@ -152,13 +161,6 @@ let app = new Vue({
         });
     },
     methods: {
-        showWishModal(wishObj) {
-            this.isShownWishModal = true;
-            this.wishObj = wishObj;
-        },
-        hideModal() {
-            this.isShownWishModal = false;
-        },
         addWishItem(id, name, link, description) {
             this.wishlist.push({
                 id: id,
