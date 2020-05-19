@@ -20,7 +20,7 @@ Vue.component('wish-item', {
     },
     template: `
     <div class="list-group-item">
-        <a v-bind:href="url">{{ this.name }}</a>
+        <a :href="url">{{ this.name }}</a>
         <button @click="show(item)">Edit</button>
         <button @click="deleteItem">Delete</button>
     </div>
@@ -181,7 +181,6 @@ if (wishItem !== null) {
             const oldIndex = evt.oldIndex;
             const newIndex = evt.newIndex;
             if (oldIndex !== newIndex) {
-                console.log('change');
                 await changeOrderWishesAction(oldIndex, newIndex);
             }
         }

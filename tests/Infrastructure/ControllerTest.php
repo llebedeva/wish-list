@@ -17,7 +17,6 @@ class ControllerTest extends SetUpTestCase
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
-        $this->assertNotEmpty($response->getContent());
     }
 
     public function testWishPage()
