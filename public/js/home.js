@@ -1,4 +1,11 @@
-import {getWishlist, createWishAction, updateWishAction, deleteWishAction} from './wishActions.js';
+import Sortable from './ext/sortable.complete.esm.js';
+import {
+    getWishlist,
+    createWishAction,
+    updateWishAction,
+    deleteWishAction,
+    changeOrderWishesAction
+} from './wishActions.js';
 
 Vue.component('wish-item', {
     props: {
@@ -12,7 +19,7 @@ Vue.component('wish-item', {
         },
     },
     template: `
-    <div>
+    <div class="list-group-item">
         <a v-bind:href="url">{{ this.name }}</a>
         <button @click="show(item)">Edit</button>
         <button @click="deleteItem">Delete</button>
@@ -61,9 +68,11 @@ let app = new Vue({
             <h2>I wish...</h2>
             <p v-if="!wishlist.length">You don't have any wishes yet. Please, create your first wish.</p>
             <button @click="showModal()">New wish</button>
-            <wish-item v-for="item in wishlist" :key="item.id" :item="item" :name="item.name"
+            <div id="list" class="list-group col">
+                <wish-item v-for="item in wishlist" :key="item.id" :item="item" :name="item.name"
                   :show="showModal"
-            ></wish-item>
+                ></wish-item>
+            </div>
             <modal v-show="isModalVisible" @hide="hideModal">
                 <form @submit.prevent="formSubmit">
                     <label for="wish">Wish:</label>
@@ -158,3 +167,23 @@ let app = new Vue({
         }
     }
 });
+
+const wishList = document.getElementById('list');
+const wishItem = document.querySelectorAll('#list .list-group-item');
+
+if (wishItem !== null) {
+    Sortable.create(wishList, {
+        multiDrag: true,
+        fallbackTolerance: 3,
+        animation: 150,
+
+        onEnd: async function (/**Event*/evt) {
+            const oldIndex = evt.oldIndex;
+            const newIndex = evt.newIndex;
+            if (oldIndex !== newIndex) {
+                console.log('change');
+                await changeOrderWishesAction(oldIndex, newIndex);
+            }
+        }
+    });
+}
