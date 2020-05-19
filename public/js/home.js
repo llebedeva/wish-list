@@ -30,7 +30,7 @@ Vue.component('wish-item', {
     }
 });
 
-Vue.component('wish-modal', {
+Vue.component('modal', {
     template: `
     <div class="modal">
         <div class="modal-content">
@@ -48,16 +48,24 @@ Vue.component('wish-modal', {
 
 let app = new Vue({
     el: '#app',
+    data: {
+        wishlist: [],
+        isModalVisible: false,
+        id: null,
+        name: '',
+        link: '',
+        description: ''
+    },
     template: `
         <div>
             <h2>I wish...</h2>
             <p v-if="!wishlist.length">You don't have any wishes yet. Please, create your first wish.</p>
-            <button @click="showModal">New wish</button>
+            <button @click="showModal()">New wish</button>
             <wish-item v-for="item in wishlist"
                   :item="item"
                   :show="showModal"
             ></wish-item>
-            <wish-modal v-show="isModalVisible" @hide="hideModal">
+            <modal v-show="isModalVisible" @hide="hideModal">
                 <form @submit.prevent="formSubmit">
                     <label for="wish">Wish:</label>
                     <br>
@@ -73,16 +81,8 @@ let app = new Vue({
                     <br>
                     <input type="submit">
                 </form>
-            </wish-modal>
+            </modal>
         </div>`,
-    data: {
-        wishlist: [],
-        isModalVisible: false,
-        id: null,
-        name: '',
-        link: '',
-        description: ''
-    },
     created : async function() {
         let wishlist = await getWishlist();
         wishlist.forEach(wish => {
@@ -96,7 +96,7 @@ let app = new Vue({
         });
     },
     methods: {
-        showModal(item=null) {
+        showModal(item = null) {
             if (item) {
                 this.id = item['id'];
                 this.name = item['name'];
@@ -123,7 +123,7 @@ let app = new Vue({
             let index = 0;
             for (let item of this.wishlist) {
                 if (item.id === id) {
-                    app.wishlist.splice(index, 1);
+                    let it = app.wishlist.splice(index, 1);
                     break;
                 }
                 index++;
