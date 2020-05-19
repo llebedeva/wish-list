@@ -3,6 +3,7 @@ import {getWishlist, createWishAction, updateWishAction, deleteWishAction} from 
 Vue.component('wish-item', {
     props: {
         item: Object,
+        name: String,
         show: Function
     },
     computed: {
@@ -12,14 +13,13 @@ Vue.component('wish-item', {
     },
     template: `
     <div>
-        <a v-bind:href="url">{{ name }}</a>
+        <a v-bind:href="url">{{ this.name }}</a>
         <button @click="show(item)">Edit</button>
         <button @click="deleteItem">Delete</button>
     </div>
     `,
     created: function() {
         this.id = this.item['id'];
-        this.name = this.item['name'];
     },
     methods: {
         async deleteItem() {
@@ -61,8 +61,7 @@ let app = new Vue({
             <h2>I wish...</h2>
             <p v-if="!wishlist.length">You don't have any wishes yet. Please, create your first wish.</p>
             <button @click="showModal()">New wish</button>
-            <wish-item v-for="item in wishlist"
-                  :item="item"
+            <wish-item v-for="item in wishlist" :key="item.id" :item="item" :name="item.name"
                   :show="showModal"
             ></wish-item>
             <modal v-show="isModalVisible" @hide="hideModal">
@@ -122,13 +121,22 @@ let app = new Vue({
             });
         },
         updateWishItem(id, name, link, description) {
-            //
+            let index = 0;
+            for (let item of this.wishlist) {
+                if (item.id === id) {
+                    this.wishlist[index]['name'] = name;
+                    this.wishlist[index]['link'] = link;
+                    this.wishlist[index]['description'] = description;
+                    break;
+                }
+                index++;
+            }
         },
         removeWishItem(id) {
             let index = 0;
             for (let item of this.wishlist) {
                 if (item.id === id) {
-                    let it = app.wishlist.splice(index, 1);
+                    app.wishlist.splice(index, 1);
                     break;
                 }
                 index++;
