@@ -102,6 +102,11 @@ let app = new Vue({
                 this.name = item['name'];
                 this.link = item['link'];
                 this.description = item['description'];
+            } else {
+                this.id = null;
+                this.name = '';
+                this.link = '';
+                this.description = '';
             }
             this.isModalVisible = true;
         },
