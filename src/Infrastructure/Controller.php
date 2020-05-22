@@ -28,8 +28,17 @@ class Controller
 
     public function indexAction() : Response
     {
-        echo file_get_contents(PROJECT_ROOT . "/public/home.html");
+        echo file_get_contents(PROJECT_ROOT . "/public/html/home.html");
         $response = new Response();
+        $response->headers->set('Content-Type', 'text/html');
+        return $response;
+    }
+
+    public function wishPage() : Response
+    {
+        $s = $this->render_php(PROJECT_ROOT . "/public/html/wish.html");
+
+        $response = new Response($s);
         $response->headers->set('Content-Type', 'text/html');
         return $response;
     }
@@ -39,19 +48,6 @@ class Controller
         $arr = json_encode($this->storage->getWishTable());
 
         $response = new Response($arr);
-        $response->headers->set('Content-Type', 'text/html');
-        return $response;
-    }
-
-    public function wishPage($id) : Response
-    {
-        $stmt = $this->storage->getWish($id);
-
-        $s = $this->render_php(PROJECT_ROOT . "/src/wish.php", [
-            "stmt" => $stmt
-        ]);
-
-        $response = new Response($s);
         $response->headers->set('Content-Type', 'text/html');
         return $response;
     }
@@ -121,7 +117,7 @@ class Controller
         return $response;
     }
 
-    private function render_php($path, array $variables)
+    private function render_php($path, array $variables = [])
     {
         ob_start();
         include($path);

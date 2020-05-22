@@ -32,11 +32,10 @@ class ControllerTest extends SetUpTestCase
 
     public function testWishPage()
     {
-        $id = 1;
         $controller = new Controller();
 
         /** @var Response $response */
-        $response = $controller->wishPage($id);
+        $response = $controller->wishPage();
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
