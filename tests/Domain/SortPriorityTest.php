@@ -50,7 +50,7 @@ class SortPriorityTest extends TestCase
         $this->assertEquals($expected, $temp);
     }
 
-    public function moveUpAllIndexesByOneStep()
+    public function testMoveUpAllIndexesByOneStep()
     {
         $columnName = self::COLUMN_NAME;
         $temp = [

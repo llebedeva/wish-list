@@ -18,6 +18,17 @@ class ControllerTest extends SetUpTestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
     }
+    public function testGetWishlist()
+    {
+        $controller = new Controller();
+
+        /** @var Response $response */
+        $response = $controller->getWishlist();
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertNotEmpty($response->getContent());
+    }
 
     public function testWishPage()
     {
