@@ -29,16 +29,11 @@ class Storage
         return $stmt->fetchAll();
     }
 
-    public function getWishTable1() : \PDOStatement
-    {
-        $sql = 'SELECT * FROM wish_table;';
-        return $this->dbh->query($sql);
-    }
-
-    public function getWish($id) : \PDOStatement
+    public function getWish($id) : array
     {
         $sql = "SELECT * FROM wish_table WHERE id = '$id';";
-        return $this->dbh->query($sql);
+        $stmt = $this->dbh->query($sql);
+        return $stmt->fetchAll();
     }
 
     public function createWish($wish, $link, $description) : int

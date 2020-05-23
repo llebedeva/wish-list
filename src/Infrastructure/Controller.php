@@ -43,6 +43,14 @@ class Controller
         return $response;
     }
 
+    public function getWish($id) : Response
+    {
+        $arr = json_encode($this->storage->getWish($id));
+        $response = new Response($arr);
+        $response->headers->set('Content-Type', 'text/html');
+        return $response;
+    }
+
     public function getWishlist() : Response
     {
         $arr = json_encode($this->storage->getWishTable());

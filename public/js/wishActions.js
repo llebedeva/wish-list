@@ -76,4 +76,16 @@ const getWishlist = async () => {
     }
 };
 
-export {createWishAction, updateWishAction, deleteWishAction, changeOrderWishesAction, getWishlist};
+const getWish = async (wishId) => {
+    const response = await fetch(path + '/' + wishId + '/info', {
+        method: 'GET',
+        headers: {'Content-type': 'application/x-www-form-urlencoded'},
+    });
+    if (response.ok) {
+        return await response.json();
+    } else {
+        console.log('Request failed! HTTP code=' + response.status);
+    }
+};
+
+export {createWishAction, updateWishAction, deleteWishAction, changeOrderWishesAction, getWishlist, getWish};

@@ -92,7 +92,7 @@ let app = new Vue({
             </modal>
         </div>`,
     created : async function() {
-        let wishlist = await getWishlist();
+        const wishlist = await getWishlist();
         wishlist.forEach(wish => {
             this.wishlist.push({
                 id: wish['id'],
