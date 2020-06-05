@@ -28,7 +28,7 @@ class Controller
 
     public function indexAction() : Response
     {
-        echo file_get_contents(PROJECT_ROOT . "/public/html/home.html");
+        echo file_get_contents(PROJECT_ROOT . "/public/html/index.html");
         $response = new Response();
         $response->headers->set('Content-Type', 'text/html');
         return $response;
