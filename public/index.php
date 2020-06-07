@@ -9,28 +9,22 @@ use App\Infrastructure\Controller;
 $controller = new Controller();
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
-    $r->get('/', function(Controller $controller) {
-        return $controller->indexAction();
-    });
-    $r->get('/wishlist', function(Controller $controller) {
+    $r->get('/api/wishlist', function(Controller $controller) {
         return $controller->getWishlist();
     });
-    $r->get('/wish/{id:\d+}', function(Controller $controller, Request $request) {
-        return $controller->wishPage();
-    });
-    $r->get('/wish/{id:\d+}/info', function(Controller $controller, Request $request) {
+    $r->get('/api/wish/{id:\d+}', function(Controller $controller, Request $request) {
         return $controller->getWish($request->request->get('args')['id']);
     });
-    $r->post('/wish', function(Controller $controller, Request $request) {
+    $r->post('/api/wish', function(Controller $controller, Request $request) {
         return $controller->addWishAction($request);
     });
-    $r->put('/wish', function(Controller $controller, Request $request) {
+    $r->put('/api/wish', function(Controller $controller, Request $request) {
         return $controller->updateWishAction($request);
     });
-    $r->put('/wish/order', function(Controller $controller, Request $request) {
+    $r->put('/api/wish/order', function(Controller $controller, Request $request) {
         return $controller->changeOrderAction($request);
     });
-    $r->delete('/wish/{id:\d+}', function(Controller $controller, Request $request) {
+    $r->delete('/api/wish/{id:\d+}', function(Controller $controller, Request $request) {
         return $controller->deleteWishAction($request->request->get('args')['id']);
     });
 });

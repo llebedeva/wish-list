@@ -1,6 +1,6 @@
 import {serialize} from "./lib.js";
 
-const path = '/wish'
+const path = '/api/wish'
 
 const createWishAction = async (wish, link, description) => {
     const response = await fetch(path, {
@@ -65,7 +65,7 @@ const deleteWishAction = async wishId => {
 };
 
 const getWishlist = async () => {
-    const response = await fetch('wishlist', {
+    const response = await fetch(path + 'list', {
         method: 'GET',
         headers: {'Content-type': 'application/x-www-form-urlencoded'},
     });

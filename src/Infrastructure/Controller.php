@@ -26,23 +26,6 @@ class Controller
         }
     }
 
-    public function indexAction() : Response
-    {
-        echo file_get_contents(PROJECT_ROOT . "/public/html/index.html");
-        $response = new Response();
-        $response->headers->set('Content-Type', 'text/html');
-        return $response;
-    }
-
-    public function wishPage() : Response
-    {
-        $s = $this->render_php(PROJECT_ROOT . "/public/html/wish.html");
-
-        $response = new Response($s);
-        $response->headers->set('Content-Type', 'text/html');
-        return $response;
-    }
-
     public function getWish($id) : Response
     {
         $arr = json_encode($this->storage->getWish($id));
@@ -123,14 +106,5 @@ class Controller
             $response = new Response("Error!: " . $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
         return $response;
-    }
-
-    private function render_php($path, array $variables = [])
-    {
-        ob_start();
-        include($path);
-        $var = ob_get_contents();
-        ob_end_clean();
-        return $var;
     }
 }
