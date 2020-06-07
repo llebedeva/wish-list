@@ -8,6 +8,19 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ControllerTest extends SetUpTestCase
 {
+    public function testGetWish()
+    {
+        $id = 0;
+        $controller = new Controller();
+
+        /** @var Response $response */
+        $response = $controller->getWish($id);
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertNotEmpty($response->getContent());
+    }
+
     public function testGetWishlist()
     {
         $controller = new Controller();
